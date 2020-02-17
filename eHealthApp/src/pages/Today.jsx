@@ -1,32 +1,37 @@
+/*
+The page displaying the activities of a user for today.
+This page allows the user to trigger synchronization as well as
+add health data manually.
+
+Author: Gergo Kekesi
+*/
+
 import React from "react";
 import {
 	IonPage,
 	IonContent,
-	IonHeader,
-	IonToolbar,
-	IonTitle,
 	IonFab,
 	IonFabButton,
 	IonIcon,
 	IonFabList,
-	IonLabel,
 	IonCard,
 	IonCardHeader,
 	IonCardTitle,
-	IonCardContent
+	IonCardContent,
+	IonImg
 } from "@ionic/react";
 
-import { list, sync, add } from "ionicons/icons";
+import { sync, add } from "ionicons/icons";
+import pencil from "../resources/pencil.png";
+import "./Today.css";
+import BackButtonToolbar from "../components/BackButtonToolbar";
 
+/*props:
+ */
 const Today = props => {
 	return (
 		<IonPage>
-			<IonHeader>
-				{/*TODO: Check if we need back button based on design*/}
-				<IonToolbar>
-					<IonTitle>Today: Activities</IonTitle>
-				</IonToolbar>
-			</IonHeader>
+			<BackButtonToolbar title="Today: Activities" />
 			<IonContent className="ion-padding">
 				{/*Activity*/}
 				<IonCard>
@@ -51,14 +56,16 @@ const Today = props => {
 						<IonFabButton
 							color="tertiary"
 							routerDirection="forward"
-							routerLink="/devices">
+							routerLink="/devices"
+							data-desc="Synchronize">
 							<IonIcon icon={sync} />
 						</IonFabButton>
 						<IonFabButton
 							color="tertiary"
 							routerDirection="forward"
-							routerLink="/manualentry">
-							<IonIcon icon={list} />
+							routerLink="/manualentry"
+							data-desc="Manual entry">
+							<IonImg src={pencil} style={{ width: "20px", height: "20px" }} />
 						</IonFabButton>
 					</IonFabList>
 				</IonFab>
