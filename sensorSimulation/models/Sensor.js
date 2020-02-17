@@ -14,6 +14,7 @@ class Sensor {
         this.activityStatus = "IDLE";
         this.stepsCounter = 0;
         this.heartRate = 0;
+        this.kcalBurnt = 0;
         this.connected = false;
     }
 
