@@ -1,8 +1,14 @@
+/*
+The main entry point for the application, containing the rendering routes
+as well as all the styling imports by Ionic.
+
+Author: Gergo Kekesi
+*/
+
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Home from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -20,8 +26,11 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
+/* Routing variables */
 import "./theme/variables.css";
+
+/*Page Components */
+import Home from "./pages/Home";
 import Today from "./pages/Today";
 import Devices from "./pages/Devices";
 import ManualEntry from "./pages/ManualEntry";

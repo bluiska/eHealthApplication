@@ -1,23 +1,23 @@
-import React from "react";
-import {
-	IonPage,
-	IonContent,
-	IonHeader,
-	IonToolbar,
-	IonTitle
-} from "@ionic/react";
+/*
+The manual health data submission page.
+Lists various options to submit health data to the app manually.
 
+Author: Gergo Kekesi
+*/
+
+import React from "react";
+import { IonPage, IonContent, IonList } from "@ionic/react";
+import BackButtonToolbar from "./../components/BackButtonToolbar";
+
+/*
+props:
+ */
 const ManualEntry = props => {
 	return (
 		<IonPage>
-			<IonHeader>
-				{/*TODO: Check if we need back button based on design*/}
-				<IonToolbar>
-					<IonTitle>Manual entry</IonTitle>
-				</IonToolbar>
-			</IonHeader>
+			<BackButtonToolbar title={"Manual Entry"} />
 			<IonContent className="ion-padding">
-				<h1>Manual entry screen.</h1>
+				<IonList></IonList>
 			</IonContent>
 		</IonPage>
 	);
