@@ -13,7 +13,10 @@ import { IonPage,
 		IonItem, 
 		IonCardHeader,
 		IonGrid,
-		IonCardTitle} from "@ionic/react";
+		IonCardTitle,
+		IonLabel,
+		IonSelect,
+		IonSelectOption} from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 
 /*props:
@@ -24,6 +27,13 @@ const PatientOverview = props => {
             <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>
             <IonContent className="ion-padding">
 				<IonList>
+					<IonItem>
+						<IonLabel>Filter by</IonLabel>
+						<IonSelect multiple={true}>
+							<IonSelectOption>Blood pressure</IonSelectOption>
+							<IonSelectOption>Exercise</IonSelectOption>
+						</IonSelect>
+					</IonItem>
 					<IonItem>
 						<IonGrid>
 							<IonCardTitle>Today</IonCardTitle>
