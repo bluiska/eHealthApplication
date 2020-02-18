@@ -26,6 +26,9 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
+/* Bootstrap */
+import "bootstrap/dist/css/bootstrap.min.css";
+
 /* Routing variables */
 import "./theme/variables.css";
 
