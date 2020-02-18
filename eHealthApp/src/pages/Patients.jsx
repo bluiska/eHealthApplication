@@ -1,7 +1,7 @@
 /*
 Add description
 
-Author: Gergo Kekesi
+Author: Gergo Kekesi & Daniel Madu
 */
 
 import React, { useState, Fragment } from "react";
@@ -13,10 +13,9 @@ import { IonPage,
 		IonSelect, 
 		IonSelectOption, 
 		IonLabel, 
-		IonButton, 
 		useIonViewWillEnter } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
-import { IonActionSheet } from "@ionic/react";
+// import { IonActionSheet } from "@ionic/react";
 
 /*props:
  */
@@ -108,7 +107,7 @@ const Patients = props => {
 				<Fragment>
 					<h2>Assigned Patients</h2>
 					{patientData.map((patient, i) => 
-					<IonCard key={i} onClick={() => displayPatientData(patient.id)}>
+					<IonCard key={i} routerDirection="forward" routerLink={"/patientoverview/" + patient.name + "/" + patient.id} onClick={() => displayPatientData(patient.id)}>
 						<IonCardHeader>
 							<IonCardTitle>Patient's Id: {patient.id}</IonCardTitle>
 						</IonCardHeader>

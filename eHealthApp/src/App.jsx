@@ -35,6 +35,7 @@ import Today from "./pages/Today";
 import Devices from "./pages/Devices";
 import ManualEntry from "./pages/ManualEntry";
 import Patients from "./pages/Patients";
+import PatientOverview from "./pages/PatientOverview";
 
 const App = () => (
 	<IonApp>
@@ -47,6 +48,7 @@ const App = () => (
 				<Route path="/devices" component={Devices} exact={true} />
 				<Route path="/manualentry" component={ManualEntry} exact={true} />
 				<Route path="/patients" component={Patients} exact={true} />
+				<Route path="/patientoverview/:name/:id" component={PatientOverview} />
 			</IonRouterOutlet>
 		</IonReactRouter>
 	</IonApp>
