@@ -19,7 +19,9 @@ import {
 	IonCardTitle,
 	IonRippleEffect,
 	IonCardContent,
-	IonIcon
+	IonIcon,
+	IonButton,
+	IonLabel
 } from "@ionic/react";
 import BackButtonToolbar from "./../components/BackButtonToolbar";
 import exercise_img from "../resources/exercise.jpg";
@@ -29,6 +31,11 @@ import walk_img from "../resources/walk.png";
 import run_img from "../resources/run.png";
 import cycle_img from "../resources/cycle.png";
 import { Container, Row, Col, Collapse, Button } from "react-bootstrap";
+import ImageCard from "../components/ImageCard";
+import IconButtonContainer from "./../components/IconButtonContainer";
+import IconButton from "../components/IconButton";
+
+import { withRouter } from "react-router-dom";
 
 var inputData = {};
 
@@ -36,84 +43,40 @@ var inputData = {};
 props:
  */
 const ManualEntry = props => {
-	const styles = {
-		cardImg: {
-			width: "100%",
-			height: "200px"
-		},
-		cardOption: {
-			overflow: "hidden",
-			position: "relative"
-		},
-		exerciseTypeImg: {
-			width: "40px",
-			height: "40px"
-		},
-		exerciseIcons: {
-			display: "flex",
-			justifyContent: "space-around",
-			width: "100%",
-			height: "40px"
-		}
-	};
-
 	const [exerciseOptionsOpen, setExerciseOptionsOpen] = useState(false);
 
 	return (
 		<IonPage>
-			<BackButtonToolbar title={"Manual Entry"} />
+			<BackButtonToolbar title={"Select an activity"} />
 			<IonContent className="ion-padding">
 				<IonList>
-					<IonCard>
-						<IonImg
-							src={exercise_img}
-							style={styles.cardImg}
-							onClick={() => {
-								console.log(exerciseOptionsOpen);
-								setExerciseOptionsOpen(!exerciseOptionsOpen);
-							}}
-						/>
-						<IonCardHeader>
-							<IonCardTitle>Exercise</IonCardTitle>
-						</IonCardHeader>
+					<ImageCard
+						title="Exercise"
+						image={exercise_img}
+						onClick={() => {
+							console.log(exerciseOptionsOpen);
+							setExerciseOptionsOpen(!exerciseOptionsOpen);
+						}}>
 						<Collapse in={exerciseOptionsOpen}>
 							<IonCardContent>
-								<div style={styles.exerciseIcons}>
-									<IonImg
-										src={walk_img}
-										style={styles.exerciseTypeImg}></IonImg>
-									<IonImg src={run_img} style={styles.exerciseTypeImg}></IonImg>
-									<IonImg
-										src={cycle_img}
-										style={styles.exerciseTypeImg}></IonImg>
-								</div>
+								<IconButtonContainer style={{ width: "100%", height: "50px" }}>
+									<IconButton image={walk_img} onClick={() => props.history.push("/walk_activity_submission")} ripple />
+									<IconButton image={run_img} onClick={() => props.history.push("/run_activity_submission")} ripple />
+									<IconButton image={cycle_img} onClick={() => props.history.push("/cycle_activity_submission")} ripple />
+								</IconButtonContainer>
 							</IonCardContent>
 						</Collapse>
-					</IonCard>
-					<IonCard
-						onClick={() => {}}
-						className="ion-activatable"
-						style={styles.cardOption}>
-						<IonImg src={blood_pressure_img} style={styles.cardImg} />
-						<IonCardHeader>
-							<IonCardTitle>Blood pressure</IonCardTitle>
-						</IonCardHeader>
-						<IonRippleEffect />
-					</IonCard>
-					<IonCard
-						onClick={() => {}}
-						className="ion-activatable"
-						style={styles.cardOption}>
-						<IonImg src={weight_img} style={styles.cardImg} />
-						<IonCardHeader>
-							<IonCardTitle>Weight</IonCardTitle>
-						</IonCardHeader>
-						<IonRippleEffect />
-					</IonCard>
+					</ImageCard>
+					<ImageCard
+						title="Blood Pressure"
+						image={blood_pressure_img}
+						onClick={() => props.history.push("/blood_pressure_activity_submission")}
+					/>
+					<ImageCard title="Weight" image={weight_img} onClick={() => props.history.push("/weight_activity_submission")} />
 				</IonList>
 			</IonContent>
 		</IonPage>
 	);
 };
 
-export default ManualEntry;
+export default withRouter(ManualEntry);
