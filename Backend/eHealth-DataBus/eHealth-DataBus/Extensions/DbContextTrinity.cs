@@ -37,44 +37,20 @@ namespace eHealth_DataBus.Extensions
 
             var obj = builder.EntityType<Master>();
 
-            // Disable inheriting Trinity properties for OData
-            IgnoreTrinityProperties(obj);
-
-            // Enable SPARQL methods
-            //EnableSparqlQueries(obj);
-
             return builder.GetEdmModel();
         }
 
         private static void SetEntitySets(ODataConventionModelBuilder b)
         {
-            //b.EntitySet<Resource>("Resources");
             b.EntitySet<Master>("Masters");
             b.EntitySet<User>("Users");
             b.EntitySet<Patient>("Patients");
             b.EntitySet<Doctor>("Doctors");
-            b.EntitySet<Activity>("Activities");
             b.EntitySet<Running>("Runnings");
+            b.EntitySet<Walking>("Walkings");
+            b.EntitySet<Cycling>("Cyclings");
             b.EntitySet<WeightReading>("WeightReadings");
             b.EntitySet<BloodPressureReading>("BloodPressureReadings");
-        }
-
-        private static void IgnoreTrinityProperties<T>(EntityTypeConfiguration<T> entity) where T : Resource
-        {
-            entity.Ignore(v => v.IsDisposed);
-            entity.Ignore(v => v.IsNew);
-            entity.Ignore(v => v.IsSynchronized);
-            entity.Ignore(v => v.Language);
-            entity.Ignore(v => v.Model);
-            entity.Ignore(v => v.Uri);
-        }
-
-        private static void EnableSparqlQueries<T>(EntityTypeConfiguration<T> entity) where T : Resource
-        {
-            //entity.Namespace = "objObjects";
-            //entity.Collection
-            //      .Function("GetLayers")
-            //      .Returns<IEnumerable<string>>();
         }
     }
 }

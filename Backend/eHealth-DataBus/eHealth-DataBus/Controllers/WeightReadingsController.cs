@@ -38,6 +38,12 @@ namespace eHealth_DataBus.Controllers
         }
 
         [ODataRoute("{uri_id}")]
+        public void Patch([FromBody] Object obj, [FromODataUri] string uri_id)
+        {
+            repo.Update(shaper.FormatObject(obj, uri_id));
+        }
+
+        [ODataRoute("{uri_id}")]
         public void Delete([FromODataUri] string uri_id)
         {
             repo.Delete(shaper.GetObjectUriByID(uri_id));
