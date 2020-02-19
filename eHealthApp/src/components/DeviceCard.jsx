@@ -1,29 +1,32 @@
 import React from "react";
-import { IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonImg } from "@ionic/react";
-import Fitbit from '../resources/fitbit.jpg';
+import { IonCard, IonCardContent, IonIcon } from "@ionic/react";
+import { sync, checkmark } from 'ionicons/icons';
 
 // styling
-const imageStyle = {
-    width: '100px',
-    height: '88px',
-    padding: "5px"
-};
 
 const cardContainer = {
-    textAlign: 'left'
+    display: "flex"
+};
+
+const iconStyle = {
+    fontSize: "30px",
+    float: 'left'
+};
+
+const deviceNameStyle = {
+    width: '100%',
+    height: '100%',
+    fontSize: '20px',
+    textAlign: 'center'
 }
 
 const DeviceCard = props => {
-    const {title, content} = props;
-    const imageUrl = "../resources/" + title + ".jpg";
+    const { title, connected, onClick } = props;
     return (
-        <IonCard style={{marginTop: "10px"}} button={true} onClick={() => console.log(title)}>
-            {/* <IonCardHeader>
-                <IonCardTitle>{title}</IonCardTitle>
-            </IonCardHeader> */}
+        <IonCard style={{ marginTop: "10px" }} button={true} onClick={onClick}>
             <IonCardContent style={cardContainer}>
-                <img align="right" style={imageStyle} src={require(`../../public/assets/images/bluetooth/${title}.jpg`)} />
-                <p style={{fontSize: "20px"}}>{title}</p>
+                    <IonIcon style={iconStyle} icon={connected ? checkmark : sync} />
+                    <p style={deviceNameStyle}>{title}</p>
             </IonCardContent>
         </IonCard>
     )
