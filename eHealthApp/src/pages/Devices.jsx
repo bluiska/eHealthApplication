@@ -7,7 +7,7 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IonContent, IonPage } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
@@ -15,37 +15,38 @@ import DeviceCard from "../components/DeviceCard";
 // Internal dependencies
 import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
 
-/*props:
+/*
+ *props:
  */
 const Devices = props => {
 	const [pairedDevices, setPairedDevices] = useState([]);
-	const [initialLoad, setInitialLoad] = useState(false);
 
-	const getPairedDevices = async () => {
+	useEffect(() => {
+		console.log("Calling devices only once");
+		getPairedDevices();
+	}, []);
+
+	const getPairedDevices = () => {
 		BluetoothSynchronisationManager.getPairedDevices()
 		.then((res) => {
-			setInitialLoad(true);
 			setPairedDevices(res);
 		})
 		.catch(err => {
 			console.log("failed:: ", err)
 		})
-	}
+	};
 
-	if (!initialLoad){
-		getPairedDevices();
-	}
+	const deviceClickHandler = id => {
+		BluetoothSynchronisationManager.connectToDevice(id);
+	};
 
 	return (
 		<IonPage>
 			<BackButtonToolbar title="Devices" />
 			<IonContent className="ion-padding">
-				{/* <DeviceCard title="Fitbit" content="hi"/>
-				<DeviceCard title="Garmin" content="hi"/>
-				<DeviceCard title="Samsung" content="hi"/> */}
 				{pairedDevices.length === 0 ? null : pairedDevices.map(x => {
 					return (
-						<DeviceCard key={Math.random()} title={x.name} content="hi" />
+						<DeviceCard key={Math.random()} title={x.name} onClick={deviceClickHandler.bind(this, x.id)} />
 					)
 				})}
 			</IonContent>

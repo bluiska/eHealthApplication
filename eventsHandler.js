@@ -3,21 +3,17 @@ const eventEmitter = new events.EventEmitter();
 const Sensor = require('./sensorSimulation/models/Sensor');
 const Logger = require('./sensorSimulation/singletons/Logger');
 
+const fitbit = new Sensor("sensor1", "Fitbit");
+const devices = [fitbit];
+
 eventEmitter
     .on('serverRunning', () => {
         console.log(`server running from Event Emitter`)
     })
     .on('onBluetoothDevicesRequest', response => {
-        console.log("hi");
-        const fitbit = new Sensor("sensor1", "fitbit");
-        const fitbit2 = new Sensor("sensor4", "fitbit");
-        const garmin = new Sensor("sensor2", "garmin");
-        const garmin2 = new Sensor("sensor5", "garmin");
-        const samsung = new Sensor("sensor3", "samsung");
-        const samsung2 = new Sensor("sensor6", "samsung");
-        let devicesList = {
-            devices: [fitbit, fitbit2, garmin, garmin2, samsung, samsung2]
-        };
+        const devicesList = {
+            devices: devices
+        }
         response.send(devicesList);
     })
     .on('connectToSensor', () => {

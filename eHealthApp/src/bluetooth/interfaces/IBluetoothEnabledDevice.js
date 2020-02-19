@@ -1,16 +1,17 @@
 class IBluetoothEnabledDevice {
-    constructor() {
-        this.batteryLevel = 100.00;
-        this.connectionStatus = "IDLE";
-        this.activityStatus = "IDLE";
-        this.stepsCounter = 0;
-        this.heartRate = 0;
-        this.kcalBurnt = 0;
-        this.connected = false;
+    constructor(id, name, batteryLevel, connectionStatus, activityStatus, connected) {
+        this.id = id;
+        this.name = name;
+        this.batteryLevel = batteryLevel;
+        this.connectionStatus = connectionStatus;
+        this.activityStatus = activityStatus;
+        this.connected = connected;
     }
 
     connect = () => {
-
+        console.log("connected!");
+        this.connected = true;
+        console.log(this);
     };
 
     disconnect = () => {

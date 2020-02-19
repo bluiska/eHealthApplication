@@ -27,7 +27,6 @@ class Sensor {
             this.connected = !this.connected;
             Logger.log(`Successfully connected to ${this.name}`);
         }
-
     }
 }
 
