@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 18/02/2020 23:55:57
+// Date: 19/02/2020 11:01:09
 
 using System;
 using System.Collections.Generic;
@@ -1543,9 +1543,33 @@ public class ehs : Ontology
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#Cycling"/>
+    ///</summary>
+    public static readonly Class Cycling = new Class(new Uri("http://www.ehealth.ie/semantics#Cycling"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#DistanceSport"/>
+    ///</summary>
+    public static readonly Class DistanceSport = new Class(new Uri("http://www.ehealth.ie/semantics#DistanceSport"));    
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#Doctor"/>
     ///</summary>
     public static readonly Class Doctor = new Class(new Uri("http://www.ehealth.ie/semantics#Doctor"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#Exercise"/>
+    ///</summary>
+    public static readonly Class Exercise = new Class(new Uri("http://www.ehealth.ie/semantics#Exercise"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#LegSport"/>
+    ///</summary>
+    public static readonly Class LegSport = new Class(new Uri("http://www.ehealth.ie/semantics#LegSport"));    
 
     ///<summary>
     ///
@@ -1564,6 +1588,12 @@ public class ehs : Ontology
     ///<see cref="http://www.ehealth.ie/semantics#User"/>
     ///</summary>
     public static readonly Class User = new Class(new Uri("http://www.ehealth.ie/semantics#User"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#Walking"/>
+    ///</summary>
+    public static readonly Class Walking = new Class(new Uri("http://www.ehealth.ie/semantics#Walking"));    
 
     ///<summary>
     ///
@@ -1687,9 +1717,33 @@ public static class EHS
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#Cycling"/>
+    ///</summary>
+    public const string Cycling = "http://www.ehealth.ie/semantics#Cycling";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#DistanceSport"/>
+    ///</summary>
+    public const string DistanceSport = "http://www.ehealth.ie/semantics#DistanceSport";
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#Doctor"/>
     ///</summary>
     public const string Doctor = "http://www.ehealth.ie/semantics#Doctor";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#Exercise"/>
+    ///</summary>
+    public const string Exercise = "http://www.ehealth.ie/semantics#Exercise";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#LegSport"/>
+    ///</summary>
+    public const string LegSport = "http://www.ehealth.ie/semantics#LegSport";
 
     ///<summary>
     ///
@@ -1708,6 +1762,12 @@ public static class EHS
     ///<see cref="http://www.ehealth.ie/semantics#User"/>
     ///</summary>
     public const string User = "http://www.ehealth.ie/semantics#User";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#Walking"/>
+    ///</summary>
+    public const string Walking = "http://www.ehealth.ie/semantics#Walking";
 
     ///<summary>
     ///

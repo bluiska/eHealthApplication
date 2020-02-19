@@ -6,6 +6,7 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:obda="https://w3id.org/obda/vocabulary#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://www.ehealth.ie/semantics"/>
     
@@ -188,44 +189,18 @@
     
 
 
-    <!-- http://www.ehealth.ie/semantics#Doctor -->
+    <!-- http://www.ehealth.ie/semantics#Cycling -->
 
-    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Doctor">
-        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#provides_treatment_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Cycling">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#DistanceSport"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ehealth.ie/semantics#Patient -->
+    <!-- http://www.ehealth.ie/semantics#DistanceSport -->
 
-    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Patient">
-        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#commits_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#is_assigned_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ehealth.ie/semantics#Running -->
-
-    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Running">
-        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#DistanceSport">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Exercise"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#calories_burnt"/>
@@ -254,13 +229,73 @@
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:label>Distance Sport</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Doctor -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Doctor">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#provides_treatment_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Exercise -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Exercise">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#LegSport -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#LegSport">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#DistanceSport"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#steps"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:label>Leg Sport</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Patient -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Patient">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#commits_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#is_assigned_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Running -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Running">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#LegSport"/>
     </owl:Class>
     
 
@@ -271,10 +306,18 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Walking -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Walking">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#LegSport"/>
     </owl:Class>
     
 

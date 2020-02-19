@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using eHealth_DataBus.Extensions;
 using eHealth_DataBus.Models;
+using eHealth_DataBus.Extensions;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eHealth_DataBus.Controllers
 {
-    [ODataRoutePrefix("Patients")]
-    public class PatientsController : ODataController
+    [ODataRoutePrefix("Cyclings")]
+    public class CyclingsController : ODataController
     {
-        private readonly ModelRepository<Patient> repo;
-        private readonly ModelFormatter<Patient> shaper;
+        private readonly ModelRepository<Cycling> repo;
+        private readonly ModelFormatter<Cycling> shaper;
 
-        public PatientsController(DbContextTrinity trinity)
+        public CyclingsController(DbContextTrinity trinity)
         {
-            repo = new ModelRepository<Patient>(trinity);
-            shaper = new ModelFormatter<Patient>(trinity);
+            repo = new ModelRepository<Cycling>(trinity);
+            shaper = new ModelFormatter<Cycling>(trinity);
         }
 
         [EnableQuery]
