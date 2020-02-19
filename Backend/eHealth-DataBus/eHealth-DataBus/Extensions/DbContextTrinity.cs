@@ -48,7 +48,8 @@ namespace eHealth_DataBus.Extensions
 
         private static void SetEntitySets(ODataConventionModelBuilder b)
         {
-            //b.EntitySet<Master>("Masters");
+            //b.EntitySet<Resource>("Resources");
+            b.EntitySet<Master>("Masters");
             b.EntitySet<User>("Users");
             b.EntitySet<Patient>("Patients");
             b.EntitySet<Doctor>("Doctors");
@@ -70,7 +71,7 @@ namespace eHealth_DataBus.Extensions
 
         private static void EnableSparqlQueries<T>(EntityTypeConfiguration<T> entity) where T : Resource
         {
-            //entity.Namespace = "MetaObjects";
+            //entity.Namespace = "objObjects";
             //entity.Collection
             //      .Function("GetLayers")
             //      .Returns<IEnumerable<string>>();

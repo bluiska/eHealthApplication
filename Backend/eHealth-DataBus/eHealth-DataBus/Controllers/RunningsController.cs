@@ -21,20 +21,20 @@ namespace eHealth_DataBus.Controllers
         }
 
         [EnableQuery]
-        public IEnumerable<Running> Get()
+        public IEnumerable<dynamic> Get()
         {
             return repo.Read();
         }
 
-        public void Post([FromBody] Object meta)
+        public void Post([FromBody] Object obj)
         {
-            repo.Create(shaper.FormatObject(meta));
+            repo.Create(shaper.FormatObject(obj));
         }
 
         [ODataRoute("{uri_id}")]
-        public void Put([FromBody] Object meta, [FromODataUri] string uri_id)
+        public void Put([FromBody] Object obj, [FromODataUri] string uri_id)
         {
-            repo.Update(shaper.FormatObject(meta, uri_id));
+            repo.Update(shaper.FormatObject(obj, uri_id));
         }
 
         [ODataRoute("{uri_id}")]
