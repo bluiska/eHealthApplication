@@ -4,7 +4,9 @@ const Sensor = require('./sensorSimulation/models/Sensor');
 const Logger = require('./sensorSimulation/singletons/Logger');
 
 const fitbit = new Sensor("sensor1", "Fitbit");
-const devices = [fitbit];
+const fitbit2 = new Sensor("sensor2", "Fitbit2");
+const fitbit3 = new Sensor("sensor3", "Fitbit3");
+const devices = [fitbit, fitbit2, fitbit3];
 
 eventEmitter
     .on('serverRunning', () => {

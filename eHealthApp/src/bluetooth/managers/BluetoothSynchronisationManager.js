@@ -16,11 +16,13 @@ class BluetoothSynchronisationManager {
         const previouslyPairedDevices = ApplicationState.getPairedDevices();
 
         if (previouslyPairedDevices.length === 0) {
+            console.log(`Getting data from server`);
             try {
                 const result = await fetch(getBluetoothDevicesUrl);
                 const data = await result.json();
                 const devices = data.devices;
                 for (const x in devices) {
+                    console.log("=> ", devices[x])
                     const { id, name, batteryLevel, connectionStatus, activityStatus, connected, stepsCounter, heartRate, kcalBurnt } = devices[x];
                     const bluetoothDevice = new Fitbit(
                         id,
@@ -56,12 +58,18 @@ class BluetoothSynchronisationManager {
         /**
          * Connect to one device
          */
-        const connectToDevice = `http://${URL}:${PORT}/connectDevice/${id}`;
-        const clickedDevice = foundDevices.find(x => x.id === id);
-        console.log("Someone clicked on: ", clickedDevice.id);
-        console.log("trying to connect...");
-        clickedDevice.connect();
-        return true;
+        return new Promise((resolve, reject) => {
+            const connectToDevice = `http://${URL}:${PORT}/connectDevice/${id}`;
+            if (ApplicationState.getPairedDevices().find(x => x.id === id) !== -1) {
+                var devices = ApplicationState.getPairedDevices();
+                const deviceToConnect = ApplicationState.getPairedDevices().find(x=>x.id === id);
+                deviceToConnect.connect();
+                resolve(devices);
+            } else {
+                reject(false);
+            }
+        })
+
     };
 
     synchroniseData = (params) => {

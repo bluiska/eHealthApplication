@@ -10,7 +10,6 @@ var state = {
     pairedDevices: [], // The list of paired devices. Initially empty
 }
 
-
 /**
  * ApplicationState class has been created as a Singleton component. Only one copy of it exists in the application
  */
@@ -26,9 +25,9 @@ class ApplicationState {
          * Using `object destructuring` to ensure that state is copied into a new state beforehand
          */
         state = {
-            ...state,
             pairedDevices: newPairedDevices
         }
+        console.log("something changed: ", state);
     };
     
     /**
