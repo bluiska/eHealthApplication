@@ -1,11 +1,9 @@
-import { heart } from 'ionicons/icons';
-
 import Fitbit from '../devices/Fitbit';
-import ApplicationState from '../../data/applicationState';
 
 const PORT = 3000;
 const URL = `localhost`;
 const getBluetoothDevicesUrl = `http://${URL}:${PORT}/getBluetoothDevices/`;
+const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
 class BluetoothSynchronisationManager {
@@ -13,16 +11,13 @@ class BluetoothSynchronisationManager {
         /**
         * Returns the list of available paired devices
         */
-        const previouslyPairedDevices = ApplicationState.getPairedDevices();
-
-        if (previouslyPairedDevices.length === 0) {
+        if (foundDevices.length === 0) {
             console.log(`Getting data from server`);
             try {
                 const result = await fetch(getBluetoothDevicesUrl);
                 const data = await result.json();
                 const devices = data.devices;
                 for (const x in devices) {
-                    console.log("=> ", devices[x])
                     const { id, name, batteryLevel, connectionStatus, activityStatus, connected, stepsCounter, heartRate, kcalBurnt } = devices[x];
                     const bluetoothDevice = new Fitbit(
                         id,
@@ -37,14 +32,13 @@ class BluetoothSynchronisationManager {
                     );
                     foundDevices.push(bluetoothDevice);
                     foundDevices = [...new Set(foundDevices)];
-                    ApplicationState.savePairedDevices(foundDevices);
                 }
                 return foundDevices;
             } catch (err) {
                 throw new Error(err);
             }
         }
-        return previouslyPairedDevices;
+        return foundDevices;
     };
 
     getConnectedDevices = () => {
@@ -59,24 +53,38 @@ class BluetoothSynchronisationManager {
          * Connect to one device
          */
         return new Promise((resolve, reject) => {
-            const connectToDevice = `http://${URL}:${PORT}/connectDevice/${id}`;
-            if (ApplicationState.getPairedDevices().find(x => x.id === id) !== -1) {
-                var devices = ApplicationState.getPairedDevices();
-                const deviceToConnect = ApplicationState.getPairedDevices().find(x=>x.id === id);
-                deviceToConnect.connect();
-                resolve(devices);
-            } else {
-                reject(false);
+            const connectingDevice = foundDevices.find(device => device.id === id);
+            if (connectingDevice) {
+                resolve(true);
             }
-        })
-
+        });
     };
 
     synchroniseData = (params) => {
         /**
          * Asks for data
          */
-        return true;
+        foundDevices.forEach(async device => {
+            try {
+                let fetchData = {
+                    id: device.id
+                }
+                console.log("f: ", fetchData)
+                const response = await fetch(synchorniseDataUrl,{
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(fetchData)
+                });
+                const data = await response.json();
+                console.log("data: ", data);
+            } catch(err) {
+                console.log(err.message);
+            }
+        })
     }
 
 };

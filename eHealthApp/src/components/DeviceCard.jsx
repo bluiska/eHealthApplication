@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { IonCard, IonCardContent, IonIcon } from "@ionic/react";
 import { sync, checkmark } from 'ionicons/icons';
 
 // styling
-
 const cardContainer = {
     display: "flex"
 };

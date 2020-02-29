@@ -14,7 +14,6 @@ import DeviceCard from "../components/DeviceCard";
 
 // Internal dependencies
 import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
-import applicationState from "../data/applicationState";
 
 
 /*
@@ -22,14 +21,14 @@ import applicationState from "../data/applicationState";
  */
 const Devices = props => {
 	const [pairedDevices, setPairedDevices] = useState([]);
-	const [shouldRerender, setShouldRerender] = useState(true);
 
 	useEffect(() => {
-		if (shouldRerender){
-			console.log("will")
-			getPairedDevices();
-		}
-	}, [shouldRerender]);
+		getPairedDevices();
+
+		const synchronisationListener = setInterval(() => {
+			BluetoothSynchronisationManager.synchroniseData();
+		}, 5000);
+	}, [])
 
 	const getPairedDevices = () => {
 		BluetoothSynchronisationManager.getPairedDevices()
@@ -40,17 +39,20 @@ const Devices = props => {
 				console.log("failed:: ", err);
 				getPairedDevices();
 			})
-			setShouldRerender(false);
 	};
 
 	const deviceClickHandler = id => {
-
 		BluetoothSynchronisationManager.connectToDevice(id)
 		.then((res) => {
-			console.log("Res: ", res);
-			console.log("Paired: ", pairedDevices);
-			setPairedDevices(res);
-			// setShouldRerender(true);
+			// METHOD 1 - WITH FLICKERING
+			setPairedDevices(() => {
+				const connectingDevice = pairedDevices.find(device => device.id === id);
+				connectingDevice.connect();
+				const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+				filteredPairedDevices.push(connectingDevice);
+				filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+				return filteredPairedDevices;
+			})
 		})
 	};
 

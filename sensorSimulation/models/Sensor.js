@@ -18,7 +18,7 @@ class Sensor {
         this.connected = false;
     }
 
-    connectToSensor = () => {
+    connectToSensor() {
         Logger.log(`Connecting to ${this.name}`);
         if (this.connected) {
             Logger.log(`Fitness tracker already connected to another device.`);
