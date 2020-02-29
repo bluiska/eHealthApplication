@@ -1,5 +1,3 @@
-import AppState from '../../data/applicationState';
-
 class IBluetoothEnabledDevice {
     constructor(id, name, batteryLevel, connectionStatus, activityStatus, connected) {
         this.id = id;
@@ -11,7 +9,7 @@ class IBluetoothEnabledDevice {
     }
 
     connect = () => {
-        console.log("got here")
+        console.log("got here");
         this.connected = !this.connected;
     };
 
