@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IonCard, IonCardContent, IonIcon } from "@ionic/react";
 import { sync, checkmark } from 'ionicons/icons';
 
@@ -17,11 +17,12 @@ const deviceNameStyle = {
     width: '100%',
     height: '100%',
     fontSize: '20px',
-    textAlign: 'center'
+    textAlign: 'center',
 }
 
 const DeviceCard = props => {
     const { title, connected, onClick } = props;
+
     return (
         <IonCard style={{ marginTop: "10px" }} button={true} onClick={onClick}>
             <IonCardContent style={cardContainer}>
