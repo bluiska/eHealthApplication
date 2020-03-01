@@ -1,8 +1,9 @@
-const o = require('odata').o;
-const endpoint = 'https://localhost:44310/odata/'
+import { o } from 'odata'
+
+const endpoint = 'https://localhost:5001/odata/'
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-class ODataClient {
+export default class ODataClient {
     constructor() {
         let ProduceResponseBody = (response) => {
             return {
@@ -31,7 +32,8 @@ class ODataClient {
             var res = await o(endpoint)
                             .patch(`${entityType}('${entityID}')`, entityBody)
                             .query();
-    
+
+            console.log(res)
             return ProduceResponseBody(res);
         }
         let Delete = async (entityType, entityID) => {
@@ -78,5 +80,3 @@ class ODataClient {
         }
     }
 }
-
-export default ODataClient;
