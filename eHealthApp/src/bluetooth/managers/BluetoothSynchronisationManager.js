@@ -3,6 +3,8 @@ import Fitbit from '../devices/Fitbit';
 const PORT = 3000;
 const URL = `localhost`;
 const getBluetoothDevicesUrl = `http://${URL}:${PORT}/getBluetoothDevices/`;
+const connectDevice = `http://${URL}:${PORT}/connectDevice/`;
+const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
@@ -12,7 +14,6 @@ class BluetoothSynchronisationManager {
         * Returns the list of available paired devices
         */
         if (foundDevices.length === 0) {
-            console.log(`Getting data from server`);
             try {
                 const result = await fetch(getBluetoothDevicesUrl);
                 const data = await result.json();
@@ -52,11 +53,47 @@ class BluetoothSynchronisationManager {
         /**
          * Connect to one device
          */
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const connectingDevice = foundDevices.find(device => device.id === id);
             if (connectingDevice) {
-                resolve(true);
+                try {
+                    const response = await fetch(connectDevice, {
+                        method: 'POST',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: id })
+                    });
+                    const data = await response.json();
+                    if (data) {
+                        resolve(data);
+                    } else {
+                        reject();
+                    }
+                }
+                catch (err) {
+                    // Device is disconnected (Simulation server not running)
+                    const deviceConnectionStatus = {
+                        connected: false,
+                        connectionStatus: "FAILED"
+                    };
+                    reject(deviceConnectionStatus);
+                }
             }
+        });
+    };
+
+    disconnect = id => {
+         fetch(disconnectDevice, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
         });
     };
 
@@ -69,8 +106,7 @@ class BluetoothSynchronisationManager {
                 let fetchData = {
                     id: device.id
                 }
-                console.log("f: ", fetchData)
-                const response = await fetch(synchorniseDataUrl,{
+                const response = await fetch(synchorniseDataUrl, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
@@ -80,8 +116,7 @@ class BluetoothSynchronisationManager {
                     body: JSON.stringify(fetchData)
                 });
                 const data = await response.json();
-                console.log("data: ", data);
-            } catch(err) {
+            } catch (err) {
                 console.log(err.message);
             }
         })

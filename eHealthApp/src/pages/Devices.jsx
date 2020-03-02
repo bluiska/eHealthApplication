@@ -7,14 +7,13 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState, useEffect, useCallback } from "react";
-import { IonContent, IonPage, IonButton } from "@ionic/react";
+import React, { useState, useEffect } from "react";
+import { IonContent, IonPage } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
 
 // Internal dependencies
 import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
-
 
 /*
  *props:
@@ -26,7 +25,7 @@ const Devices = props => {
 		getPairedDevices();
 
 		const synchronisationListener = setInterval(() => {
-			BluetoothSynchronisationManager.synchroniseData();
+			// console.log("it lives");
 		}, 5000);
 	}, [])
 
@@ -42,18 +41,51 @@ const Devices = props => {
 	};
 
 	const deviceClickHandler = id => {
-		BluetoothSynchronisationManager.connectToDevice(id)
-		.then((res) => {
-			// METHOD 1 - WITH FLICKERING
+		const connectingDevice = pairedDevices.find(device => device.id === id);
+		console.log(connectingDevice);
+		if (connectingDevice.connected) {
 			setPairedDevices(() => {
-				const connectingDevice = pairedDevices.find(device => device.id === id);
-				connectingDevice.connect();
-				const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
-				filteredPairedDevices.push(connectingDevice);
-				filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
-				return filteredPairedDevices;
-			})
-		})
+				return changeDeviceStatus(id, "DISCONNECT")
+			});
+		}
+		else {
+			setPairedDevices(() => {
+				return changeDeviceStatus(id, "CONNECTING");
+			});
+
+			BluetoothSynchronisationManager.connectToDevice(id)
+				.then((res) => {
+					setPairedDevices(() => {
+						const connectingDevice = pairedDevices.find(device => device.id === id);
+						connectingDevice.connect(res);
+						const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+						filteredPairedDevices.push(connectingDevice);
+						filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+						return filteredPairedDevices;
+					})
+				})
+				.catch((res) => {
+					setPairedDevices(() => {
+						return changeDeviceStatus(id, "FAILED");
+					})
+				})
+		}
+	};
+
+	const changeDeviceStatus = (id, status) => {
+		const connectingDevice = pairedDevices.find(device => device.id === id);
+		if (status === "CONNECTING") {
+			connectingDevice.changeConnectionStatus(status);
+		} else if (status === "DISCONNECT") {
+			BluetoothSynchronisationManager.disconnect(id);
+			connectingDevice.disconnect();
+		} else if (status = "FAILED"){
+			connectingDevice.failedToConnect();
+		}
+		const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+		filteredPairedDevices.push(connectingDevice);
+		filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+		return filteredPairedDevices;
 	};
 
 	return (
@@ -61,9 +93,14 @@ const Devices = props => {
 			<BackButtonToolbar title="Devices" />
 			<IonContent className="ion-padding">
 				{pairedDevices.map(x => {
-					console.log("rendered: ", x);
 					return (
-						<DeviceCard key={Math.random()} title={x.name} connected={x.connected} onClick={deviceClickHandler.bind(this, x.id)} />
+						<DeviceCard
+							key={Math.random()}
+							title={x.name}
+							connected={x.connected}
+							connectionStatus={x.connectionStatus}
+							onClick={deviceClickHandler.bind(this, x.id)}
+						/>
 					)
 				})}
 			</IonContent>

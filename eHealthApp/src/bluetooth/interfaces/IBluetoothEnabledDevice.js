@@ -8,13 +8,23 @@ class IBluetoothEnabledDevice {
         this.connected = connected;
     }
 
-    connect = () => {
-        console.log("got here");
-        this.connected = !this.connected;
+    connect = (deviceConnectionStatus) => {
+        this.connected = true;
+        this.connectionStatus = deviceConnectionStatus.connectionStatus;
+    };
+
+    changeConnectionStatus = status => {
+        this.connectionStatus = status;
     };
 
     disconnect = () => {
+        this.connected = false;
+        this.connectionStatus = "DISCONNECTED";
+    };
 
+    failedToConnect = () => {
+        this.connected = false;
+        this.connectionStatus = "FAILED";
     };
 
     pair = () => {
@@ -35,7 +45,7 @@ class IBluetoothEnabledDevice {
 
     getConnectedState = () => {
 
-    }
+    };
 }
 
 export default IBluetoothEnabledDevice;
