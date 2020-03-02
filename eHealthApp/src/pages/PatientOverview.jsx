@@ -21,9 +21,10 @@ import { IonPage,
 		IonSelect,
 		IonSelectOption,
 		IonToolbar} from "@ionic/react";
-import { heart } from 'ionicons/icons';
+import { heart, options } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { Container, Row, Col } from "react-bootstrap";
+import FilterOverview from "./FilterOverview";
 
 /*props:
  */
@@ -33,6 +34,7 @@ const PatientOverview = props => {
 	const todaysDate = new Date()
 	const yesterdaysDate = new Date(todaysDate)
 	const [selectedFilter, setSelectedFilter] = useState([])
+	const [displayFilter, setDisplayFilter] = useState(false)
 
 	const styles = {
 		activity: {
@@ -101,8 +103,9 @@ const PatientOverview = props => {
     return(
         <IonPage>
             <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>
+			{!displayFilter &&
 			<IonToolbar>
-				<IonList>
+				{/* <IonList>
 					<IonItem>
 						<IonLabel>Filter by</IonLabel> 
 						<IonSelect multiple={true} onIonChange={(event) => setSelectedFilterHandler(event)}>
@@ -113,9 +116,20 @@ const PatientOverview = props => {
 							<IonSelectOption>Weight</IonSelectOption>
 						</IonSelect>
 					</IonItem>
-				</IonList>
-			</IonToolbar>
+				</IonList> */}
+
+				
+				<IonCard color="secondary" style={styles.filter} onClick={() => setDisplayFilter(!displayFilter)}>
+					<IonCardContent>
+						<IonIcon icon={options}/>
+						Filter
+					</IonCardContent>
+				</IonCard>
+			</IonToolbar>}
             <IonContent className="ion-padding">
+				{displayFilter && <FilterOverview setDisplayFilter={setDisplayFilter}/>}
+
+				{!displayFilter && 
 				<IonList>
 					<IonItem>
 						<IonGrid>
@@ -134,7 +148,7 @@ const PatientOverview = props => {
 							)}
 						</IonGrid>
 					</IonItem>
-				</IonList>
+				</IonList>}
             </IonContent>
         </IonPage>
     )
