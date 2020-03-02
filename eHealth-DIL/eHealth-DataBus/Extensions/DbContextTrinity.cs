@@ -14,7 +14,7 @@ namespace eHealth_DataBus.Extensions
     {
         public IStore Store { get { return StoreFactory.CreateStore(_connectionString); } }
 
-        private string _connectionString = "provider=virtuoso;host=ehealth-db-host.uksouth.cloudapp.azure.com;port=1111;uid=dba;pw=dba;rule=urn:example/ruleset";
+        private string _connectionString = "provider=virtuoso;host=127.0.0.1;port=1111;uid=dba;pw=dba;rule=urn:example/ruleset";
         public IModel DefaultModel { get { return Store.GetModel(_defaultModelUri); } }
 
         Uri _defaultModelUri = new Uri("http://www.ehealth.ie/semantics");

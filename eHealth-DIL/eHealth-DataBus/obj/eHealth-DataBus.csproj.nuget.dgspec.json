@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\Backend\\eHealth-DataBus\\eHealth-DataBus\\eHealth-DataBus.csproj": {}
+    "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\eHealth-DIL\\eHealth-DataBus\\eHealth-DataBus.csproj": {}
   },
   "projects": {
-    "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\Backend\\eHealth-DataBus\\eHealth-DataBus\\eHealth-DataBus.csproj": {
+    "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\eHealth-DIL\\eHealth-DataBus\\eHealth-DataBus.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\Backend\\eHealth-DataBus\\eHealth-DataBus\\eHealth-DataBus.csproj",
+        "projectUniqueName": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\eHealth-DIL\\eHealth-DataBus\\eHealth-DataBus.csproj",
         "projectName": "eHealth-DataBus",
-        "projectPath": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\Backend\\eHealth-DataBus\\eHealth-DataBus\\eHealth-DataBus.csproj",
+        "projectPath": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\eHealth-DIL\\eHealth-DataBus\\eHealth-DataBus.csproj",
         "packagesPath": "C:\\Users\\andyl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\Backend\\eHealth-DataBus\\eHealth-DataBus\\obj\\",
+        "outputPath": "C:\\Users\\andyl\\Documents\\GitHub\\eHealthApplication\\eHealth-DIL\\eHealth-DataBus\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",

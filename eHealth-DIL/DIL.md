@@ -1,0 +1,69 @@
+# eHealth Data Integration Layer (DIL)
+The eHealth Data Integration Layer (DIL) is an intermediate SOA-based (Service-oriented Architecture) layer for managing the data traffic between both frontend and backend sources on the basis of CRUD. It enables the ability to import/export data from one source to another, or vice versa. The backend system integrated by the DIL is a semantic database which uses the [Semiodesk Trinity](https://trinity-rdf.net/) library in order to maintain the connection based on the ODBC (Open Database Connectivity) standard. [OData](https://www.odata.org/) (Open Data Protocol) is an extended communication protocol to Web APIs on the DIL which exposes every CRUD operation to each entity.
+
+## Prerequisites
+- ASP.NET Core 2.2
+- [OpenLink Virtuoso](http://vos.openlinksw.com/owiki/wiki/VOS/VOSDownload)
+
+## 1. Preamble
+*It is recommended to clone the entire eHealth repository comprising of the frontend as well as the backend applications.*
+
+Before starting the deployment, clone this repository. After cloning, ensure that the repository folder is inside your personal GitHub directory. Then follow through this instruction sequentially.
+
+## 2. Deploying Virtuoso
+Prior to deploying the DIL, it is important that Virtuoso is installed. To do so, download and install the database using the .exe file.
+
+To verify the deployment of Virtuoso, access the platform on http://localhost:8890.
+
+## 3. Deploying the eHealth Ontology on Virtuoso
+On the bar located on the left-hand side of the page, click on "Conductor". Then, use the base credentials "dba" for both "Account" and "Password" in order to login.
+
+Click on the "Linked Data" tab and then click on the "Quad Store Upload" subtab. Select the 
+"ehealth.owl" file located inside the eHealth-DataBus/ontologies directory and change the "Named Graph IRI" to "http://www.ehealth.ie/semantics". Click on the "Upload" button.
+
+To verify the deployment of the ontology, navigate to the "SPARQL" subtab. Specify "http://www.ehealth.ie/semantics" as "Default Graph IRI" and issue the following test query:
+```
+SELECT * WHERE { ?s ?p ?o. }
+```
+
+If the query presents the whole ontology as triples then the deployment is successful.
+
+## 4. Deploying the DIL
+
+Issue the following commands for launching the DIL in localhost mode:
+```
+cd eHealth-DataBus
+dotnet run
+```
+To access the DIL via IPV4 Address, issue the following commands:
+```
+cd eHealth-DataBus
+dotnet run --urls https://0.0.0.0:5001
+```
+
+To verify the deployment of the DIL, access the platform on https://localhost:5001/odata.
+
+## 5. Consuming OData
+To consume OData, the DIL's endpoint (https://localhost:5001/odata) must be specified on an OData Client. Services like SAP's open-source Web Framework [OpenUI5 (JavaScript)](https://openui5.org/), [o.js (JavaScript)](https://github.com/janhommes/o.js), or [Simple.OData.Client (C#)](https://github.com/simple-odata-client/Simple.OData.Client) have built-in OData client capabilities that take advantage of the OData metadata in order to unleash its full data management potential. However, since the DIL is developed in ASP.NET Core, the Web API remains as a viable backdrop option since OData is an extension to it. The frontend application of the eHealth system uses o.js for consuming OData. Refer to the documentation of the example services mentioned in this section that detail the means of consuming OData.
+
+It is important to know the data model of the DIL in order to consume OData. OData in general requires an Entity-Data-Model (EDM) in order to map the data to their corresponding model. Since OData consists of a metadata document, it exposes the entire data model. It is possible to access the metadata via the [endpoint](https://localhost:5001/odata) by its key ["@odata.context"](https://localhost:5001/odata/$metadata).
+
+Each entity has four methods that represent CRUD operations:
+| Method   | Query Parameter | Body   |
+|:--------:|:---------------:|:------:|
+| Create   | N/A             | Entity |
+| Read     | N/A             | N/A    |
+| Update   | ID              | Entity |
+| Delete   | ID              | N/A    |
+
+To specify the relationship from one entity to another, it must be specified as follows:
+
+```
+{
+    "Name": "Dr. Max Mustermann"
+    "Patients": [{
+        "Uri": "www.ehealth.ie/semantics#Patient-123456789"
+    }]
+}
+```
+Note that the relationship has used the URI instead of the ID. It is due to the face that the ID is a subset of the URI which begins after the hashtag symbol. The intention of using IDs instead of specifying the full URI is to reduce the need of writing and let the backend logic automatically handle the URI identification based on the ID. However, it is currently not possible to change the way of relating one entity to another by IDs since the Trinity library is maintained by Semiodesk.
