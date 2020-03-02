@@ -37,7 +37,7 @@ const FilterOverview = props => {
                     </IonItem>
 
                     <IonItem>
-                        <IonCheckbox value="Weight"></IonCheckbox>
+                        <IonCheckbox value="Weight"></IonCheckbox> 
                         <IonLabel>Weight</IonLabel>
                     </IonItem>
                 </IonList>
