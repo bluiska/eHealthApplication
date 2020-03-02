@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard,
@@ -18,10 +18,10 @@ import { IonPage,
 		useIonViewWillEnter,
 		IonRow,
 		IonCol,
-		IonSelect,
-		IonSelectOption,
+		IonButton,
+		IonButtons,
 		IonToolbar} from "@ionic/react";
-import { heart, options } from 'ionicons/icons';
+import { heart, options, arrowBack } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { Container, Row, Col } from "react-bootstrap";
 import FilterOverview from "./FilterOverview";
@@ -102,30 +102,26 @@ const PatientOverview = props => {
 
     return(
         <IonPage>
-            <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>
-			{!displayFilter &&
+            {!displayFilter && <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>}
+			
 			<IonToolbar>
-				{/* <IonList>
-					<IonItem>
-						<IonLabel>Filter by</IonLabel> 
-						<IonSelect multiple={true} onIonChange={(event) => setSelectedFilterHandler(event)}>
-							<IonSelectOption>Blood pressure</IonSelectOption>
-							<IonSelectOption>Run</IonSelectOption>
-							<IonSelectOption>Walk</IonSelectOption>
-							<IonSelectOption>Cycle</IonSelectOption>
-							<IonSelectOption>Weight</IonSelectOption>
-						</IonSelect>
-					</IonItem>
-				</IonList> */}
-
-				
-				<IonCard color="secondary" style={styles.filter} onClick={() => setDisplayFilter(!displayFilter)}>
+				{/* <IonCard color="secondary" style={styles.filter} onClick={() => setDisplayFilter(!displayFilter)}>
 					<IonCardContent>
 						<IonIcon icon={options}/>
 						Filter
 					</IonCardContent>
-				</IonCard>
-			</IonToolbar>}
+				</IonCard> */}
+
+				{displayFilter &&
+					<IonTitle>Filter by</IonTitle>}
+				
+				{!displayFilter &&
+					<IonButton size="large" expand="block" onClick={() => setDisplayFilter(!displayFilter)}>
+						<IonIcon icon={options}/>
+						<IonTitle>Filter</IonTitle>
+					</IonButton>}
+
+			</IonToolbar>
             <IonContent className="ion-padding">
 				{displayFilter && <FilterOverview setDisplayFilter={setDisplayFilter}/>}
 

@@ -15,36 +15,36 @@ const FilterOverview = props => {
         <IonPage>
             <IonContent className="ion-padding">
                 <IonList>
-                    <IonListHeader>Filter by</IonListHeader>
+                    {/* <IonListHeader>Filter by</IonListHeader> */}
                     <IonItem>
-                        <IonCheckbox color="primary"></IonCheckbox>
+                        <IonCheckbox color="danger" value="Blood pressure"></IonCheckbox>
                         <IonLabel>Blood pressure</IonLabel>
                     </IonItem>
 
                     <IonItem>
-                        <IonCheckbox></IonCheckbox>
+                        <IonCheckbox value="Run"></IonCheckbox>
                         <IonLabel>Run</IonLabel>
                     </IonItem>
 
                     <IonItem>
-                        <IonCheckbox></IonCheckbox>
+                        <IonCheckbox value="Walk"></IonCheckbox>
                         <IonLabel>Walk</IonLabel>
                     </IonItem>
 
                     <IonItem>
-                        <IonCheckbox></IonCheckbox>
+                        <IonCheckbox value="Cycle"></IonCheckbox>
                         <IonLabel>Cycle</IonLabel>
                     </IonItem>
 
                     <IonItem>
-                        <IonCheckbox></IonCheckbox>
+                        <IonCheckbox value="Weight"></IonCheckbox>
                         <IonLabel>Weight</IonLabel>
                     </IonItem>
                 </IonList>
             </IonContent>
             <IonFooter>
                 <IonButton size="large" expand="block" onClick={() => props.setDisplayFilter(false)}>
-                    <IonTitle>Filter</IonTitle>
+                    <IonTitle>Apply</IonTitle>
                 </IonButton>
             </IonFooter>
         </IonPage>
