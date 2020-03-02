@@ -14,11 +14,12 @@ import {
 } from "@ionic/react";
 import BackButtonToolbar from "../../components/BackButtonToolbar";
 import { Container, Row, Col } from "react-bootstrap";
+import FooterSubmitButton from "../../components/FooterSubmitButton";
 
 const Weight = () => {
 	return (
 		<IonPage>
-			<BackButtonToolbar title={"Weight submission"} />
+			<BackButtonToolbar title={"Weight entry"} />
 			<IonContent className="ion-padding">
 				<IonItem>
 					<IonLabel position="stacked">
@@ -55,17 +56,11 @@ const Weight = () => {
 					</Container>
 				</IonRadioGroup>
 			</IonContent>
-			<IonFooter>
-				<IonButton
-					color="secondary"
-					expand="block"
-					size="large"
-					onClick={() => {
-						console.log("Submit clicked.");
-					}}>
-					Submit
-				</IonButton>
-			</IonFooter>
+			<FooterSubmitButton
+				onSubmit={() => {
+					console.log("Hi");
+				}}
+			/>
 		</IonPage>
 	);
 };

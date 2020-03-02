@@ -10,18 +10,7 @@ import {
 	IonPage,
 	IonContent,
 	IonList,
-	IonCard,
-	IonInput,
-	IonSelect,
-	IonSelectOption,
-	IonImg,
-	IonCardHeader,
-	IonCardTitle,
-	IonRippleEffect,
-	IonCardContent,
-	IonIcon,
-	IonButton,
-	IonLabel
+	IonCardContent
 } from "@ionic/react";
 import BackButtonToolbar from "./../components/BackButtonToolbar";
 import exercise_img from "../resources/exercise.jpg";
@@ -30,14 +19,12 @@ import weight_img from "../resources/weight_scale.jpg";
 import walk_img from "../resources/walk.png";
 import run_img from "../resources/run.png";
 import cycle_img from "../resources/cycle.png";
-import { Container, Row, Col, Collapse, Button } from "react-bootstrap";
+import { Collapse } from "react-bootstrap";
 import ImageCard from "../components/ImageCard";
 import IconButtonContainer from "./../components/IconButtonContainer";
 import IconButton from "../components/IconButton";
 
 import { withRouter } from "react-router-dom";
-
-var inputData = {};
 
 /*
 props:
@@ -60,9 +47,9 @@ const ManualEntry = props => {
 						<Collapse in={exerciseOptionsOpen}>
 							<IonCardContent>
 								<IconButtonContainer style={{ width: "100%", height: "50px" }}>
-									<IconButton image={walk_img} onClick={() => props.history.push("/walk_activity_submission")} ripple />
-									<IconButton image={run_img} onClick={() => props.history.push("/run_activity_submission")} ripple />
-									<IconButton image={cycle_img} onClick={() => props.history.push("/cycle_activity_submission")} ripple />
+									<IconButton image={walk_img} onClick={() => props.history.push("/activity_submission/type/walk")} ripple />
+									<IconButton image={run_img} onClick={() => props.history.push("/activity_submission/type/run")} ripple />
+									<IconButton image={cycle_img} onClick={() => props.history.push("/activity_submission/type/cycle")} ripple />
 								</IconButtonContainer>
 							</IonCardContent>
 						</Collapse>
