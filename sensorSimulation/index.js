@@ -24,6 +24,18 @@ app
             console.log(req.body)
         }
     })
+    .post(`/connectDevice`, (req, res) => {
+        if (req && req.body) {
+            const deviceId = req.body.id;
+            eventEmitter.emit('connectToSensor', {id: deviceId, res: res});
+        }
+    })
+    .post(`/disconnectDevice`, (req, res) => {
+        if (req && req.body) {
+            const deviceId = req.body.id;
+            eventEmitter.emit(`disconnectSensor`, {id: deviceId, res: res});
+        }
+    })
 
 app.listen(PORT, () => {
     Logger.log(`Server's listening on port ${PORT}`);

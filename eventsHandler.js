@@ -18,9 +18,22 @@ eventEmitter
         }
         response.send(devicesList);
     })
-    .on('connectToSensor', () => {
-        const sensor1 = new Sensor("randomID", "Fitbit");
-        sensor1.connectToSensor();
+    .on('connectToSensor', async params => {
+        const deviceId = params.id;
+        const sensor = devices.find(x => x.id === deviceId);
+        try {
+            const deviceConnectionStatus = await sensor.connectToSensor();
+            params.res.send(deviceConnectionStatus);
+        } catch (err) {
+            Logger.log(`Failed connecting to a device...`);
+            params.res.send({deviceConnected: false});
+        }
+    })
+    .on('disonnectSensor', params => {
+        const deviceId = params.id;
+        const sensor = devices.find(x => x.id === deviceId);
+        sensor.disconnect();
+        params.res.send(true);
     })
 
 module.exports = eventEmitter;
