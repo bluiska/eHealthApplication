@@ -24,20 +24,20 @@ afterEach(() => {
     container = null;
 })
 
-// #0
+// #0 
 describe("Devices component", () => {
     test("renders", () => {
         const wrapper = shallow(<Devices />);
 
         expect(wrapper.exists()).toBe(true);
     });
-})
+});
 
 // #1 Testing if the Component renders without crashing
 test("Component renders without crashing", () => {
     const div = document.createElement('div');
     ReactDOM.render(<Devices />, div);
-})
+});
 
 // #2 Testing if the page's "Header" title is "Devices" 
 test("Page should have a header's title of Devices", async () => {
