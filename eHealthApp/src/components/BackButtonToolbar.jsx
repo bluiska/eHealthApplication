@@ -6,15 +6,9 @@ Author: Gergo Kekesi
 */
 
 import React from "react";
-import {
-	IonHeader,
-	IonToolbar,
-	IonTitle,
-	IonButtons,
-	IonButton,
-	IonIcon
-} from "@ionic/react";
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon } from "@ionic/react";
 import { arrowBack } from "ionicons/icons";
+import { withRouter } from "react-router-dom";
 
 /*
 props:
@@ -35,7 +29,7 @@ const BackButtonToolbar = props => {
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
-					<IonButton onClick={() => window.history.back()}>
+					<IonButton onClick={() => props.history.goBack()}>
 						<IonIcon icon={arrowBack} style={styles.backButton}></IonIcon>
 					</IonButton>
 				</IonButtons>
@@ -45,4 +39,4 @@ const BackButtonToolbar = props => {
 	);
 };
 
-export default BackButtonToolbar;
+export default withRouter(BackButtonToolbar);
