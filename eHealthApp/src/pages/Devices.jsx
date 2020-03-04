@@ -13,7 +13,7 @@ import BackButtonToolbar from '../components/BackButtonToolbar'
 import DeviceCard from '../components/DeviceCard'
 
 // Internal dependencies
-import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
+import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager'
 
 // Styling
 const styles = {
