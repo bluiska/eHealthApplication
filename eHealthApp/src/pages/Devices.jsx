@@ -9,6 +9,7 @@ Author: Ireneusz Janusz
 // External dependencies
 import React, { useState, useEffect } from "react";
 import { IonContent, IonPage, IonLabel, IonItem } from "@ionic/react";
+import PropTypes from 'prop-types';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
 
@@ -28,12 +29,12 @@ const styles = {
 	}
 }
 
-/*
- *props:
- */
-const Devices = props => {
+const Devices = () => {
+	// Creating a state to keep a log of paired devices
 	const [pairedDevices, setPairedDevices] = useState([]);
 
+	// Using useEffect React Hook to get paired devices from the Sensor Simulator
+	// The usage of useEffect ensures that the function getPairedDevices() is called only once
 	useEffect(() => {
 		getPairedDevices();
 
@@ -42,6 +43,13 @@ const Devices = props => {
 		}, 5000);
 	}, [])
 
+	/**
+	 * Gets the list of available Bluetooth devices using the Bluetooth Synchronisation Manager
+	 * getPairedDevices() returns a Promise
+	 * Successful resolve of the Promise sets the pairedDevices state
+	 * Rejected Promise logs an error to a console and asks for the devices again
+	 * Request for the devices happens in the loop, until the Promise is resolve successfuly
+	 */
 	const getPairedDevices = () => {
 		BluetoothSynchronisationManager.getPairedDevices()
 			.then((res) => {
@@ -53,6 +61,18 @@ const Devices = props => {
 			})
 	};
 
+	/**
+	 * Handles the event of clicking on a specific device on the page
+	 * Firstly, the device is found in the array of paired/found devices
+	 * If clicked device is already connected, disconnects the device
+	 * Else, changes the device's connection status to "CONNECTING" - while the connection is being established
+	 * Then asks the BluetoothSynchronisationManager to connect to this device
+	 * In order to display the change of status on the page:
+	 * When the device is connected, it has to be removed from the pairedDevices array
+	 * And then added back again, and finally sorted alphabetically
+	 * In case of an error - connection status of the device is changed to 'FAILED'
+	 * @param {String} id - ID of a clicked device 
+	 */
 	const deviceClickHandler = id => {
 		const connectingDevice = pairedDevices.find(device => device.id === id);
 		if (connectingDevice.connected) {
@@ -84,6 +104,15 @@ const Devices = props => {
 		}
 	};
 
+	/**
+	 * Changes the device's connection status using React Hooks
+	 * Function has been encapsulated as it repeats quite often in this component
+	 * In order to successfuly rerender the component, 
+	 * the device we are updating has to be removed from the devices array,
+	 * added back again and then array has to be sorted alphabetically
+	 * @param {String} id - ID of device
+	 * @param {String} status - Connection status of the device 
+	 */
 	const changeDeviceStatus = (id, status) => {
 		const connectingDevice = pairedDevices.find(device => device.id === id);
 		if (status === "CONNECTING") {
@@ -91,7 +120,7 @@ const Devices = props => {
 		} else if (status === "DISCONNECT") {
 			BluetoothSynchronisationManager.disconnect(id);
 			connectingDevice.disconnect();
-		} else if (status = "FAILED"){
+		} else if (status = "FAILED") {
 			connectingDevice.failedToConnect();
 		}
 		const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
@@ -123,3 +152,10 @@ const Devices = props => {
 };
 
 export default Devices;
+
+// Definition of props using PropTypes library
+Devices.propTypes = {
+	/**
+	 * No props
+	 */
+};

@@ -1,7 +1,17 @@
+/**
+ * DeviceCard is a reusable component that displays short information
+ * about Bluetooth devices on the Devices page (mainly)
+ * The purpose of this component is to encapsulate the logic from the Devices page
+ * and to ensure that we render only necessary components 
+ */
+
+// Importing required dependencies
 import React from "react";
+import PropTypes from 'prop-types';
 import { IonCard, IonCardContent, IonIcon } from "@ionic/react";
 import { sync, checkmark } from 'ionicons/icons';
 
+// Component's styling
 const styles = {
     cardContainer: {
         display: "flex",
@@ -28,8 +38,14 @@ const styles = {
 }
 
 const DeviceCard = props => {
+    // Extracting props attributes into separate variables
+    // Eliminates having to write props.title, props.connected, etc. 
     const { title, connected, connectionStatus, onClick } = props;
 
+    /**
+     * Returns the colour for the text component
+     * Based on the text value of connectionStatus prop
+     */
     const getConnectionColor = () => {
         switch (connectionStatus) {
             case "CONNECTED":
@@ -59,3 +75,11 @@ const DeviceCard = props => {
 }
 
 export default DeviceCard;
+
+// Definition of props using PropTypes library
+DeviceCard.propTypes = {
+    title: PropTypes.string.isRequired,
+    connected: PropTypes.bool.isRequired,
+    connectionStatus: PropTypes.string.isRequired, 
+    onClick: PropTypes.func.isRequired
+};

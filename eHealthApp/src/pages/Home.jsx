@@ -19,8 +19,6 @@ import background_image from "../resources/home_background_blur.jpg";
 
 import "./Home.css";
 
-/*props:
- */
 const Home = () => {
 	const styles = {
 		home: {
@@ -73,3 +71,10 @@ const Home = () => {
 };
 
 export default Home;
+
+// Definition of props using PropTypes library
+Home.propTypes = {
+	/**
+	 * No props
+	 */
+}

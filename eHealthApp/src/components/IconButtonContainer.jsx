@@ -1,4 +1,5 @@
 import React from "react";
+import { PropTypes } from 'prop-types';
 
 const IconButtonContainer = props => {
 	const styles = {
@@ -16,3 +17,9 @@ const IconButtonContainer = props => {
 };
 
 export default IconButtonContainer;
+
+// Definition of props using PropTypes library
+IconButtonContainer.propTypes = {
+	style: PropTypes.object,
+	children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element, PropTypes.elementType])
+}
