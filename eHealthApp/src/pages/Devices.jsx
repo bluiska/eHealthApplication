@@ -24,7 +24,7 @@ const styles = {
     justifyContent: 'center',
     fontSize: '30px'
   }
-};
+}
 
 const Devices = () => {
   // Creating a state to keep a log of paired devices
