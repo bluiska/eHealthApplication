@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll",
     "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
@@ -59,6 +59,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
+    "husky": "^4.2.3",
     "pre-commit": "^1.2.2",
     "react-scripts": "^3.4.0"
   }
