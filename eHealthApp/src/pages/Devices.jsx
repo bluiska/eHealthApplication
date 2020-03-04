@@ -17,91 +17,90 @@ import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSync
 
 // Styling
 const styles = {
-	labelContainer: {
-		height: '100%',
-		display: 'flex'
-	},
-	noDevicesLabel: {
-		textAlign: 'center',
-		justifyContent: 'center',
-		fontSize: "30px"
-	}
-}
+  labelContainer: {
+    height: '100%',
+    display: 'flex'
+  },
+  noDevicesLabel: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: '30px'
+  }
+};
 
 const Devices = () => {
-	// Creating a state to keep a log of paired devices
-	const [pairedDevices, setPairedDevices] = useState([]);
+  // Creating a state to keep a log of paired devices
+  const [pairedDevices, setPairedDevices] = useState([]);
 
-	// Using useEffect React Hook to get paired devices from the Sensor Simulator
-	// The usage of useEffect ensures that the function getPairedDevices() is called only once
-	useEffect(() => {
-		getPairedDevices();
+  // Using useEffect React Hook to get paired devices from the Sensor Simulator
+  // The usage of useEffect ensures that the function getPairedDevices() is called only once
+  useEffect(() => {
+    getPairedDevices();
 
 		const synchronisationListener = setInterval(() => {
 			// console.log("it lives");
 		}, 5000);
 	}, [getPairedDevices])
 
-	/**
-	 * Gets the list of available Bluetooth devices using the Bluetooth Synchronisation Manager
-	 * getPairedDevices() returns a Promise
-	 * Successful resolve of the Promise sets the pairedDevices state
-	 * Rejected Promise logs an error to a console and asks for the devices again
-	 * Request for the devices happens in the loop, until the Promise is resolve successfuly
-	 */
-	const getPairedDevices = () => {
-		BluetoothSynchronisationManager.getPairedDevices()
-			.then((res) => {
-				setPairedDevices(res);
-			})
-			.catch(err => {
-				console.log("failed:: ", err);
-				getPairedDevices();
-			})
-	};
+  /**
+   * Gets the list of available Bluetooth devices using the Bluetooth Synchronisation Manager
+   * getPairedDevices() returns a Promise
+   * Successful resolve of the Promise sets the pairedDevices state
+   * Rejected Promise logs an error to a console and asks for the devices again
+   * Request for the devices happens in the loop, until the Promise is resolve successfuly
+   */
+  const getPairedDevices = () => {
+    BluetoothSynchronisationManager.getPairedDevices()
+      .then(res => {
+        setPairedDevices(res);
+      })
+      .catch(err => {
+        console.log('failed:: ', err);
+        getPairedDevices();
+      });
+  };
 
-	/**
-	 * Handles the event of clicking on a specific device on the page
-	 * Firstly, the device is found in the array of paired/found devices
-	 * If clicked device is already connected, disconnects the device
-	 * Else, changes the device's connection status to "CONNECTING" - while the connection is being established
-	 * Then asks the BluetoothSynchronisationManager to connect to this device
-	 * In order to display the change of status on the page:
-	 * When the device is connected, it has to be removed from the pairedDevices array
-	 * And then added back again, and finally sorted alphabetically
-	 * In case of an error - connection status of the device is changed to 'FAILED'
-	 * @param {String} id - ID of a clicked device 
-	 */
-	const deviceClickHandler = id => {
-		const connectingDevice = pairedDevices.find(device => device.id === id);
-		if (connectingDevice.connected) {
-			setPairedDevices(() => {
-				return changeDeviceStatus(id, "DISCONNECT")
-			});
-		}
-		else {
-			setPairedDevices(() => {
-				return changeDeviceStatus(id, "CONNECTING");
-			});
+  /**
+   * Handles the event of clicking on a specific device on the page
+   * Firstly, the device is found in the array of paired/found devices
+   * If clicked device is already connected, disconnects the device
+   * Else, changes the device's connection status to "CONNECTING" - while the connection is being established
+   * Then asks the BluetoothSynchronisationManager to connect to this device
+   * In order to display the change of status on the page:
+   * When the device is connected, it has to be removed from the pairedDevices array
+   * And then added back again, and finally sorted alphabetically
+   * In case of an error - connection status of the device is changed to 'FAILED'
+   * @param {String} id - ID of a clicked device
+   */
+  const deviceClickHandler = id => {
+    const connectingDevice = pairedDevices.find(device => device.id === id);
+    if (connectingDevice.connected) {
+      setPairedDevices(() => {
+        return changeDeviceStatus(id, 'DISCONNECT');
+      });
+    } else {
+      setPairedDevices(() => {
+        return changeDeviceStatus(id, 'CONNECTING');
+      });
 
-			BluetoothSynchronisationManager.connectToDevice(id)
-				.then((res) => {
-					setPairedDevices(() => {
-						const connectingDevice = pairedDevices.find(device => device.id === id);
-						connectingDevice.connect(res);
-						const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
-						filteredPairedDevices.push(connectingDevice);
-						filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
-						return filteredPairedDevices;
-					})
-				})
-				.catch((res) => {
-					setPairedDevices(() => {
-						return changeDeviceStatus(id, "FAILED");
-					})
-				})
-		}
-	};
+      BluetoothSynchronisationManager.connectToDevice(id)
+        .then(res => {
+          setPairedDevices(() => {
+            const connectingDevice = pairedDevices.find(device => device.id === id);
+            connectingDevice.connect(res);
+            const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+            filteredPairedDevices.push(connectingDevice);
+            filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+            return filteredPairedDevices;
+          });
+        })
+        .catch(res => {
+          setPairedDevices(() => {
+            return changeDeviceStatus(id, 'FAILED');
+          });
+        });
+    }
+  };
 
 	/**
 	 * Changes the device's connection status using React Hooks
@@ -128,33 +127,36 @@ const Devices = () => {
 		return filteredPairedDevices;
 	};
 
-	return (
-		<IonPage>
-			<BackButtonToolbar title="Devices" />
-			<IonContent className="ion-padding">
-				{
-					pairedDevices.length > 0 ? pairedDevices.map(x => {
-						return (
-							<DeviceCard
-								key={x.id}
-								title={x.name}
-								connected={x.connected}
-								connectionStatus={x.connectionStatus}
-								onClick={deviceClickHandler.bind(this, x.id)}
-							/>
-						)
-					}) : <IonItem lines="none" style={styles.labelContainer}><IonLabel style={styles.noDevicesLabel}>No devices found</IonLabel></IonItem>
-				}
-			</IonContent>
-		</IonPage>
-	);
+  return (
+    <IonPage>
+      <BackButtonToolbar title="Devices" />
+      <IonContent className="ion-padding">
+        {pairedDevices.length > 0 ? (
+          pairedDevices.map(x => {
+            return (
+              <DeviceCard
+                key={x.id}
+                title={x.name}
+                connected={x.connected}
+                connectionStatus={x.connectionStatus}
+                onClick={deviceClickHandler.bind(this, x.id)}
+              />
+            );
+          })
+        ) : (
+          <IonItem lines="none" style={styles.labelContainer}>
+            <IonLabel style={styles.noDevicesLabel}>No devices found</IonLabel>
+          </IonItem>
+        )}
+      </IonContent>
+    </IonPage>
+  );
 };
 
 export default Devices;
 
 Devices.propTypes = {
-	/**
-	 * No props
-	 */
+  /**
+   * No props
+   */
 };
-	
