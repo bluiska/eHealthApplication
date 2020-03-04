@@ -9,7 +9,6 @@ Author: Ireneusz Janusz
 // External dependencies
 import React, { useState, useEffect } from "react";
 import { IonContent, IonPage, IonLabel, IonItem } from "@ionic/react";
-import PropTypes from 'prop-types';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
 
@@ -41,7 +40,7 @@ const Devices = () => {
 		const synchronisationListener = setInterval(() => {
 			// console.log("it lives");
 		}, 5000);
-	}, [])
+	}, [getPairedDevices])
 
 	/**
 	 * Gets the list of available Bluetooth devices using the Bluetooth Synchronisation Manager
@@ -120,7 +119,7 @@ const Devices = () => {
 		} else if (status === "DISCONNECT") {
 			BluetoothSynchronisationManager.disconnect(id);
 			connectingDevice.disconnect();
-		} else if (status = "FAILED"){
+		} else if (status === "FAILED"){
 			connectingDevice.failedToConnect();
 		}
 		const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
