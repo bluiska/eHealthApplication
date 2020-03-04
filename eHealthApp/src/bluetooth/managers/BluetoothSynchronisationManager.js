@@ -1,54 +1,15 @@
-import Fitbit from '../devices/Fitbit';
+import PAIRED_DEVICES from '../../data/paired_devices';
 
 const PORT = 3000;
 const URL = `localhost`;
-const getBluetoothDevicesUrl = `http://${URL}:${PORT}/getBluetoothDevices/`;
 const connectDevice = `http://${URL}:${PORT}/connectDevice/`;
 const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
 class BluetoothSynchronisationManager {
-  getPairedDevices = async () => {
-    /**
-     * Returns the list of available paired devices
-     */
-    if (foundDevices.length === 0) {
-      try {
-        const result = await fetch(getBluetoothDevicesUrl);
-        const data = await result.json();
-        const devices = data.devices;
-        for (const x in devices) {
-          const {
-            id,
-            name,
-            batteryLevel,
-            connectionStatus,
-            activityStatus,
-            connected,
-            stepsCounter,
-            heartRate,
-            kcalBurnt
-          } = devices[x];
-          const bluetoothDevice = new Fitbit(
-            id,
-            name,
-            batteryLevel,
-            connectionStatus,
-            activityStatus,
-            connected,
-            stepsCounter,
-            heartRate,
-            kcalBurnt
-          );
-          foundDevices.push(bluetoothDevice);
-          foundDevices = [...new Set(foundDevices)];
-        }
-        return foundDevices;
-      } catch (err) {
-        throw new Error(err);
-      }
-    }
+  getPairedDevices = () => {
+    foundDevices = PAIRED_DEVICES;
     return foundDevices;
   };
 
@@ -77,18 +38,23 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify({ id: id })
           });
           const data = await response.json();
+          console.log("attempted connection and got: ", data);
           if (data) {
             resolve(data);
+            return;
           } else {
             reject();
+            return;
           }
         } catch (err) {
           // Device is disconnected (Simulation server not running)
-          const deviceConnectionStatus = {
-            connected: false,
-            connectionStatus: 'FAILED'
-          };
-          reject(deviceConnectionStatus);
+          // const deviceConnectionStatus = {
+          //   connected: false,
+          //   connectionStatus: 'FAILED'
+          // };
+          // reject(deviceConnectionStatus);
+          reject();
+          return;
         }
       }
     });
@@ -125,6 +91,7 @@ class BluetoothSynchronisationManager {
           body: JSON.stringify(fetchData)
         });
         const data = await response.json();
+        console.log(data);
       } catch (err) {
         console.log(err.message);
       }

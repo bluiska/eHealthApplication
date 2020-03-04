@@ -1,10 +1,9 @@
 class IBluetoothEnabledDevice {
-  constructor(id, name, batteryLevel, connectionStatus, activityStatus, connected) {
+  constructor(id, name, batteryLevel, connectionStatus, connected) {
     this.id = id;
     this.name = name;
     this.batteryLevel = batteryLevel;
     this.connectionStatus = connectionStatus;
-    this.activityStatus = activityStatus;
     this.connected = connected;
   }
 

@@ -18,10 +18,11 @@ const styles = {
     width: '100%'
   },
   iconStyle: {
+    display: 'block',
     width: '100%',
     marginLeft: '-55px',
     fontSize: '30px',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   deviceNameStyle: {
     width: '100%',

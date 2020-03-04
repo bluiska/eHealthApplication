@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const Logger = require('./singletons/Logger');
-const eventEmitter = require('../eventsHandler');
+const eventEmitter = require('./eventsHandler');
 
 const app = express();
 const PORT = 3000;

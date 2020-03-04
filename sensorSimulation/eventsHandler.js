@@ -25,14 +25,16 @@ eventEmitter
             const deviceConnectionStatus = await sensor.connectToSensor();
             params.res.send(deviceConnectionStatus);
         } catch (err) {
-            Logger.log(`Failed connecting to a device...`);
-            params.res.send({deviceConnected: false});
+            setTimeout(() => {
+            params.res.send(false);
+            }, 3000);
         }
     })
-    .on('disonnectSensor', params => {
+    .on('disconnectSensor', params => {
         const deviceId = params.id;
         const sensor = devices.find(x => x.id === deviceId);
         sensor.disconnect();
+        console.log(devices);
         params.res.send(true);
     })
 
