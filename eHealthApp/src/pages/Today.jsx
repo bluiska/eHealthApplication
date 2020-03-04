@@ -26,9 +26,7 @@ import pencil from "../resources/pencil.png";
 import "./Today.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 
-/*props:
- */
-const Today = props => {
+const Today = () => {
 	return (
 		<IonPage>
 			<BackButtonToolbar title="Today: Activities" />
@@ -75,3 +73,10 @@ const Today = props => {
 };
 
 export default Today;
+
+// Definition of props using PropTypes library
+Today.propTypes = {
+	/**
+	 * No props
+	 */
+};

@@ -47,3 +47,10 @@ const BloodPressure = () => {
 };
 
 export default BloodPressure;
+
+// Definition of props using PropTypes library
+BloodPressure.propTypes = {
+	/**
+	 * No props
+	 */
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Image } from "react-bootstrap";
 import { IonCard, IonCardHeader, IonCardTitle } from "@ionic/react";
+import { PropTypes } from 'prop-types';
 
 const ImageCard = props => {
 	const styles = {
@@ -14,6 +15,7 @@ const ImageCard = props => {
 			objectFit: "cover"
 		}
 	};
+
 	return (
 		<IonCard style={styles.card}>
 			<Image src={props.image} style={styles.cardImg} onClick={props.onClick} />
@@ -26,3 +28,11 @@ const ImageCard = props => {
 };
 
 export default ImageCard;
+
+// Definition of props using PropTypes library
+ImageCard.propTypes = {
+	image: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+	children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element, PropTypes.elementType])
+}

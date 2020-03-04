@@ -25,10 +25,8 @@ import IconButtonContainer from "./../components/IconButtonContainer";
 import IconButton from "../components/IconButton";
 
 import { withRouter } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 
-/*
-props:
- */
 const ManualEntry = props => {
 	const [exerciseOptionsOpen, setExerciseOptionsOpen] = useState(false);
 
@@ -67,3 +65,10 @@ const ManualEntry = props => {
 };
 
 export default withRouter(ManualEntry);
+
+// Definition of props using PropTypes library
+ManualEntry.propTypes = {
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}).isRequired
+}

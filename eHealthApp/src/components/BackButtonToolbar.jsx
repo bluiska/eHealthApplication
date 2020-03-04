@@ -9,11 +9,8 @@ import React from "react";
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon } from "@ionic/react";
 import { arrowBack } from "ionicons/icons";
 import { withRouter } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 
-/*
-props:
-    title: {string}
- */
 const BackButtonToolbar = props => {
 	const styles = {
 		backButton: {
@@ -40,3 +37,11 @@ const BackButtonToolbar = props => {
 };
 
 export default withRouter(BackButtonToolbar);
+
+// Definition of props using PropTypes library
+BackButtonToolbar.propTypes = {
+	title: PropTypes.string.isRequired,
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}).isRequired
+}

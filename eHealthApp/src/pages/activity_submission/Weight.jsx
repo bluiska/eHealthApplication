@@ -9,8 +9,6 @@ import {
 	IonListHeader,
 	IonRadioGroup,
 	IonRadio,
-	IonButton,
-	IonFooter
 } from "@ionic/react";
 import BackButtonToolbar from "../../components/BackButtonToolbar";
 import { Container, Row, Col } from "react-bootstrap";
@@ -66,3 +64,10 @@ const Weight = () => {
 };
 
 export default Weight;
+
+// Definition of props using PropTypes library
+Weight.propTypes = {
+	/**
+	 * No props
+	 */
+}

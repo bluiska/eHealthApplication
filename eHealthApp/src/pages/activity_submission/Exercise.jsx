@@ -14,6 +14,7 @@ import {
 import BackButtonToolbar from "../../components/BackButtonToolbar";
 import FooterSubmitButton from "../../components/FooterSubmitButton";
 import { Container, Row, Col } from "react-bootstrap";
+import PropTypes from 'prop-types'
 
 const Exercise = (props) => {
 	const styles = {
@@ -29,11 +30,6 @@ const Exercise = (props) => {
 	const getCurrentDate = () => {
 		var today = new Date();
 		return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-	}
-
-	const getCurrentTime = () => {
-		var today = new Date();
-		return today.toISOString();
 	}
 
 	const exerciseType = props.match.params.type;
@@ -133,3 +129,12 @@ const Exercise = (props) => {
 };
 
 export default Exercise;
+
+// Definition of props using PropTypes library
+Exercise.propTypes = {
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			type: PropTypes.string.isRequired
+		})
+	})
+}

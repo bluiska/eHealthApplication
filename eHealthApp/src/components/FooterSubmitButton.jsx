@@ -1,5 +1,6 @@
 import React from "react";
 import { IonFooter, IonButton } from "@ionic/react";
+import { PropTypes } from 'prop-types';
 
 const FooterSubmitButton = props => {
 	return (
@@ -12,3 +13,8 @@ const FooterSubmitButton = props => {
 };
 
 export default FooterSubmitButton;
+
+// Definition of props using PropTypes library
+FooterSubmitButton.propTypes = {
+	onSubmit: PropTypes.func.isRequired
+}

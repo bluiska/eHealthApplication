@@ -120,7 +120,7 @@ const Devices = () => {
 		} else if (status === "DISCONNECT") {
 			BluetoothSynchronisationManager.disconnect(id);
 			connectingDevice.disconnect();
-		} else if (status = "FAILED"){
+		} else if (status = "FAILED") {
 			connectingDevice.failedToConnect();
 		}
 		const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
@@ -153,9 +153,9 @@ const Devices = () => {
 
 export default Devices;
 
+// Definition of props using PropTypes library
 Devices.propTypes = {
 	/**
 	 * No props
 	 */
 };
-	

@@ -1,5 +1,6 @@
 import React from "react";
 import { IonImg, IonRippleEffect } from "@ionic/react";
+import PropTypes from 'prop-types'
 
 const IconButton = props => {
 	const styles = {
@@ -41,3 +42,10 @@ const IconButton = props => {
 };
 
 export default IconButton;
+
+// Definition of props using PropTypes library
+IconButton.propTypes = {
+	image: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+	ripple: PropTypes.bool
+}
