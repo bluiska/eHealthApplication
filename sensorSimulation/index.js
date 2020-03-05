@@ -20,8 +20,8 @@ app
         eventEmitter.emit('onBluetoothDevicesRequest', res);
     })
     .post(`/synchroniseData`, (req, res) => {
-        if (req) {
-            console.log(req.body)
+        if (req && req.body) {
+            eventEmitter.emit('syncData', {id: req.body.id, res:res});
         }
     })
     .post(`/connectDevice`, (req, res) => {
@@ -39,5 +39,6 @@ app
 
 app.listen(PORT, () => {
     Logger.log(`Server's listening on port ${PORT}`);
+    eventEmitter.emit('serverRunning');
 });
 

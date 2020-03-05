@@ -1,4 +1,5 @@
 import PAIRED_DEVICES from '../../data/paired_devices';
+import ODataClient from '../../utilities/odataClient';
 
 const PORT = 3000;
 const URL = `localhost`;
@@ -38,7 +39,7 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify({ id: id })
           });
           const data = await response.json();
-          console.log("attempted connection and got: ", data);
+          console.log('attempted connection and got: ', data);
           if (data) {
             resolve(data);
             return;
@@ -72,28 +73,39 @@ class BluetoothSynchronisationManager {
     });
   };
 
-  synchroniseData = params => {
+  synchroniseData = () => {
     /**
      * Asks for data
      */
     foundDevices.forEach(async device => {
-      try {
-        let fetchData = {
-          id: device.id
-        };
-        const response = await fetch(synchorniseDataUrl, {
-          method: 'POST',
-          mode: 'cors',
-          cache: 'no-cache',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(fetchData)
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (err) {
-        console.log(err.message);
+      if (device.connected){
+        console.log("attempting to fetch data");
+        try {
+          let fetchData = {
+            id: device.id
+          };
+          const response = await fetch(synchorniseDataUrl, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fetchData)
+          });
+          const data = await response.json();
+          const { stepsCounter, distance, kcalBurnt, heartRate } = data;
+          // SEND DATA TO THE DATABASE
+          ODataClient.IssueODataRequest({
+            "requestType": "POST",
+            "entityType": "Walkings",
+            "entitiyBody": {
+              "steps": stepsCounter
+            }
+          })
+        } catch (err) {
+          console.log(err.message);
+        }
       }
     });
   };

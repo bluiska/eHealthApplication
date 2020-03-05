@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IonCard, IonCardContent, IonIcon } from '@ionic/react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { sync, checkmark } from 'ionicons/icons';
 
 // Component's styling
@@ -18,22 +19,22 @@ const styles = {
     width: '100%'
   },
   iconStyle: {
-    display: 'block',
-    width: '100%',
-    marginLeft: '-55px',
-    fontSize: '30px',
-    textAlign: 'left',
+    // display: 'block',
+    // width: '100%',
+    marginLeft: '-15px',
+    fontSize: '25px',
+    // textAlign: 'left'
   },
   deviceNameStyle: {
     width: '100%',
     height: '100%',
-    fontSize: '20px',
+    fontSize: '16px',
     textAlign: 'center'
   },
   deviceConnectionStatus: {
     width: '100%',
     height: '100%',
-    fontSize: '20px',
+    fontSize: '16px',
     textAlign: 'right'
   }
 };
@@ -67,16 +68,26 @@ const DeviceCard = props => {
   return (
     <IonCard style={{ marginTop: '10px' }} button={true} onClick={onClick}>
       <IonCardContent style={styles.cardContainer}>
-        <IonIcon style={styles.iconStyle} icon={connected ? checkmark : sync} />
-        <p style={styles.deviceNameStyle}>{title.toUpperCase()}</p>
-        <p
-          style={{
-            ...styles.deviceConnectionStatus,
-            color: getConnectionColor()
-          }}
-        >
-          {connectionStatus}
-        </p>
+        <Container>
+          <Row>
+            <Col xs={2}>
+              <IonIcon style={styles.iconStyle} icon={connected ? checkmark : sync} />
+            </Col>
+            <Col xs={4}>
+              <p style={styles.deviceNameStyle}>{title.toUpperCase()}</p>
+            </Col>
+            <Col xs={6} >
+              <p
+                style={{
+                  ...styles.deviceConnectionStatus,
+                  color: getConnectionColor()
+                }}
+              >
+                {connectionStatus}
+              </p>
+            </Col>
+          </Row>
+        </Container>
       </IonCardContent>
     </IonCard>
   );

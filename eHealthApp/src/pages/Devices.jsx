@@ -7,7 +7,7 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonPage, IonLabel, IonItem, IonButton } from '@ionic/react';
 import BackButtonToolbar from '../components/BackButtonToolbar';
 import DeviceCard from '../components/DeviceCard';
@@ -38,7 +38,7 @@ const styles = {
   },
   disconnectModalButtonsContainer: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   button: {
     width: '75px'
@@ -53,14 +53,25 @@ const Devices = () => {
   const [showFailModal, setShowFailModal] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
+  let syncDataListener;
+
+  // Effect hook used to start synchronising data with all bluetooth devices
+  // An empty array is passed as a dependencey, so that this hook only runs once
+  // When components mounts
+  useEffect(() => {
+    
+    syncDataListener = setInterval(() => {
+      BluetoothSynchronisationManager.synchroniseData();
+    }, 3000);
+  }, [])
 
   const deviceClickHandler = id => {
-    console.log(`Clicked on: ${id}`)
+    console.log(`Clicked on: ${id}`);
     const clickedDevice = pairedDevices.find(x => x.id === id);
     setClickedDeviceHolder(clickedDevice);
     if (
       (clickedDevice.connectionStatus.toLowerCase() === 'paired' ||
-      clickedDevice.connectionStatus.toLowerCase() === 'disconnected') &&
+        clickedDevice.connectionStatus.toLowerCase() === 'disconnected') &&
       clickedDevice.connected === false
     ) {
       // CONNECT
@@ -100,9 +111,9 @@ const Devices = () => {
    */
   const disconnectModalHandler = disconnect => {
     setShowDisconnectModal(false);
-    if (disconnect){
+    if (disconnect) {
       clickedDeviceHolder.disconnect();
-      changeDeviceStatus(clickedDeviceHolder.id, "DISCONNECTED");
+      changeDeviceStatus(clickedDeviceHolder.id, 'DISCONNECTED');
       BluetoothSynchronisationManager.disconnect(clickedDeviceHolder.id);
       clickedDeviceHolder.disconnect();
     }
@@ -134,14 +145,26 @@ const Devices = () => {
       <CustomModal isOpen={showFailModal} onClose={failConnectModalHandler}>
         <p style={styles.failText}>Failed connecting to a device</p>
         <div style={styles.failButtonContainer}>
-          <div style={styles.button}><IonButton onClick={failConnectModalHandler} expand="full">OK</IonButton></div>
+          <div style={styles.button}>
+            <IonButton onClick={failConnectModalHandler} expand="full">
+              OK
+            </IonButton>
+          </div>
         </div>
       </CustomModal>
       <CustomModal isOpen={showDisconnectModal} onClose={disconnectModalHandler}>
         <p style={styles.disconnectModalLabel}>Do you want to disconnect from the device?</p>
         <div style={styles.disconnectModalButtonsContainer}>
-          <div style={styles.button}><IonButton expand="full" onClick={disconnectModalHandler.bind(this, true)}>YES</IonButton></div>
-          <div style={styles.button}><IonButton expand="full" onClick={disconnectModalHandler.bind(this, false)}>NO</IonButton></div>
+          <div style={styles.button}>
+            <IonButton expand="full" onClick={disconnectModalHandler.bind(this, true)}>
+              YES
+            </IonButton>
+          </div>
+          <div style={styles.button}>
+            <IonButton expand="full" onClick={disconnectModalHandler.bind(this, false)}>
+              NO
+            </IonButton>
+          </div>
         </div>
       </CustomModal>
       <IonContent className="ion-padding">

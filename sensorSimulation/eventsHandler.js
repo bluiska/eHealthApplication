@@ -11,6 +11,7 @@ const devices = [fitbit];
 eventEmitter
     .on('serverRunning', () => {
         console.log(`server running from Event Emitter`)
+        devices.forEach(x => x.startMeasuringData());
     })
     .on('onBluetoothDevicesRequest', response => {
         const devicesList = {
@@ -36,6 +37,13 @@ eventEmitter
         sensor.disconnect();
         console.log(devices);
         params.res.send(true);
+    })
+    .on('syncData', params => {
+        const bluetoothDevice = devices.find(x => x.id === params.id);
+        if (bluetoothDevice.connected) {
+            const syndData = bluetoothDevice.getSyncData();
+            params.res.send(syndData);
+        }
     })
 
 module.exports = eventEmitter;

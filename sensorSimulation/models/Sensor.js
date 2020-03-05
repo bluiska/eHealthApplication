@@ -5,6 +5,13 @@
  */
 const Logger = require('../singletons/Logger');
 const DEVICE_CONNECTION_STATUS = require('../constants/DEVICE_CONNECTION_STATUS');
+// Based on Kyle's Converter. Average length step is equal to 0.0008 km
+const STEP_TO_KM_RATE = 0.0008;
+// Based on a maximum bracket of burning 360 kcal per 5km walk
+const KCAL_BY_M_RATE = 0.072;
+// On average, during a brist walk heart beats between 110 to 120 bpm
+const HEART_RATE_MIN = 110;
+const HEART_RATE_MAX = 120;
 
 class Sensor {
     constructor(id, name) {
@@ -14,9 +21,14 @@ class Sensor {
         this.connectionStatus = DEVICE_CONNECTION_STATUS.PAIRED;
         this.activityStatus = "IDLE";
         this.stepsCounter = 0;
+        this.distance = 0;
         this.heartRate = 0;
         this.kcalBurnt = 0;
         this.connected = false;
+
+        var stepCounterInterval;
+        var heartRateInterval;
+        var kcalBurntInterval;
     }
 
     connectToSensor() {
@@ -60,6 +72,31 @@ class Sensor {
     disconnect() {
         this.connected = false;
         this.connectionStatus = "DISCONNECTED";
+    }
+
+    startMeasuringData() {
+        if (this.stepCounterInterval) clearInterval(this.stepCounterInterval);
+        if (this.heartRateInterval) clearInterval(this.heartRateInterval);
+        if (this.kcalBurntInterval) clearInterval(this.kcalBurntInterval);
+
+        this.stepCounterInterval = setInterval(() => {
+            this.stepsCounter++;
+            this.distance = this.stepsCounter * 0.0008;
+            this.kcalBurnt = this.distance * 0.072;
+        }, 2000);
+
+        this.heartRateInterval = setInterval(() => {
+            this.heartRate = Math.ceil(Math.random() * (HEART_RATE_MAX - HEART_RATE_MIN)) + HEART_RATE_MIN;
+        }, 3000);
+    }
+
+    getSyncData() {
+        return {
+            stepsCounter: this.stepsCounter,
+            distance: this.distance,
+            kcalBurnt: this.kcalBurnt,
+            heartRate: this.heartRate
+        }
     }
 }
 
