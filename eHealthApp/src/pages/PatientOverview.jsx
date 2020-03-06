@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard,
@@ -19,9 +19,8 @@ import { IonPage,
 		IonRow,
 		IonCol,
 		IonButton,
-		IonButtons,
 		IonToolbar} from "@ionic/react";
-import { heart, options, arrowBack } from 'ionicons/icons';
+import { heart, options } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { Container, Row, Col } from "react-bootstrap";
 import FilterOverview from "./FilterOverview";
@@ -96,8 +95,15 @@ const PatientOverview = props => {
 		])
 	})
 
-	const setSelectedFilterHandler = (event) => {
-		setSelectedFilter(event.target.value)
+	const setSelectedFilterHandler = (value) => {
+		if (!selectedFilter.includes(value)) {
+			// adds value to the array (select)
+			setSelectedFilter([...selectedFilter, value])
+		} else {
+			// removes the value from the array (unselect)
+			const res = selectedFilter.filter(item => item !== value)
+			setSelectedFilter(res)
+		}
 	}
 
     return(
@@ -123,7 +129,7 @@ const PatientOverview = props => {
 
 			</IonToolbar>
             <IonContent className="ion-padding">
-				{displayFilter && <FilterOverview setDisplayFilter={setDisplayFilter}/>}
+				{displayFilter && <FilterOverview selectedFilter={selectedFilter} setSelectedFilterHandler={setSelectedFilterHandler} setDisplayFilter={setDisplayFilter}/>}
 
 				{!displayFilter && 
 				<IonList>
@@ -131,7 +137,7 @@ const PatientOverview = props => {
 						<IonGrid>
 							<IonTitle>Today</IonTitle>
 							{userData.map((data, i) => 
-								data.date == todaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
+								data.date === todaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
 							)}
 						</IonGrid>
 					</IonItem>
@@ -140,7 +146,7 @@ const PatientOverview = props => {
 						<IonGrid>
 							<IonTitle>Yesterday</IonTitle>
 							{userData.map((data, i) => 
-								data.date == yesterdaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
+								data.date === yesterdaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
 							)}
 						</IonGrid>
 					</IonItem>

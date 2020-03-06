@@ -4,7 +4,7 @@ Add description
 Author: Gergo Kekesi & Daniel Madu
 */
 
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard, IonCardContent, 
@@ -15,7 +15,6 @@ import { IonPage,
 		IonLabel, 
 		useIonViewWillEnter, 
 		IonList,
-		IonItem,
 		IonToolbar} from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 // import { IonActionSheet } from "@ionic/react";

@@ -11,34 +11,35 @@ import { IonPage,
         IonCheckbox} from '@ionic/react'
 
 const FilterOverview = props => {
+    const style= {
+        label: {
+            marginLeft: "20px"
+        }
+    }
+
     return(
         <IonPage>
-            <IonContent className="ion-padding">
+            <IonContent className="ion-padding" fullscreen>
                 <IonList>
-                    {/* <IonListHeader>Filter by</IonListHeader> */}
                     <IonItem>
-                        <IonCheckbox color="danger" value="Blood pressure"></IonCheckbox>
-                        <IonLabel>Blood pressure</IonLabel>
+                        <IonCheckbox checked={props.selectedFilter.includes("Blood pressure")} onClick={() => props.setSelectedFilterHandler("Blood pressure")} color="danger" value="Blood pressure"></IonCheckbox>
+                        <IonLabel style={style.label}>Blood pressure</IonLabel>
                     </IonItem>
-
                     <IonItem>
-                        <IonCheckbox value="Run"></IonCheckbox>
-                        <IonLabel>Run</IonLabel>
+                        <IonCheckbox checked={props.selectedFilter.includes("Run")} onClick={() => props.setSelectedFilterHandler("Run")} color="primary" value="Run"></IonCheckbox>
+                        <IonLabel style={style.label}>Run</IonLabel>
                     </IonItem>
-
                     <IonItem>
-                        <IonCheckbox value="Walk"></IonCheckbox>
-                        <IonLabel>Walk</IonLabel>
+                        <IonCheckbox checked={props.selectedFilter.includes("Walk")} onClick={() => props.setSelectedFilterHandler("Walk")} color="secondary" value="Walk"></IonCheckbox>
+                        <IonLabel style={style.label}>Walk</IonLabel>
                     </IonItem>
-
                     <IonItem>
-                        <IonCheckbox value="Cycle"></IonCheckbox>
-                        <IonLabel>Cycle</IonLabel>
+                        <IonCheckbox checked={props.selectedFilter.includes("Cycle")} onClick={() => props.setSelectedFilterHandler("Cycle")} color="danger" value="Cycle"></IonCheckbox>
+                        <IonLabel style={style.label}>Cycle</IonLabel>
                     </IonItem>
-
                     <IonItem>
-                        <IonCheckbox value="Weight"></IonCheckbox> 
-                        <IonLabel>Weight</IonLabel>
+                        <IonCheckbox checked={props.selectedFilter.includes("Weight")} onClick={() => props.setSelectedFilterHandler("Weight")} color="primary" value="Weight"></IonCheckbox>
+                        <IonLabel style={style.label}>Weight</IonLabel>
                     </IonItem>
                 </IonList>
             </IonContent>
@@ -52,15 +53,3 @@ const FilterOverview = props => {
 }
 
 export default FilterOverview;
-
-
-
-				{/* <IonLabel>Filter by</IonLabel> */}
-				{/* Open as seperate component */}
-				{/* <IonSelect multiple={true}>
-					<IonSelectOption>Blood pressure</IonSelectOption>
-					<IonSelectOption>Run</IonSelectOption>
-					<IonSelectOption>Walk</IonSelectOption>
-					<IonSelectOption>Cycle</IonSelectOption>
-					<IonSelectOption>Weight</IonSelectOption>
-				</IonSelect> */}
