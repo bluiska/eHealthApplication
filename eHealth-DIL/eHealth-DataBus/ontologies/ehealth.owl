@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.ehealth.ie/semantics#"
+     xml:base="http://www.ehealth.ie/semantics"
+     xmlns:ehs="http://www.ehealth.ie/semantics#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:obda="https://w3id.org/obda/vocabulary#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.ehealth.ie/semantics"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#commits_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.ehealth.ie/semantics#commits_to">
+        <rdfs:label>commits to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#is_assigned_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.ehealth.ie/semantics#is_assigned_to">
+        <rdfs:label>is assigned to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#provides_treatment_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.ehealth.ie/semantics#provides_treatment_to">
+        <rdfs:label>provides treatment to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#calories_burnt -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#calories_burnt">
+        <rdfs:label>calories burnt</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#diastolic_pressure -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#diastolic_pressure">
+        <rdfs:label>diastolic pressure</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#distance -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#distance"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#end_time -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#end_time">
+        <rdfs:label>end time</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#name"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#source -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#source"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#start_time -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#start_time">
+        <rdfs:label>start time</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#steps -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#steps"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#systolic_pressure -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#systolic_pressure">
+        <rdfs:label>systolic pressure</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#timestamp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#timestamp"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#weight -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#weight"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Activity -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Activity">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#timestamp"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#BloodPressureReading -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#BloodPressureReading">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#diastolic_pressure"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#systolic_pressure"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Blood Pressure Reading</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Cycling -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Cycling">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#DistanceSport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#DistanceSport -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#DistanceSport">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Exercise"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#calories_burnt"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#distance"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#end_time"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#start_time"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Distance Sport</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Doctor -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Doctor">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#provides_treatment_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Exercise -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Exercise">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#LegSport -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#LegSport">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#DistanceSport"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#steps"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Leg Sport</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Patient -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Patient">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#commits_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#is_assigned_to"/>
+                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Running -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Running">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#LegSport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#User -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#User">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#Walking -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Walking">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#LegSport"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#WeightReading -->
+
+    <owl:Class rdf:about="http://www.ehealth.ie/semantics#WeightReading">
+        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#weight"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Weight Reading</rdfs:label>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
