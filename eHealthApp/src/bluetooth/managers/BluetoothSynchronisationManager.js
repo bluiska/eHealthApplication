@@ -94,15 +94,16 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify(fetchData)
           });
           const data = await response.json();
+          console.log("data: ", data);
           const { stepsCounter, distance, kcalBurnt, heartRate } = data;
           // SEND DATA TO THE DATABASE
-          ODataClient.IssueODataRequest({
-            "requestType": "POST",
-            "entityType": "Walkings",
-            "entitiyBody": {
-              "steps": stepsCounter
-            }
-          })
+          // ODataClient.IssueODataRequest({
+          //   "requestType": "POST",
+          //   "entityType": "Walkings",
+          //   "entitiyBody": {
+          //     "steps": stepsCounter
+          //   }
+          // })
         } catch (err) {
           console.log(err.message);
         }

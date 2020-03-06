@@ -8,12 +8,11 @@ Author: Ireneusz Janusz
 
 // External dependencies
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonPage, IonLabel, IonItem, IonButton } from '@ionic/react';
+import { IonContent, IonPage, IonLabel, IonItem, IonButton, IonAlert } from '@ionic/react';
 import BackButtonToolbar from '../components/BackButtonToolbar';
 import DeviceCard from '../components/DeviceCard';
 
 // Internal dependencies
-import CustomModal from '../components/CustomModal';
 import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
 
 // Styling
@@ -68,6 +67,7 @@ const Devices = () => {
   const deviceClickHandler = id => {
     console.log(`Clicked on: ${id}`);
     const clickedDevice = pairedDevices.find(x => x.id === id);
+    console.log("c: ", clickedDevice)
     setClickedDeviceHolder(clickedDevice);
     if (
       (clickedDevice.connectionStatus.toLowerCase() === 'paired' ||
@@ -142,31 +142,38 @@ const Devices = () => {
   return (
     <IonPage>
       <BackButtonToolbar title="Devices" />
-      <CustomModal isOpen={showFailModal} onClose={failConnectModalHandler}>
-        <p style={styles.failText}>Failed connecting to a device</p>
-        <div style={styles.failButtonContainer}>
-          <div style={styles.button}>
-            <IonButton onClick={failConnectModalHandler} expand="full">
-              OK
-            </IonButton>
-          </div>
-        </div>
-      </CustomModal>
-      <CustomModal isOpen={showDisconnectModal} onClose={disconnectModalHandler}>
-        <p style={styles.disconnectModalLabel}>Do you want to disconnect from the device?</p>
-        <div style={styles.disconnectModalButtonsContainer}>
-          <div style={styles.button}>
-            <IonButton expand="full" onClick={disconnectModalHandler.bind(this, true)}>
-              YES
-            </IonButton>
-          </div>
-          <div style={styles.button}>
-            <IonButton expand="full" onClick={disconnectModalHandler.bind(this, false)}>
-              NO
-            </IonButton>
-          </div>
-        </div>
-      </CustomModal>
+      <IonAlert 
+        isOpen={showFailModal}
+        onDidDismiss={failConnectModalHandler}
+        header={'Failed'}
+        message={'Failed pairing with a bluetooth device'}
+        buttons={[
+          {
+            text: 'OK',
+            role:'ok'
+          }
+        ]}
+      />
+      <IonAlert 
+        isOpen={showDisconnectModal}
+        onDidDismiss={disconnectModalHandler.bind(this, false)}
+        header={'Disconnect?'}
+        message={'Do you want to disconnect from the device?'}
+        buttons={[
+          {
+            text: 'Yes',
+            handler: () => {
+              disconnectModalHandler(true)
+            }
+          },
+          {
+            text: 'No',
+            handler: () => {
+              disconnectModalHandler(false)
+            }
+          }
+        ]}
+      />
       <IonContent className="ion-padding">
         {pairedDevices.length > 0 ? (
           pairedDevices.map(x => {

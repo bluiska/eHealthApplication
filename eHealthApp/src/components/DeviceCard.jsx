@@ -21,6 +21,7 @@ const styles = {
   iconStyle: {
     // display: 'block',
     // width: '100%',
+    marginTop: '5px',
     marginLeft: '-15px',
     fontSize: '25px',
     // textAlign: 'left'
@@ -69,7 +70,7 @@ const DeviceCard = props => {
     <IonCard style={{ marginTop: '10px' }} button={true} onClick={onClick}>
       <IonCardContent style={styles.cardContainer}>
         <Container>
-          <Row>
+          <Row className="align-items-center">
             <Col xs={2}>
               <IonIcon style={styles.iconStyle} icon={connected ? checkmark : sync} />
             </Col>
