@@ -23,7 +23,7 @@ const styles = {
     // width: '100%',
     marginTop: '5px',
     marginLeft: '-15px',
-    fontSize: '25px',
+    fontSize: '25px'
     // textAlign: 'left'
   },
   deviceNameStyle: {
@@ -77,7 +77,7 @@ const DeviceCard = props => {
             <Col xs={4}>
               <p style={styles.deviceNameStyle}>{title.toUpperCase()}</p>
             </Col>
-            <Col xs={6} >
+            <Col xs={6}>
               <p
                 style={{
                   ...styles.deviceConnectionStatus,

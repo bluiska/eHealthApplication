@@ -78,8 +78,8 @@ class BluetoothSynchronisationManager {
      * Asks for data
      */
     foundDevices.forEach(async device => {
-      if (device.connected){
-        console.log("attempting to fetch data");
+      if (device.connected) {
+        console.log('attempting to fetch data');
         try {
           let fetchData = {
             id: device.id
@@ -94,7 +94,7 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify(fetchData)
           });
           const data = await response.json();
-          console.log("data: ", data);
+          console.log('data: ', data);
           const { stepsCounter, distance, kcalBurnt, heartRate } = data;
           // SEND DATA TO THE DATABASE
           // ODataClient.IssueODataRequest({

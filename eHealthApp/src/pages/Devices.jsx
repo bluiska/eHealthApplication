@@ -58,16 +58,15 @@ const Devices = () => {
   // An empty array is passed as a dependencey, so that this hook only runs once
   // When components mounts
   useEffect(() => {
-    
     syncDataListener = setInterval(() => {
       BluetoothSynchronisationManager.synchroniseData();
     }, 3000);
-  }, [])
+  }, []);
 
   const deviceClickHandler = id => {
     console.log(`Clicked on: ${id}`);
     const clickedDevice = pairedDevices.find(x => x.id === id);
-    console.log("c: ", clickedDevice)
+    console.log('c: ', clickedDevice);
     setClickedDeviceHolder(clickedDevice);
     if (
       (clickedDevice.connectionStatus.toLowerCase() === 'paired' ||
@@ -142,7 +141,7 @@ const Devices = () => {
   return (
     <IonPage>
       <BackButtonToolbar title="Devices" />
-      <IonAlert 
+      <IonAlert
         isOpen={showFailModal}
         onDidDismiss={failConnectModalHandler}
         header={'Failed'}
@@ -150,11 +149,11 @@ const Devices = () => {
         buttons={[
           {
             text: 'OK',
-            role:'ok'
+            role: 'ok'
           }
         ]}
       />
-      <IonAlert 
+      <IonAlert
         isOpen={showDisconnectModal}
         onDidDismiss={disconnectModalHandler.bind(this, false)}
         header={'Disconnect?'}
@@ -163,13 +162,13 @@ const Devices = () => {
           {
             text: 'Yes',
             handler: () => {
-              disconnectModalHandler(true)
+              disconnectModalHandler(true);
             }
           },
           {
             text: 'No',
             handler: () => {
-              disconnectModalHandler(false)
+              disconnectModalHandler(false);
             }
           }
         ]}

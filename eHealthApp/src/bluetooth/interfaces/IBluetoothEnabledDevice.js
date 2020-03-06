@@ -6,9 +6,9 @@ class IBluetoothEnabledDevice {
     this.connectionStatus = connectionStatus;
     this.connected = connected;
 
-    this.someFunc = (sth) => {
+    this.someFunc = sth => {
       console.log(sth);
-    }
+    };
   }
 
   connect = deviceConnectionStatus => {
