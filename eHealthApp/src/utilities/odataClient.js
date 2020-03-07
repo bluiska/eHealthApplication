@@ -33,7 +33,6 @@ export default class ODataClient {
                             .patch(`${entityType}('${entityID}')`, entityBody)
                             .query();
 
-            console.log(res)
             return ProduceResponseBody(res);
         }
         let Delete = async (entityType, entityID) => {
