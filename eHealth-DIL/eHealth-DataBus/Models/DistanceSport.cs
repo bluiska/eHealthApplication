@@ -16,10 +16,10 @@ namespace eHealth_DataBus.Models
         public double CaloriesBurnt { get; set; }
 
         [RdfProperty(EHS.start_time)]
-        public string StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [RdfProperty(EHS.end_time)]
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         [RdfProperty(EHS.distance)]
         public double Distance { get; set; }
