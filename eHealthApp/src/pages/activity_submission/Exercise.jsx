@@ -31,10 +31,23 @@ const Exercise = (props) => {
 		return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 	}
 
+<<<<<<< HEAD
 	const getCurrentTime = () => {
 		var today = new Date();
 		return today.toISOString();
 	}
+=======
+  //Testing git hooks
+  const testFunction = () => {
+    var today = new Date();
+    return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  };
+
+  const getCurrentTime = () => {
+    var today = new Date();
+    return today.toISOString();
+  };
+>>>>>>> feature/GitHooks
 
 	const exerciseType = props.match.params.type;
 

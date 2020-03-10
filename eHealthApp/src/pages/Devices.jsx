@@ -84,21 +84,30 @@ const Devices = props => {
 		}
 	};
 
-	const changeDeviceStatus = (id, status) => {
-		const connectingDevice = pairedDevices.find(device => device.id === id);
-		if (status === "CONNECTING") {
-			connectingDevice.changeConnectionStatus(status);
-		} else if (status === "DISCONNECT") {
-			BluetoothSynchronisationManager.disconnect(id);
-			connectingDevice.disconnect();
-		} else if (status = "FAILED"){
-			connectingDevice.failedToConnect();
-		}
-		const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
-		filteredPairedDevices.push(connectingDevice);
-		filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
-		return filteredPairedDevices;
-	};
+  /**
+   * Changes the device's connection status using React Hooks
+   * Function has been encapsulated as it repeats quite often in this component
+   * In order to successfuly rerender the component,
+   * the device we are updating has to be removed from the devices array,
+   * added back again and then array has to be sorted alphabetically
+   * @param {String} id - ID of device
+   * @param {String} status - Connection status of the device
+   */
+  const changeDeviceStatus = (id, status) => {
+    const connectingDevice = pairedDevices.find(device => device.id === id);
+    if (status === 'CONNECTING') {
+      connectingDevice.changeConnectionStatus(status);
+    } else if (status === 'DISCONNECT') {
+      BluetoothSynchronisationManager.disconnect(id);
+      connectingDevice.disconnect();
+    } else if (status === 'FAILED') {
+      connectingDevice.failedToConnect();
+    }
+    const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+    filteredPairedDevices.push(connectingDevice);
+    filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+    return filteredPairedDevices;
+  };
 
 	return (
 		<IonPage>
