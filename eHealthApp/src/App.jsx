@@ -38,6 +38,7 @@ import Today from './pages/Today';
 import Devices from './pages/Devices';
 import ManualEntry from './pages/ManualEntry';
 import Patients from './pages/Patients';
+import PatientOverview from "./pages/PatientOverview";
 import Exercise from './pages/activity_submission/Exercise';
 import BloodPressure from './pages/activity_submission/BloodPressure';
 import Weight from './pages/activity_submission/Weight';
@@ -49,16 +50,17 @@ const App = () => (
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
 
-        <Route path="/today" component={Today} exact={true} />
-        <Route path="/devices" component={Devices} exact={true} />
-        <Route path="/manualentry" component={ManualEntry} exact={true} />
-        <Route path="/patients" component={Patients} exact={true} />
-        <Route path="/activity_submission/type/:type" component={Exercise} />
-        <Route path="/blood_pressure_activity_submission" component={BloodPressure} exact={true} />
-        <Route path="/weight_activity_submission" component={Weight} exact={true} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+				<Route path="/today" component={Today} exact={true} />
+				<Route path="/devices" component={Devices} exact={true} />
+				<Route path="/manualentry" component={ManualEntry} exact={true} />
+				<Route path="/patients" component={Patients} exact={true} />
+				<Route path="/patientoverview/:name/:id" component={PatientOverview} />
+				<Route path="/activity_submission/type/:type" component={Exercise} />
+				<Route path="/blood_pressure_activity_submission" component={BloodPressure} exact={true} />
+				<Route path="/weight_activity_submission" component={Weight} exact={true} />
+			</IonRouterOutlet>
+		</IonReactRouter>
+	</IonApp>
 );
 
 export default App;
