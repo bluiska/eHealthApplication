@@ -77,7 +77,7 @@ class BluetoothSynchronisationManager {
     /**
      * Asks for data
      */
-    const client = new ODataClient()
+    const client = new ODataClient();
     foundDevices.forEach(async device => {
       if (device.connected) {
         try {
@@ -98,14 +98,14 @@ class BluetoothSynchronisationManager {
           const { stepsCounter, distance, kcalBurnt, heartRate } = data;
           // SEND DATA TO THE DATABASE
           await client.IssueODataRequest({
-            "requestType": "POST",
-            "entityType": "Walkings",
-            "entityBody": {
-              "steps": stepsCounter,
-              "caloriesBurnt": kcalBurnt,
-              "distance": distance,
+            requestType: 'POST',
+            entityType: 'Walkings',
+            entityBody: {
+              steps: stepsCounter,
+              caloriesBurnt: kcalBurnt,
+              distance: distance
             }
-          })
+          });
         } catch (err) {
           console.log(err.message);
         }

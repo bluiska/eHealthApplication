@@ -95,7 +95,8 @@ class Sensor {
             stepsCounter: this.stepsCounter,
             distance: this.distance,
             kcalBurnt: this.kcalBurnt,
-            heartRate: this.heartRate
+            heartRate: this.heartRate,
+            timestamp: new Date(),
         }
     }
 }

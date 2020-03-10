@@ -26,7 +26,6 @@ app
     })
     .post(`/connectDevice`, (req, res) => {
         if (req && req.body) {
-            console.log(`Marisa is a sleeping koala`)
             const deviceId = req.body.id;
             eventEmitter.emit('connectToSensor', {id: deviceId, res: res});
         }
