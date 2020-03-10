@@ -148,12 +148,18 @@
     <!-- http://www.ehealth.ie/semantics#Activity -->
 
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#Activity">
-        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Master"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#committed_by"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -273,20 +279,6 @@
     
 
 
-    <!-- http://www.ehealth.ie/semantics#Master -->
-
-    <owl:Class rdf:about="http://www.ehealth.ie/semantics#Master">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
     <!-- http://www.ehealth.ie/semantics#Patient -->
 
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#Patient">
@@ -312,7 +304,13 @@
     <!-- http://www.ehealth.ie/semantics#User -->
 
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#User">
-        <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#Master"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 

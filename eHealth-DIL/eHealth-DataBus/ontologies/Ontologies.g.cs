@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 10/03/2020 15:15:24
+// Date: 10/03/2020 15:39:22
 
 using System;
 using System.Collections.Generic;
@@ -1573,12 +1573,6 @@ public class ehs : Ontology
 
     ///<summary>
     ///
-    ///<see cref="http://www.ehealth.ie/semantics#Master"/>
-    ///</summary>
-    public static readonly Class Master = new Class(new Uri("http://www.ehealth.ie/semantics#Master"));    
-
-    ///<summary>
-    ///
     ///<see cref="http://www.ehealth.ie/semantics#Patient"/>
     ///</summary>
     public static readonly Class Patient = new Class(new Uri("http://www.ehealth.ie/semantics#Patient"));    
@@ -1816,12 +1810,6 @@ public static class EHS
     ///<see cref="http://www.ehealth.ie/semantics#LegSport"/>
     ///</summary>
     public const string LegSport = "http://www.ehealth.ie/semantics#LegSport";
-
-    ///<summary>
-    ///
-    ///<see cref="http://www.ehealth.ie/semantics#Master"/>
-    ///</summary>
-    public const string Master = "http://www.ehealth.ie/semantics#Master";
 
     ///<summary>
     ///
