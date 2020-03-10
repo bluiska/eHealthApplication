@@ -16,7 +16,7 @@ namespace eHealth_DataBus.Models
         public string Name { get; set; }
 
         [RdfProperty(EHS.timestamp)]
-        public string Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         [RdfProperty(EHS.committed_by)]
         public Patient Patient { get; set; }
