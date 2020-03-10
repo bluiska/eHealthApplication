@@ -44,11 +44,11 @@ import BloodPressure from './pages/activity_submission/BloodPressure';
 import Weight from './pages/activity_submission/Weight';
 
 const App = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
+	<IonApp>
+		<IonReactRouter>
+			<IonRouterOutlet>
+				<Route path="/home" component={Home} exact={true} />
+				<Route exact path="/" render={() => <Redirect to="/home" />} />
 
 				<Route path="/today" component={Today} exact={true} />
 				<Route path="/devices" component={Devices} exact={true} />

@@ -20,7 +20,6 @@ import BackButtonToolbar from "../components/BackButtonToolbar";
 /*props:
  */
 const Patients = props => {
-
 	const [doctor, setDoctor] = useState('')
 	const [dbData, setDBData] = useState([])
 
