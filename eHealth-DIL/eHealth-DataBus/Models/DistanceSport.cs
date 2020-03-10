@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Models
@@ -7,6 +8,9 @@ namespace eHealth_DataBus.Models
     public class DistanceSport : Exercise
     {
         public DistanceSport(Uri uri) : base(uri) { }
+        
+        [JsonConstructor]
+        public DistanceSport(string uri) : base(new Uri(uri)) { }
 
         [RdfProperty(EHS.calories_burnt)]
         public double CaloriesBurnt { get; set; }
