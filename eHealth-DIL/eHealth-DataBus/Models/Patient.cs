@@ -15,8 +15,5 @@ namespace eHealth_DataBus.Models
 
         [RdfProperty(EHS.is_assigned_to)]
         public List<Doctor> Doctors { get; set; }
-
-        [RdfProperty(EHS.commits_to)]
-        public List<Activity> Activities { get; set; }
     }
 }
