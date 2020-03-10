@@ -22,7 +22,6 @@ import { IonPage,
 		IonToolbar} from "@ionic/react";
 import { heart, options } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
-import { Container, Row, Col } from "react-bootstrap";
 import FilterOverview from "./FilterOverview";
 
 /*props:
@@ -111,22 +110,13 @@ const PatientOverview = props => {
             {!displayFilter && <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>}
 			
 			<IonToolbar>
-				{/* <IonCard color="secondary" style={styles.filter} onClick={() => setDisplayFilter(!displayFilter)}>
-					<IonCardContent>
-						<IonIcon icon={options}/>
-						Filter
-					</IonCardContent>
-				</IonCard> */}
-
-				{displayFilter &&
-					<IonTitle>Filter by</IonTitle>}
+				{displayFilter && <IonTitle>Filter by</IonTitle>}
 				
 				{!displayFilter &&
 					<IonButton size="large" expand="block" onClick={() => setDisplayFilter(!displayFilter)}>
 						<IonIcon icon={options}/>
 						<IonTitle>Filter</IonTitle>
 					</IonButton>}
-
 			</IonToolbar>
             <IonContent className="ion-padding">
 				{displayFilter && <FilterOverview selectedFilter={selectedFilter} setSelectedFilterHandler={setSelectedFilterHandler} setDisplayFilter={setDisplayFilter}/>}

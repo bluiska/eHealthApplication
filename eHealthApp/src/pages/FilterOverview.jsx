@@ -6,7 +6,6 @@ import { IonPage,
         IonTitle, 
         IonLabel,
         IonList,
-        IonListHeader,
         IonItem,
         IonCheckbox} from '@ionic/react'
 

@@ -1,10 +1,10 @@
 /*
 Add description
 
-Author: Gergo Kekesi & Daniel Madu
+Author: Daniel Madu
 */
 
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard, IonCardContent, 
@@ -13,50 +13,18 @@ import { IonPage,
 		IonSelect, 
 		IonSelectOption, 
 		IonLabel, 
-		useIonViewWillEnter, 
-		IonList,
+		useIonViewWillEnter,
 		IonToolbar} from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
-// import { IonActionSheet } from "@ionic/react";
 
 /*props:
  */
 const Patients = props => {
-	// const [doctorData, setDoctorData] = useState([])
 	const [doctor, setDoctor] = useState('')
 	const [dbData, setDBData] = useState([])
-	// const [patientData, setPatientData] = useState([])
-
-	const [showActionSheet, setShowActionSheet] = useState(false);
 
 
 	useIonViewWillEnter(() => {
-		// setDoctorData([{id: 'dq24fd1', name: "Daniel"},
-		// 				{id: 'eq24fd1', name: "Irek"},
-		// 				{id: 'fq24fd1', name: "Andy"},
-		// 				{id: 'gq24fd1', name: "Gergo"},
-		// 				{id: 'hq24fd1', name: "Mark"},
-		// 				{id: 'iq24fd1', name: "Sergio"},
-		// 				{id: 'jq24fd1', name: "Margory"},
-		// 				{id: 'kq24fd1', name: "Basu"},
-		// 				{id: 'lq24fd1', name: "Chris"},
-		// 				{id: 'mq24fd1', name: "Jing"},
-		// 				{id: 'nq24fd1', name: "Gergo 2"},
-		// 				{id: 'oq24fd1', name: "Simon"}])
-
-		// setPatientData([{id: 'dq24fd1', name: "Daniel"},
-		// 				{id: 'eq24fd1', name: "Irek"},
-		// 				{id: 'fq24fd1', name: "Andy"},
-		// 				{id: 'gq24fd1', name: "Gergo"},
-		// 				{id: 'hq24fd1', name: "Mark"},
-		// 				{id: 'iq24fd1', name: "Sergio"},
-		// 				{id: 'jq24fd1', name: "Margory"},
-		// 				{id: 'kq24fd1', name: "Basu"},
-		// 				{id: 'lq24fd1', name: "Chris"},
-		// 				{id: 'mq24fd1', name: "Jing"},
-		// 				{id: 'nq24fd1', name: "Gergo 2"},
-		// 				{id: 'oq24fd1', name: "Simon"}])
-		
 		setDBData([
 					{name: 'Doctor Daniel', ID: 'Doctor-1234',
 					patients: [{id: 'Patient-1234', name: 'Daniel'},{id: 'Patient-1234', name: 'Irek'},{id: 'Patient-1234', name: 'Andy'},{id: 'Patient-1234', name: 'Greg'},
@@ -100,38 +68,9 @@ const Patients = props => {
 					</IonSelect>
 			</IonToolbar>
 			<BackButtonToolbar title={"Patients"} />
-			<IonContent className="ion-padding">		
-				{/* <h1>Select a health professional from the list below to view their patients and their data.</h1> */}
-				<IonList>
-					{/* <IonItem>
-						<IonLabel>Select doctor</IonLabel>
-						<IonSelect interface="popover" onIonChange={(event) => selectDoctorHandler(event)}>
-							{doctorData.map((doctor, index) => 
-								<IonSelectOption value={doctor.id} key={index}>
-									{doctor.name}
-								</IonSelectOption>
-							)}
-						</IonSelect>
-					</IonItem> */}
-				
-
-
-				{/* <IonButton onClick={() => setShowActionSheet(true)} expand="block">Select doctor</IonButton>
-				<IonActionSheet
-					isOpen={showActionSheet}				
-					onDidDismiss={() => setShowActionSheet(false)}
-					buttons={
-						doctorData.map((doctor) => {
-							return{
-								text: doctor.name,
-								handler: () => selectDoctorHandler2(doctor.id)
-							}
-						})
-					}
-				></IonActionSheet> */}
-
+			<IonContent className="ion-padding">
 				{doctor && 
-					<div>
+					<Fragment>
 						<h2>Assigned Patients</h2>
 						{dbData.filter((doc) => doc.ID === doctor)
 						.map((patients, i1) => 
@@ -139,8 +78,8 @@ const Patients = props => {
 								<Patient key={i1+i2} patient={patient} />
 							)
 						)}
-					</div>}
-				</IonList>
+					</Fragment>
+				}
 			</IonContent>
 		</IonPage>
 	);
