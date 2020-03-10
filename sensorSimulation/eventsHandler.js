@@ -45,5 +45,12 @@ eventEmitter
             params.res.send(syndData);
         }
     })
+    .on('startActivity', params => {
+        devices.forEach(device => Logger.log(`Device ${device.id} is ${device.connected ? 'connected' : 'disconnected'}`))
+        params.res.status(200).send(true)
+    })
+    .on('stopActivity', params => {
+
+    })
 
 module.exports = eventEmitter;

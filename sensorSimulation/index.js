@@ -37,6 +37,15 @@ app
             eventEmitter.emit(`disconnectSensor`, {id: deviceId, res: res});
         }
     })
+    .get('/startActivity', (req, res) => {
+        Logger.log('[INFO] Activity started')
+        eventEmitter.emit('startActivity', {res: res})
+    })
+    .get('/stopActivity', (req, res) => {
+        Logger.log('[INFO] Activity has been stopped')
+        eventEmitter.emit('stopActivity', {res:res})
+    })
+
 
 app.listen(PORT, () => {
     Logger.log(`Server's listening on port ${PORT}`);
