@@ -14,6 +14,6 @@ namespace eHealth_DataBus.Models
         public Patient(string uri) : base(new Uri(uri)) { }
 
         [RdfProperty(EHS.is_assigned_to)]
-        public List<Doctor> Doctors { get; set; }
+        public Doctor Doctor { get; set; }
     }
 }

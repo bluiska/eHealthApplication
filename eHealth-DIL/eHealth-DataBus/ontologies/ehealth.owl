@@ -286,7 +286,8 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#is_assigned_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
