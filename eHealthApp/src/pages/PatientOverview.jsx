@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard,
@@ -19,24 +19,47 @@ import { IonPage,
 		IonRow,
 		IonCol,
 		IonButton,
-		IonToolbar} from "@ionic/react";
+		IonToolbar,
+		IonCardHeader} from "@ionic/react";
 import { heart, options } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
+import { Accordion, AccordionToggle, AccordionCollapse, Button, Card, Row, Col, Image } from "react-bootstrap";
+
+import exercise_img from "../resources/exercise.jpg";
+import weight_img from "../resources/weight_scale.jpg";
+import walk_img from "../resources/walk.png";
+import run_img from "../resources/run.png";
+import cycle_img from "../resources/cycle.png";
 
 /*props:
  */
 
 const PatientOverview = props => {
-	const [userData, setUserData] = useState([])
 	const todaysDate = new Date()
-	const yesterdaysDate = new Date(todaysDate)
+	const [userData, setUserData] = useState([
+		{id: "activity1", name:"Blood pressure", value:"120 mmHg", date: "Wed Mar 11 2020", time:	"17:41"},
+		{id: "activity2", name:"Blood pressure", value:"130 mmHg", date: "Wed Mar 11 2020", time:	"15:31"},
+		{id: "activity3", name:"Cycle", value:"20 mins", date: "Wed Mar 11 2020", time:	"13:21"},
+		{id: "activity4", name:"Run", value:"25 mins", date: "Wed Mar 11 2020", time:	"14:11"},
+		 {id: "activity5", name:"Blood pressure", value:"135 mmHg", date: "Tue Mar 10 2020", time: "05:43"},
+		{id: "activity6", name:"Blood pressure", value:"140 mmHg", date: "Tue Mar 10 2020", time: "16:31"},
+		{id: "activity7", name:"Blood pressure", value:"140 mmHg", date: "Mon Mar 9 2020", time: "16:21"}
+	])
+	
+	let yesterdaysDate = new Date(todaysDate)
+	yesterdaysDate.setDate(todaysDate.getDate() - 1)
+
 	const [selectedFilter, setSelectedFilter] = useState([])
 	const [displayFilter, setDisplayFilter] = useState(false)
 
+	const dataForToday = userData.filter(val => val.date === todaysDate.toDateString())
+	const dataForYesterday = userData.filter(val => val.date === yesterdaysDate.toDateString())
+	const restOfTheData = userData.filter(val => val.date !== yesterdaysDate.toDateString() && val.date !== todaysDate.toDateString())
+
 	const styles = {
 		activity: {
-			display: "flex"
+			display: "inline-block"
 		},
 		icon: {
 			float: "left"
@@ -49,50 +72,56 @@ const PatientOverview = props => {
 		},
 		filter: {
 			width: "20%"
+		},
+		iconimg: {
+			width: "20px",
+			height: "20px",
+			margin: "auto"
 		}
 	};
 
 	const RecordCard = props => {
+		console.log(props)
 		return(
-			props.data
-			.filter(val => selectedFilter.includes(val.name) || selectedFilter.length === 0)
-			.map((d, i) =>
-				<IonCard key={i}>
-					<IonCardContent>
-						<IonGrid>
-							<IonRow style={styles.activity}>
-								<IonCol>
-									<IonLabel style={styles.icon}>
-										{d.name === "Blood pressure" && <IonIcon icon={heart} />}
-									</IonLabel>
-									<IonLabel style={styles.title}>
-										<h2>{d.name}</h2>
-									</IonLabel>
-								</IonCol>
-								<IonCol>									
-									<IonLabel>
-										<h3>{d.value}</h3>
-									</IonLabel>
-								</IonCol>
-							</IonRow>
-						</IonGrid>
-					</IonCardContent>
+			<Accordion>
+				<IonCard key={props.index}>
+					<Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
+						<Row className="align-content-center justify-content-center">
+							<Col xs="3">
+								{props.data.name === "Blood pressure" && <div style={styles.iconimg}>
+																	<IonIcon icon={heart} style={styles.iconimg}/>
+																</div>}
+								{props.data.name === "Cycle" && <Image src={cycle_img} style={styles.iconimg} />}
+								{props.data.name === "Run" && <Image src={run_img} style={styles.iconimg} />}
+							</Col>
+							<Col xs="7">
+								<IonLabel style={styles.title}>
+									<h2>{props.data.name}</h2>
+								</IonLabel>
+							</Col>
+							<Col xs="2">									
+								<IonLabel style={styles.value}>
+									<h3>{props.data.value}</h3>
+								</IonLabel>
+							</Col>
+						</Row>
+					</Accordion.Toggle>
+					
+					<Accordion.Collapse eventKey={props.index}>
+						<IonCardContent>
+							<IonLabel>
+								Date: {props.data.date}
+							</IonLabel>
+							<IonLabel>
+								Time: {props.data.time}
+							</IonLabel>
+						</IonCardContent>
+					</Accordion.Collapse>
 				</IonCard>
-			)
+				
+				</Accordion>
 		)
 	}
-
-	useIonViewWillEnter(async () => {
-		yesterdaysDate.setDate(todaysDate.getDate() - 1)
-		setUserData([
-			{name:"Blood pressure", value:"120 mmHg", date: todaysDate.toDateString(), time:	"17:41"},
-			 {name:"Blood pressure", value:"130 mmHg", date: todaysDate.toDateString(), time:	"17:41"},
-			 {name:"Cycle", value:"20 mins", date: todaysDate.toDateString(), time:	"17:41"},
-			 {name:"Run", value:"25 mins", date: todaysDate.toDateString(), time:	"17:41"},
-		 	{name:"Blood pressure", value:"135 mmHg", date: yesterdaysDate.toDateString(), time: "05:43"},
-			{name:"Blood pressure", value:"140 mmHg", date: yesterdaysDate.toDateString(), time: "16:31"}
-		])
-	})
 
 	const setSelectedFilterHandler = (value) => {
 		if (!selectedFilter.includes(value)) {
@@ -124,21 +153,30 @@ const PatientOverview = props => {
 				{!displayFilter && 
 				<IonList>
 					<IonItem>
+						{dataForToday &&
 						<IonGrid>
 							<IonTitle>Today</IonTitle>
-							{userData.map((data, i) => 
-								data.date === todaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
+							{dataForToday
+							.filter(val => selectedFilter.includes(val.name) || selectedFilter.length === 0)
+							.map((data) => 
+								data.date === todaysDate.toDateString() && <RecordCard index={data.id} key={data.id} data={data}/>
 							)}
 						</IonGrid>
+						}
 					</IonItem>
-
+					
 					<IonItem>
+						{yesterdaysDate &&
 						<IonGrid>
 							<IonTitle>Yesterday</IonTitle>
-							{userData.map((data, i) => 
-								data.date === yesterdaysDate.toDateString() && <RecordCard key={i} data={[data]}/>
+							{/* {console.log(yesterdaysDate)} */}
+							{userData
+							.filter(val => selectedFilter.includes(val.name) || selectedFilter.length === 0)
+							.map((data) => 
+								data.date === yesterdaysDate.toDateString() && <RecordCard index={data.id} key={data.id} data={data}/>
 							)}
 						</IonGrid>
+						}
 					</IonItem>
 				</IonList>}
             </IonContent>
