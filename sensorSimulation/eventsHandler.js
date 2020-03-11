@@ -1,7 +1,7 @@
 const events = require('events');
 const eventEmitter = new events.EventEmitter();
-const Sensor = require('./sensorSimulation/models/Sensor');
-const Logger = require('./sensorSimulation/singletons/Logger');
+const Sensor = require('./models/Sensor');
+const Logger = require('./singletons/Logger');
 
 const fitbit = new Sensor("sensor1", "Fitbit");
 // const fitbit2 = new Sensor("sensor2", "Fitbit2");

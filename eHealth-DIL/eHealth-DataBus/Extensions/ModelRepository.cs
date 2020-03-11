@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using eHealth_DataBus.Models;
-using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Extensions
 {
-    public class ModelRepository<TEntity> : IRepository<TEntity> where TEntity : Resource
+    public class ModelRepository<TEntity> : IRepository<TEntity> where TEntity : Master
     {
         internal DbContextTrinity _dbt;
 
@@ -17,9 +16,21 @@ namespace eHealth_DataBus.Extensions
 
         public IEnumerable<TEntity> Read()
         {
-            return _dbt.DefaultModel
-                       .GetResources<TEntity>(true)
-                       .ToList();
+            var items = _dbt.DefaultModel
+                            .GetResources<TEntity>(true)
+                            .ToList();
+
+            foreach (var item in items)
+            {
+                if (item.ID == null)
+                {
+                    var uri = item.Uri.ToString();
+                    var separatorIndex = uri.IndexOf("#");
+                    item.ID = uri.Substring(separatorIndex + 1);
+                }
+            }
+
+            return items;
         }
 
         public void Create(TEntity obj)
@@ -31,18 +42,12 @@ namespace eHealth_DataBus.Extensions
         public void Update(TEntity obj)
         {
             _dbt.DefaultModel.UpdateResource(obj);
+            obj.Commit();
         }
 
         public void Delete(Uri uri)
         {
             _dbt.DefaultModel.DeleteResource(uri);
-        }
-
-        public IEnumerable<dynamic> GetQuery(string query)
-        {
-            return _dbt.DefaultModel
-                       .ExecuteQuery(new SparqlQuery(query))
-                       .GetBindings();
         }
     }
 }

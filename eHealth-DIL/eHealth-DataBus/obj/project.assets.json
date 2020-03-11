@@ -1875,10 +1875,10 @@
           "lib/netstandard2.0/Microsoft.Extensions.Caching.SqlServer.dll": {}
         }
       },
-      "Microsoft.Extensions.Configuration/3.1.1": {
+      "Microsoft.Extensions.Configuration/3.1.2": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "3.1.1"
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
@@ -1887,10 +1887,10 @@
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/3.1.1": {
+      "Microsoft.Extensions.Configuration.Abstractions/3.1.2": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "3.1.1"
+          "Microsoft.Extensions.Primitives": "3.1.2"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
@@ -2394,7 +2394,7 @@
           "lib/netstandard2.0/Microsoft.Extensions.Options.DataAnnotations.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/3.1.1": {
+      "Microsoft.Extensions.Primitives/3.1.2": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.2",
@@ -3069,7 +3069,7 @@
           }
         }
       },
-      "Semiodesk.Trinity/1.0.3.22": {
+      "Semiodesk.Trinity/1.0.3.28": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
@@ -3087,10 +3087,10 @@
           "build/Semiodesk.Trinity.targets": {}
         }
       },
-      "Semiodesk.Trinity.Virtuoso/1.0.3.22": {
+      "Semiodesk.Trinity.Virtuoso/1.0.3.28": {
         "type": "package",
         "dependencies": {
-          "Semiodesk.Trinity": "1.0.3.22",
+          "Semiodesk.Trinity": "1.0.3.28",
           "System.Configuration.ConfigurationManager": "4.6.0",
           "System.Data.Common": "4.3.0",
           "System.Security.Permissions": "4.6.0"
@@ -6507,10 +6507,10 @@
         "microsoft.extensions.caching.sqlserver.nuspec"
       ]
     },
-    "Microsoft.Extensions.Configuration/3.1.1": {
-      "sha512": "LHbdc7ZBzKOqmvGpK1EkEqpFllPa3IOrEI7dIu+BZwr6A10zBpe2XpZHeNh87DGjEfHcAItwvh/Slah8tbnr7Q==",
+    "Microsoft.Extensions.Configuration/3.1.2": {
+      "sha512": "BxwRSBab309SYMCDCFyB6eSc7FnX5m9kOJQHw2IQIyb5PEtpfslhscTw63Gwhl3dPnaM1VGFXIyI0BVgpiLgOw==",
       "type": "package",
-      "path": "microsoft.extensions.configuration/3.1.1",
+      "path": "microsoft.extensions.configuration/3.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6519,14 +6519,14 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
-        "microsoft.extensions.configuration.3.1.1.nupkg.sha512",
+        "microsoft.extensions.configuration.3.1.2.nupkg.sha512",
         "microsoft.extensions.configuration.nuspec"
       ]
     },
-    "Microsoft.Extensions.Configuration.Abstractions/3.1.1": {
-      "sha512": "Msu6IzxV486nNmsasJQXB/c44DiVz7FqXCjIBnvmG2M8NGaVDIQra1qff9cEEkhqa+dGH+jf3mdggm8w9eX7BQ==",
+    "Microsoft.Extensions.Configuration.Abstractions/3.1.2": {
+      "sha512": "xmfdVdazTslWJ8od7uNS9QSPqn1wBC84RLprPrFS20EdAqd3lV0g0IZAitYbCiiICpjktnhzbUb85aLHNZ3RQw==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.abstractions/3.1.1",
+      "path": "microsoft.extensions.configuration.abstractions/3.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6535,7 +6535,7 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
-        "microsoft.extensions.configuration.abstractions.3.1.1.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.3.1.2.nupkg.sha512",
         "microsoft.extensions.configuration.abstractions.nuspec"
       ]
     },
@@ -7052,10 +7052,10 @@
         "microsoft.extensions.options.dataannotations.nuspec"
       ]
     },
-    "Microsoft.Extensions.Primitives/3.1.1": {
-      "sha512": "tC5Eo5DbJA+NgiIw26R5c97N02tFvtfqstUxqb/4qXPLXI2IAIWSMUkh/1c9Gw59TT9hNkLwlmLErSPlHgyJVQ==",
+    "Microsoft.Extensions.Primitives/3.1.2": {
+      "sha512": "WGtoFWY9yc9HGMG6ObDNQPz9dBP+xz/GqFe2dKjdE/cSdXFEKxCFTyYCzL/e8kxVkc/Bq9qjOsXRWydvn0g9Uw==",
       "type": "package",
-      "path": "microsoft.extensions.primitives/3.1.1",
+      "path": "microsoft.extensions.primitives/3.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7064,7 +7064,7 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
-        "microsoft.extensions.primitives.3.1.1.nupkg.sha512",
+        "microsoft.extensions.primitives.3.1.2.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec"
       ]
     },
@@ -8196,10 +8196,10 @@
         "version.txt"
       ]
     },
-    "Semiodesk.Trinity/1.0.3.22": {
-      "sha512": "WJdncHQL2T/dHCYrsTOxKhP3djfKMuTkO9kuO/sweI+gswdk5ZhIG4GFBse5q9woNoDFF34rDxVJDIkgo+lwZw==",
+    "Semiodesk.Trinity/1.0.3.28": {
+      "sha512": "s9e05CdapbJx8fuPkLqDPK8XG3MPvuRYVewqEQXnndcgaIZA28Svw6ZoGYb3qj8pKb/h3VRVsR4ax81xWGnRQg==",
       "type": "package",
-      "path": "semiodesk.trinity/1.0.3.22",
+      "path": "semiodesk.trinity/1.0.3.28",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -8209,7 +8209,7 @@
         "lib/net40/Semiodesk.Trinity.xml",
         "lib/netstandard2.0/Semiodesk.Trinity.dll",
         "lib/netstandard2.0/Semiodesk.Trinity.xml",
-        "semiodesk.trinity.1.0.3.22.nupkg.sha512",
+        "semiodesk.trinity.1.0.3.28.nupkg.sha512",
         "semiodesk.trinity.nuspec",
         "tools/HtmlAgilityPack.dll",
         "tools/Microsoft.Build.Framework.dll",
@@ -8328,16 +8328,16 @@
         "trinity-logo.png"
       ]
     },
-    "Semiodesk.Trinity.Virtuoso/1.0.3.22": {
-      "sha512": "PtEkj8CvpjQGr296tdTMx8441W7/Rchgr9x1E7LqbfjczInbODGodF48gCEcR2q2AFUpqqEEKLnui1AEzDXRTQ==",
+    "Semiodesk.Trinity.Virtuoso/1.0.3.28": {
+      "sha512": "2Ujmci1l8fArZYl13Ua9aAM95ygYTxBiBifR9faySocWj/KhOEKUKh7CaWbo6O0PDPOLYmvmh/QFbxr+lJjNpA==",
       "type": "package",
-      "path": "semiodesk.trinity.virtuoso/1.0.3.22",
+      "path": "semiodesk.trinity.virtuoso/1.0.3.28",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/OpenLink.Data.Virtuoso.dll",
         "lib/netstandard2.0/Semiodesk.Trinity.Virtuoso.dll",
-        "semiodesk.trinity.virtuoso.1.0.3.22.nupkg.sha512",
+        "semiodesk.trinity.virtuoso.1.0.3.28.nupkg.sha512",
         "semiodesk.trinity.virtuoso.nuspec",
         "trinity-logo.png"
       ]
@@ -13351,12 +13351,12 @@
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.OData >= 7.3.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
-      "Microsoft.Extensions.Configuration >= 3.1.1",
-      "Microsoft.Extensions.Configuration.Abstractions >= 3.1.1",
-      "Microsoft.Extensions.Primitives >= 3.1.1",
+      "Microsoft.Extensions.Configuration >= 3.1.2",
+      "Microsoft.Extensions.Configuration.Abstractions >= 3.1.2",
+      "Microsoft.Extensions.Primitives >= 3.1.2",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Semiodesk.Trinity >= 1.0.3.22",
-      "Semiodesk.Trinity.Virtuoso >= 1.0.3.22"
+      "Semiodesk.Trinity >= 1.0.3.28",
+      "Semiodesk.Trinity.Virtuoso >= 1.0.3.28"
     ]
   },
   "packageFolders": {
@@ -13420,15 +13420,15 @@
           },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",
-            "version": "[3.1.1, )"
+            "version": "[3.1.2, )"
           },
           "Microsoft.Extensions.Configuration.Abstractions": {
             "target": "Package",
-            "version": "[3.1.1, )"
+            "version": "[3.1.2, )"
           },
           "Microsoft.Extensions.Primitives": {
             "target": "Package",
-            "version": "[3.1.1, )"
+            "version": "[3.1.2, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
@@ -13438,11 +13438,11 @@
           },
           "Semiodesk.Trinity": {
             "target": "Package",
-            "version": "[1.0.3.22, )"
+            "version": "[1.0.3.28, )"
           },
           "Semiodesk.Trinity.Virtuoso": {
             "target": "Package",
-            "version": "[1.0.3.22, )"
+            "version": "[1.0.3.28, )"
           }
         },
         "imports": [
@@ -13464,7 +13464,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Configuration (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Configuration 3.1.1 was resolved.",
+      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Configuration (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Configuration 3.1.2 was resolved.",
       "libraryId": "Microsoft.Extensions.Configuration",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"
@@ -13474,7 +13474,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Configuration.Abstractions (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Configuration.Abstractions 3.1.1 was resolved.",
+      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Configuration.Abstractions (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Configuration.Abstractions 3.1.2 was resolved.",
       "libraryId": "Microsoft.Extensions.Configuration.Abstractions",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"
@@ -13484,7 +13484,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Primitives (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Primitives 3.1.1 was resolved.",
+      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.2.0 requires Microsoft.Extensions.Primitives (>= 2.2.0 && < 2.3.0) but version Microsoft.Extensions.Primitives 3.1.2 was resolved.",
       "libraryId": "Microsoft.Extensions.Primitives",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"

@@ -1,37 +1,23 @@
-import { o } from 'odata'
+import { o } from "odata";
 
-const endpoint = 'https://localhost:5001/odata/'
+const endpoint = "https://localhost:5001/odata/";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export default class ODataClient {
-    constructor() {
-        let ProduceResponseBody = (response) => {
-            return {
-                body: response,  
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            };
+  constructor() {
+    let ProduceResponseBody = response => {
+      return {
+        body: response,
+        headers: {
+          "Content-Type": "application/json"
         }
+      };
+    };
 
-        let Read = async (entityType, query = {}) => {
-            var res = await o(endpoint)
-                            .get(entityType)
-                            .query(query);
-            
-            return ProduceResponseBody(res);
-        }
-        let Create = async (entityType, entityBody) => {
-            var res = await o(endpoint)
-                            .post(entityType, entityBody)
-                            .query();
-    
-            return ProduceResponseBody(res);
-        }
-        let Update = async (entityType, entityID, entityBody) => {
-            var res = await o(endpoint)
-                            .patch(`${entityType}('${entityID}')`, entityBody)
-                            .query();
+    let Read = async (entityType, query = {}) => {
+      var res = await o(endpoint)
+        .get(entityType)
+        .query(query);
 
             return ProduceResponseBody(res);
         }
@@ -39,10 +25,10 @@ export default class ODataClient {
             var res = await o(endpoint)
                             .delete(`${entityType}('${entityID}')`)
                             .query();
-    
+
             return ProduceResponseBody(res);
         }
-        
+
         this.IssueODataRequest = async (req) => {
             var context = new Object();
             switch(req.requestType) {
@@ -63,7 +49,7 @@ export default class ODataClient {
                     context.res = await Update(req.entityType,
                                                req.entityID,
                                                req.entityBody);
-                case "DELETE":    
+                case "DELETE":
                     context.res = await Delete(req.entityType,
                                                req.entityID);
                     break;

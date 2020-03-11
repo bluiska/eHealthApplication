@@ -23,10 +23,10 @@
     
 
 
-    <!-- http://www.ehealth.ie/semantics#commits_to -->
+    <!-- http://www.ehealth.ie/semantics#committed_by -->
 
-    <owl:ObjectProperty rdf:about="http://www.ehealth.ie/semantics#commits_to">
-        <rdfs:label>commits to</rdfs:label>
+    <owl:ObjectProperty rdf:about="http://www.ehealth.ie/semantics#committed_by">
+        <rdfs:label>committed by</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -150,6 +150,13 @@
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#Activity">
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#committed_by"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -159,7 +166,7 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#timestamp"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -219,14 +226,14 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#end_time"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#start_time"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>Distance Sport</rdfs:label>
@@ -278,14 +285,9 @@
         <rdfs:subClassOf rdf:resource="http://www.ehealth.ie/semantics#User"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#commits_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Activity"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#is_assigned_to"/>
-                <owl:someValuesFrom rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -335,6 +337,132 @@
         </rdfs:subClassOf>
         <rdfs:label>Weight Reading</rdfs:label>
     </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestDoctor-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestDoctor-1">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-3"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-4"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-5"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-7"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Madeleine Girard</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestDoctor-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestDoctor-2">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-2"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-6"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Esteban Escobar</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestDoctor-3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestDoctor-3">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-1"/>
+        <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-8"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Stefan Hainer</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-1">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-3"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maria Kucharski</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-2">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mohammad el-Islam</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-3">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aoife O&apos;Connell</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-4">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Elise Leclair</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-5">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roland Johannsen</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-6 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-6">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Giuliana Auditore</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-7 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-7">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Genevieve Leblanc</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#TestPatient-8 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-8">
+        <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
+        <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-3"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thomas von Bayern</name>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
 
