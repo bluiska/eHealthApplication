@@ -42,7 +42,7 @@ const Today = props => {
             <p>
               No activity for today. Synchronize your devices or add an entry manually using the
               plus button below.
-              </p>
+            </p>
           </IonCardContent>
         </IonCard>
         {/*Floating action button*/}

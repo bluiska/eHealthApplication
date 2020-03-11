@@ -1,5 +1,6 @@
 import PAIRED_DEVICES from '../../data/paired_devices';
 import ODataClient from '../../utilities/odataClient';
+import Exercise from '../../models/Activity';
 
 const PORT = 3000;
 const URL = `localhost`;
@@ -9,10 +10,9 @@ const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
 class BluetoothSynchronisationManager {
-
   constructor() {
     setTimeout(() => {
-      this.synchroniseData()
+      this.synchroniseData();
     }, 20000);
   }
   getPairedDevices = () => {
@@ -82,7 +82,7 @@ class BluetoothSynchronisationManager {
     /**
      * Asks for data
      */
-    const client = new ODataClient()
+    const client = new ODataClient();
     foundDevices.forEach(async device => {
       if (device.connected) {
         try {
@@ -99,23 +99,23 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify(fetchData)
           });
           const data = await response.json();
-          console.log(data)
+
+          console.log(data);
           if (data.length !== 0) {
+            console.log("Retrieved data: ", data);
             const { stepsCounter, distance, kcalBurnt } = data;
             // SEND DATA TO THE DATABASE
             try {
               await client.IssueODataRequest({
-                "requestType": "POST",
-                "entityType": "Walkings",
-                "entityBody": {
-                  "steps": stepsCounter,
-                  "caloriesBurnt": kcalBurnt,
-                  "distance": distance,
+                requestType: 'POST',
+                entityType: 'Walkings',
+                entityBody: {
+                  steps: stepsCounter,
+                  caloriesBurnt: kcalBurnt,
+                  distance: distance
                 }
-              })
-            } catch (err) {
-
-            }
+              });
+            } catch (err) {}
           }
         } catch (err) {
           console.log(err.message);
