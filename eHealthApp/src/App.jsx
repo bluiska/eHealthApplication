@@ -50,11 +50,14 @@ const App = () => (
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
 
-        <Route path="/today" component={Today} exact={true} />
+        <Route path="/today/patient/:id" component={Today} exact={true} />
         <Route path="/devices" component={Devices} exact={true} />
         <Route path="/manualentry" component={ManualEntry} exact={true} />
-        <Route path="/patients" component={Patients} exact={true} />
-        <Route path="/patientoverview/:name/:id" component={PatientOverview} />
+        <Route path="/patients/:docid" component={Patients} exact={true} />
+        <Route
+          path="/patientoverview/doctor/:doc/patient/:id"
+          component={PatientOverview}
+        />
         <Route path="/activity_submission/type/:type" component={Exercise} />
         <Route
           path="/blood_pressure_activity_submission"
