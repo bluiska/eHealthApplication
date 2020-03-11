@@ -102,7 +102,7 @@ class BluetoothSynchronisationManager {
 
           console.log(data);
           if (data.length !== 0) {
-            console.log("Retrieved data: ", data);
+            console.log('Retrieved data: ', data);
             const { stepsCounter, distance, kcalBurnt } = data;
             // SEND DATA TO THE DATABASE
             try {
