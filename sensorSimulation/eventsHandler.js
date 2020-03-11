@@ -11,7 +11,6 @@ const devices = [fitbit];
 eventEmitter
     .on('serverRunning', () => {
         console.log(`server running from Event Emitter`)
-        devices.forEach(x => x.startMeasuringData());
     })
     .on('onBluetoothDevicesRequest', response => {
         const devicesList = {
@@ -46,11 +45,31 @@ eventEmitter
         }
     })
     .on('startActivity', params => {
-        devices.forEach(device => Logger.log(`Device ${device.id} is ${device.connected ? 'connected' : 'disconnected'}`))
+        devices.forEach(device => {
+            if (device.connected && !device.measuringActivity){
+                Logger.log(`[INFO] Device #${device.id} started an activity`)
+                if (params.type) {
+                    device.startActivity(params.type)
+                    device.measuringActivity = !device.measuringActivity
+                } else {
+                    Logger.log(`[ERROR] StartActivity - Activity type not provided`)
+                }
+            } else {
+                Logger.log(`[INFO] Device #${device.id} is ${device.connected} == ${device.measuringActivity}`)
+            }
+        })
         params.res.status(200).send(true)
     })
     .on('stopActivity', params => {
-
+        devices.forEach(device => {
+            if (device.connected && device.measuringActivity) {
+                Logger.log(`[INFO] Device #${device.id} stopped an activity`)
+                device.stopActivity()
+                device.measuringActivity = !device.measuringActivity
+                console.log("[INFO] Activities: ", device.activities)
+            }
+        })
+        params.res.status(200).send(true)
     })
 
 module.exports = eventEmitter;

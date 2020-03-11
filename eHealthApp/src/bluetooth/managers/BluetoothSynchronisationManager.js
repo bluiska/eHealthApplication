@@ -9,6 +9,12 @@ const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
 class BluetoothSynchronisationManager {
+
+  constructor() {
+    setTimeout(() => {
+      this.synchroniseData()
+    }, 20000);
+  }
   getPairedDevices = () => {
     foundDevices = PAIRED_DEVICES;
     return foundDevices;
@@ -39,7 +45,6 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify({ id: id })
           });
           const data = await response.json();
-          console.log('attempted connection and got: ', data);
           if (data) {
             resolve(data);
             return;
@@ -94,18 +99,24 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify(fetchData)
           });
           const data = await response.json();
-          console.log('data: ', data);
-          const { stepsCounter, distance, kcalBurnt, heartRate } = data;
-          // SEND DATA TO THE DATABASE
-          await client.IssueODataRequest({
-            "requestType": "POST",
-            "entityType": "Walkings",
-            "entityBody": {
-              "steps": stepsCounter,
-              "caloriesBurnt": kcalBurnt,
-              "distance": distance,
+          console.log(data)
+          if (data.length !== 0) {
+            const { stepsCounter, distance, kcalBurnt } = data;
+            // SEND DATA TO THE DATABASE
+            try {
+              await client.IssueODataRequest({
+                "requestType": "POST",
+                "entityType": "Walkings",
+                "entityBody": {
+                  "steps": stepsCounter,
+                  "caloriesBurnt": kcalBurnt,
+                  "distance": distance,
+                }
+              })
+            } catch (err) {
+
             }
-          })
+          }
         } catch (err) {
           console.log(err.message);
         }

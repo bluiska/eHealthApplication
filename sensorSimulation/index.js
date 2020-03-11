@@ -26,7 +26,6 @@ app
     })
     .post(`/connectDevice`, (req, res) => {
         if (req && req.body) {
-            console.log(`Marisa is a sleeping koala`)
             const deviceId = req.body.id;
             eventEmitter.emit('connectToSensor', {id: deviceId, res: res});
         }
@@ -37,9 +36,12 @@ app
             eventEmitter.emit(`disconnectSensor`, {id: deviceId, res: res});
         }
     })
-    .get('/startActivity', (req, res) => {
-        Logger.log('[INFO] Activity started')
-        eventEmitter.emit('startActivity', {res: res})
+    .post('/startActivity', (req, res) => {
+        if (req && req.body) {
+            console.log(req.body)
+            Logger.log('[INFO] Activity started')
+            eventEmitter.emit('startActivity', {res: res, type: req.body.type})
+        }
     })
     .get('/stopActivity', (req, res) => {
         Logger.log('[INFO] Activity has been stopped')
@@ -48,7 +50,7 @@ app
 
 
 app.listen(PORT, () => {
-    Logger.log(`Server's listening on port ${PORT}`);
+    Logger.log(`[INFO] Server's listening on port ${PORT}`);
     eventEmitter.emit('serverRunning');
 });
 

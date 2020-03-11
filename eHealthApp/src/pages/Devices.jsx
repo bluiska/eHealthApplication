@@ -7,7 +7,7 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IonContent, IonPage, IonLabel, IonItem, IonButton, IonAlert } from '@ionic/react';
 import BackButtonToolbar from '../components/BackButtonToolbar';
 import DeviceCard from '../components/DeviceCard';
@@ -52,21 +52,9 @@ const Devices = () => {
   const [showFailModal, setShowFailModal] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
-  let syncDataListener;
-
-  // Effect hook used to start synchronising data with all bluetooth devices
-  // An empty array is passed as a dependencey, so that this hook only runs once
-  // When components mounts
-  useEffect(() => {
-    syncDataListener = setInterval(() => {
-      BluetoothSynchronisationManager.synchroniseData();
-    }, 3000);
-  }, []);
 
   const deviceClickHandler = id => {
-    console.log(`Clicked on: ${id}`);
     const clickedDevice = pairedDevices.find(x => x.id === id);
-    console.log('c: ', clickedDevice);
     setClickedDeviceHolder(clickedDevice);
     if (
       (clickedDevice.connectionStatus.toLowerCase() === 'paired' ||
