@@ -1,15 +1,17 @@
-import { o } from 'odata';
+import { o } from "odata";
 
-const endpoint = 'https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//const endpoint = 'https://localhost:5001/odata/'
+const endpoint =
+  "https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-export default class ODataClient {
+export default new (class BackendAccess {
   constructor() {
     let ProduceResponseBody = response => {
       return {
         body: response,
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }
       };
     };
@@ -47,25 +49,34 @@ export default class ODataClient {
     this.IssueODataRequest = async req => {
       var context = new Object();
       switch (req.requestType) {
-        case 'GET':
+        case "GET":
           context.res = await Read(req.entityType, req.query);
           break;
-        case 'POST':
+        case "POST":
           context.res = await Create(req.entityType, req.entityBody);
-          console.log('test: ', context.res);
+          console.log("test: ", context.res);
           break;
-        case 'PUT':
-          context.res = await Update(req.entityType, req.entityID, req.entityBody);
+        case "PUT":
+          context.res = await Update(
+            req.entityType,
+            req.entityID,
+            req.entityBody
+          );
           break;
-        case 'PATCH':
-          context.res = await Update(req.entityType, req.entityID, req.entityBody);
-        case 'DELETE':
+        case "PATCH":
+          context.res = await Update(
+            req.entityType,
+            req.entityID,
+            req.entityBody
+          );
+        case "DELETE":
           context.res = await Delete(req.entityType, req.entityID);
           break;
         default:
           context.res = {
             status: 400,
-            body: 'Invalid protocol. Issue a request with either GET, POST, PUT, or DELETE.'
+            body:
+              "Invalid protocol. Issue a request with either GET, POST, PUT, or DELETE."
           };
           break;
       }
@@ -73,4 +84,4 @@ export default class ODataClient {
       return context.res.body;
     };
   }
-}
+})();

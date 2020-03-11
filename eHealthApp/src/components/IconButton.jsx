@@ -1,22 +1,22 @@
-import React from 'react';
-import { IonImg, IonRippleEffect } from '@ionic/react';
+import React from "react";
+import { IonImg, IonRippleEffect } from "@ionic/react";
 
 const IconButton = props => {
   const styles = {
     rippleOption: {
-      overflow: 'hidden',
-      position: 'relative',
-      borderRadius: '20px'
+      overflow: "hidden",
+      position: "relative",
+      borderRadius: "20px"
     },
     exerciseTypeImg: {
-      display: 'block',
-      margin: 'auto',
-      width: '40px',
-      height: '40px'
+      display: "block",
+      margin: "auto",
+      width: "40px",
+      height: "40px"
     },
     rippleContainer: {
-      width: '50px',
-      height: '50px'
+      width: "50px",
+      height: "50px"
     }
   };
   return (

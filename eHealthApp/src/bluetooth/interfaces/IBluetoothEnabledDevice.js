@@ -1,5 +1,12 @@
 class IBluetoothEnabledDevice {
-  constructor(id, name, batteryLevel, connectionStatus, connected) {
+  constructor(
+    id,
+    name,
+    batteryLevel,
+    connectionStatus,
+    activityStatus,
+    connected
+  ) {
     this.id = id;
     this.name = name;
     this.batteryLevel = batteryLevel;
@@ -22,12 +29,12 @@ class IBluetoothEnabledDevice {
 
   disconnect = () => {
     this.connected = false;
-    this.connectionStatus = 'DISCONNECTED';
+    this.connectionStatus = "DISCONNECTED";
   };
 
   failedToConnect = () => {
     this.connected = false;
-    this.connectionStatus = 'FAILED';
+    this.connectionStatus = "FAILED";
   };
 
   pair = () => {};

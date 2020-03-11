@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   IonPage,
   IonContent,
@@ -11,15 +11,15 @@ import {
   IonRadio,
   IonButton,
   IonFooter
-} from '@ionic/react';
-import BackButtonToolbar from '../../components/BackButtonToolbar';
-import { Container, Row, Col } from 'react-bootstrap';
-import FooterSubmitButton from '../../components/FooterSubmitButton';
+} from "@ionic/react";
+import BackButtonToolbar from "../../components/BackButtonToolbar";
+import { Container, Row, Col } from "react-bootstrap";
+import FooterSubmitButton from "../../components/FooterSubmitButton";
 
 const Weight = () => {
   return (
     <IonPage>
-      <BackButtonToolbar title={'Weight entry'} />
+      <BackButtonToolbar title={"Weight entry"} />
       <IonContent className="ion-padding">
         <IonItem>
           <IonLabel position="stacked">
@@ -34,20 +34,20 @@ const Weight = () => {
 
           <Container>
             <Row>
-              <Col style={{ padding: '0px' }}>
-                <IonItem style={{ borderRadius: '15px' }}>
+              <Col style={{ padding: "0px" }}>
+                <IonItem style={{ borderRadius: "15px" }}>
                   <IonLabel>Kg</IonLabel>
                   <IonRadio value="kg" color="tertiary" checked="true" />
                 </IonItem>
               </Col>
-              <Col style={{ padding: '0px' }}>
-                <IonItem style={{ borderRadius: '15px' }}>
+              <Col style={{ padding: "0px" }}>
+                <IonItem style={{ borderRadius: "15px" }}>
                   <IonLabel>Stones</IonLabel>
                   <IonRadio value="stone" color="tertiary" />
                 </IonItem>
               </Col>
-              <Col style={{ padding: '0px' }}>
-                <IonItem style={{ borderRadius: '15px' }}>
+              <Col style={{ padding: "0px" }}>
+                <IonItem style={{ borderRadius: "15px" }}>
                   <IonLabel>Pounds</IonLabel>
                   <IonRadio value="pounds" color="tertiary" />
                 </IonItem>
@@ -58,7 +58,7 @@ const Weight = () => {
       </IonContent>
       <FooterSubmitButton
         onSubmit={() => {
-          console.log('Hi');
+          console.log("Hi");
         }}
       />
     </IonPage>

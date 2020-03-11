@@ -1,4 +1,4 @@
-import IBluetoothEnabledDevice from '../interfaces/IBluetoothEnabledDevice';
+import IBluetoothEnabledDevice from "../interfaces/IBluetoothEnabledDevice";
 
 class Fitbit extends IBluetoothEnabledDevice {
   // constructor(

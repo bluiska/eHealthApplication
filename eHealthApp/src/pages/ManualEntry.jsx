@@ -5,21 +5,21 @@ Lists various options to submit health data to the app manually.
 Author: Gergo Kekesi
 */
 
-import React, { useState } from 'react';
-import { IonPage, IonContent, IonList, IonCardContent } from '@ionic/react';
-import BackButtonToolbar from './../components/BackButtonToolbar';
-import exercise_img from '../resources/exercise.jpg';
-import blood_pressure_img from '../resources/blood_pressure.jpg';
-import weight_img from '../resources/weight_scale.jpg';
-import walk_img from '../resources/walk.png';
-import run_img from '../resources/run.png';
-import cycle_img from '../resources/cycle.png';
-import { Collapse } from 'react-bootstrap';
-import ImageCard from '../components/ImageCard';
-import IconButtonContainer from './../components/IconButtonContainer';
-import IconButton from '../components/IconButton';
+import React, { useState } from "react";
+import { IonPage, IonContent, IonList, IonCardContent } from "@ionic/react";
+import BackButtonToolbar from "./../components/BackButtonToolbar";
+import exercise_img from "../resources/exercise.jpg";
+import blood_pressure_img from "../resources/blood_pressure.jpg";
+import weight_img from "../resources/weight_scale.jpg";
+import walk_img from "../resources/walk.png";
+import run_img from "../resources/run.png";
+import cycle_img from "../resources/cycle.png";
+import { Collapse } from "react-bootstrap";
+import ImageCard from "../components/ImageCard";
+import IconButtonContainer from "./../components/IconButtonContainer";
+import IconButton from "../components/IconButton";
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 /*
 props:
@@ -29,7 +29,7 @@ const ManualEntry = props => {
 
   return (
     <IonPage>
-      <BackButtonToolbar title={'Select an activity'} />
+      <BackButtonToolbar title={"Select an activity"} />
       <IonContent className="ion-padding">
         <IonList>
           <ImageCard
@@ -42,20 +42,26 @@ const ManualEntry = props => {
           >
             <Collapse in={exerciseOptionsOpen}>
               <IonCardContent>
-                <IconButtonContainer style={{ width: '100%', height: '50px' }}>
+                <IconButtonContainer style={{ width: "100%", height: "50px" }}>
                   <IconButton
                     image={walk_img}
-                    onClick={() => props.history.push('/activity_submission/type/walk')}
+                    onClick={() =>
+                      props.history.push("/activity_submission/type/walk")
+                    }
                     ripple
                   />
                   <IconButton
                     image={run_img}
-                    onClick={() => props.history.push('/activity_submission/type/run')}
+                    onClick={() =>
+                      props.history.push("/activity_submission/type/run")
+                    }
                     ripple
                   />
                   <IconButton
                     image={cycle_img}
-                    onClick={() => props.history.push('/activity_submission/type/cycle')}
+                    onClick={() =>
+                      props.history.push("/activity_submission/type/cycle")
+                    }
                     ripple
                   />
                 </IconButtonContainer>
@@ -65,12 +71,14 @@ const ManualEntry = props => {
           <ImageCard
             title="Blood Pressure"
             image={blood_pressure_img}
-            onClick={() => props.history.push('/blood_pressure_activity_submission')}
+            onClick={() =>
+              props.history.push("/blood_pressure_activity_submission")
+            }
           />
           <ImageCard
             title="Weight"
             image={weight_img}
-            onClick={() => props.history.push('/weight_activity_submission')}
+            onClick={() => props.history.push("/weight_activity_submission")}
           />
         </IonList>
       </IonContent>

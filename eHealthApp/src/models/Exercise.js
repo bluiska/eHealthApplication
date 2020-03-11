@@ -1,4 +1,4 @@
-import Activity from './Activity';
+import Activity from "./Activity";
 
 class Exercise extends Activity {
   constructor(type, steps, caloriesBurnt, startTime, endTime, distance) {

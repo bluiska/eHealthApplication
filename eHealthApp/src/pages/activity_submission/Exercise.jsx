@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   IonPage,
   IonContent,
@@ -10,25 +10,27 @@ import {
   IonRadioGroup,
   IonListHeader,
   IonRadio
-} from '@ionic/react';
-import BackButtonToolbar from '../../components/BackButtonToolbar';
-import FooterSubmitButton from '../../components/FooterSubmitButton';
-import { Container, Row, Col } from 'react-bootstrap';
+} from "@ionic/react";
+import BackButtonToolbar from "../../components/BackButtonToolbar";
+import FooterSubmitButton from "../../components/FooterSubmitButton";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Exercise = props => {
   const styles = {
     label: {
-      fontSize: '1.3em',
-      paddingLeft: '0px'
+      fontSize: "1.3em",
+      paddingLeft: "0px"
     },
     star: {
-      fontSize: '1.4em'
+      fontSize: "1.4em"
     }
   };
 
   const getCurrentDate = () => {
     var today = new Date();
-    return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    return (
+      today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+    );
   };
 
   const getCurrentTime = () => {
@@ -40,14 +42,14 @@ const Exercise = props => {
 
   const getType = type => {
     switch (type) {
-      case 'walk':
-        return { title: 'Walk', activity: 'walked' };
-      case 'run':
-        return { title: 'Run', activity: 'ran' };
-      case 'cycle':
-        return { title: 'Cycle', activity: 'cycled' };
+      case "walk":
+        return { title: "Walk", activity: "walked" };
+      case "run":
+        return { title: "Run", activity: "ran" };
+      case "cycle":
+        return { title: "Cycle", activity: "cycled" };
       default:
-        return '';
+        return "";
     }
   };
 
@@ -57,16 +59,19 @@ const Exercise = props => {
       <IonContent className="ion-padding">
         <IonItem>
           <IonLabel>
-            Date{' '}
+            Date{" "}
             <IonText style={styles.star} color="danger">
               *
             </IonText>
           </IonLabel>
-          <ion-datetime placeholder="Select date" value={() => getCurrentDate()}></ion-datetime>
+          <ion-datetime
+            placeholder="Select date"
+            value={() => getCurrentDate()}
+          ></ion-datetime>
         </IonItem>
         <IonItem>
           <IonLabel>
-            Start Time{' '}
+            Start Time{" "}
             <IonText style={styles.star} color="danger">
               *
             </IonText>
@@ -79,7 +84,7 @@ const Exercise = props => {
         </IonItem>
         <IonItem>
           <IonLabel>
-            End Time{' '}
+            End Time{" "}
             <IonText style={styles.star} color="danger">
               *
             </IonText>
@@ -92,10 +97,10 @@ const Exercise = props => {
         </IonItem>
         <IonItem>
           <Container>
-            <Row style={{ padding: '0px' }}>
-              <Col style={{ padding: '0px' }}>
+            <Row style={{ padding: "0px" }}>
+              <Col style={{ padding: "0px" }}>
                 <IonLabel style={styles.label} position="stacked">
-                  Distance{' '}
+                  Distance{" "}
                   <IonText style={styles.star} color="danger">
                     *
                   </IonText>
@@ -103,14 +108,16 @@ const Exercise = props => {
                 <IonInput
                   className="ion-no-padding ion-padding-vertical"
                   type="number"
-                  placeholder={`Enter the distance ${getType(exerciseType).activity}`}
+                  placeholder={`Enter the distance ${
+                    getType(exerciseType).activity
+                  }`}
                   clearInput
                 />
               </Col>
             </Row>
 
-            <Row style={{ padding: '0px' }}>
-              <Col style={{ padding: '0px' }}>
+            <Row style={{ padding: "0px" }}>
+              <Col style={{ padding: "0px" }}>
                 <IonRadioGroup>
                   <IonListHeader className="ion-no-padding">
                     <IonLabel>Measurement Type</IonLabel>
@@ -118,13 +125,13 @@ const Exercise = props => {
 
                   <Row>
                     <Col>
-                      <IonItem style={{ borderRadius: '15px' }}>
+                      <IonItem style={{ borderRadius: "15px" }}>
                         <IonLabel>Km</IonLabel>
                         <IonRadio value="stone" color="tertiary" slot="end" />
                       </IonItem>
                     </Col>
                     <Col>
-                      <IonItem style={{ borderRadius: '15px' }}>
+                      <IonItem style={{ borderRadius: "15px" }}>
                         <IonLabel>Miles</IonLabel>
                         <IonRadio value="pounds" color="tertiary" slot="end" />
                       </IonItem>
@@ -138,7 +145,7 @@ const Exercise = props => {
       </IonContent>
       <FooterSubmitButton
         onSubmit={() => {
-          console.log('Hi');
+          console.log("Hi");
         }}
       />
     </IonPage>

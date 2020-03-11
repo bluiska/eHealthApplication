@@ -35,8 +35,6 @@ namespace eHealth_DataBus.Extensions
             var builder = new ODataConventionModelBuilder();
             SetEntitySets(builder);
 
-            var obj = builder.EntityType<Master>();
-
             return builder.GetEdmModel();
         }
 
@@ -46,6 +44,10 @@ namespace eHealth_DataBus.Extensions
             b.EntitySet<User>("Users");
             b.EntitySet<Patient>("Patients");
             b.EntitySet<Doctor>("Doctors");
+            b.EntitySet<Activity>("Activities");
+            b.EntitySet<Exercise>("Exercises");
+            b.EntitySet<DistanceSport>("DistanceSports");
+            b.EntitySet<LegSport>("LegSports");
             b.EntitySet<Running>("Runnings");
             b.EntitySet<Walking>("Walkings");
             b.EntitySet<Cycling>("Cyclings");

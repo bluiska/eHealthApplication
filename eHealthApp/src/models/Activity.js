@@ -9,16 +9,16 @@
  */
 
 const ACTIVITY_TYPE = Object.freeze({
-  WALKING: 'walking',
-  RUNNING: 'running',
-  CYCLING: 'cycling',
-  BLOOD_PREASURE: 'blood_preasure',
-  WEIGHT: 'weight'
+  WALKING: "walking",
+  RUNNING: "running",
+  CYCLING: "cycling",
+  BLOOD_PREASURE: "blood_preasure",
+  WEIGHT: "weight"
 });
 
 class Activity {
   constructor(type) {
-    this.type = this.validateType(type) ? type : 'unknown';
+    this.type = this.validateType(type) ? type : "unknown";
     this.timestamp = new Date().toISOString();
   }
 

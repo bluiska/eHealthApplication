@@ -5,23 +5,56 @@ This page allows navigation to the pages that complete the Assignment's tasks.
 Author: Gergo Kekesi
 */
 
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import background_image from '../resources/home_background_blur.jpg';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  IonActionSheet
+} from "@ionic/react";
+import React, { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import background_image from "../resources/home_background_blur.jpg";
 
-import './Home.css';
+import "./Home.css";
+import { withRouter } from "react-router-dom";
+
+var doctors = ["Dr. Greg", "Dr. Irek", "Dr. Daniel"];
+var patients = ["Andy", "Lee", "Tennant"];
 
 /*props:
  */
-const Home = () => {
+const Home = props => {
+  const [showDoctorActionSheet, setShowDoctorActionSheet] = useState(false);
+  const [showPatientActionSheet, setShowPatientActionSheet] = useState(false);
+
   const styles = {
     home: {
-      width: '100%',
-      height: '100%',
+      width: "100%",
+      height: "100%",
       backgroundImage: `url(${background_image})`,
-      backgroundSize: 'cover'
+      backgroundSize: "cover"
     }
+  };
+
+  const docButton = doc => {
+    return {
+      text: doc,
+      handler: () => {
+        props.history.push(`/patients/${doc}`);
+      }
+    };
+  };
+
+  const patientButton = patient => {
+    return {
+      text: patient,
+      handler: () => {
+        props.history.push(`/today/patient/${patient}`);
+      }
+    };
   };
 
   return (
@@ -39,9 +72,8 @@ const Home = () => {
                 <IonButton
                   size="large"
                   expand="block"
-                  style={{ marginBottom: '30px' }}
-                  routerDirection="forward"
-                  routerLink={'/today'}
+                  style={{ marginBottom: "30px" }}
+                  onClick={() => setShowPatientActionSheet(true)}
                 >
                   Today's Activity
                 </IonButton>
@@ -52,8 +84,7 @@ const Home = () => {
                 <IonButton
                   size="large"
                   expand="block"
-                  routerDirection="forward"
-                  routerLink={'/patients'}
+                  onClick={() => setShowDoctorActionSheet(true)}
                 >
                   View Patients
                 </IonButton>
@@ -62,9 +93,25 @@ const Home = () => {
             <Row></Row>
           </Container>
         </div>
+        <IonActionSheet
+          isOpen={showDoctorActionSheet}
+          onDidDismiss={() => setShowDoctorActionSheet(false)}
+          header="Select a doctor:"
+          buttons={doctors.map(doc => {
+            return docButton(doc);
+          })}
+        />
+        <IonActionSheet
+          isOpen={showPatientActionSheet}
+          onDidDismiss={() => setShowPatientActionSheet(false)}
+          header="Select a patient:"
+          buttons={patients.map(patient => {
+            return patientButton(patient);
+          })}
+        />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Home;
+export default withRouter(Home);

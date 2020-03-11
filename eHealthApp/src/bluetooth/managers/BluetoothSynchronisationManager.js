@@ -1,6 +1,6 @@
-import PAIRED_DEVICES from '../../data/paired_devices';
-import ODataClient from '../../utilities/odataClient';
-import Exercise from '../../models/Activity';
+import PAIRED_DEVICES from "../../data/paired_devices";
+import ODataClient from "../../utilities/BackendAccess";
+import Exercise from "../../models/Activity";
 
 const PORT = 3000;
 const URL = `localhost`;
@@ -36,11 +36,11 @@ class BluetoothSynchronisationManager {
       if (connectingDevice) {
         try {
           const response = await fetch(connectDevice, {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({ id: id })
           });
@@ -68,11 +68,11 @@ class BluetoothSynchronisationManager {
 
   disconnect = id => {
     fetch(disconnectDevice, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ id: id })
     });
@@ -90,11 +90,11 @@ class BluetoothSynchronisationManager {
             id: device.id
           };
           const response = await fetch(synchorniseDataUrl, {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json"
             },
             body: JSON.stringify(fetchData)
           });
@@ -102,13 +102,13 @@ class BluetoothSynchronisationManager {
 
           console.log(data);
           if (data.length !== 0) {
-            console.log('Retrieved data: ', data);
+            console.log("Retrieved data: ", data);
             const { stepsCounter, distance, kcalBurnt } = data;
             // SEND DATA TO THE DATABASE
             try {
               await client.IssueODataRequest({
-                requestType: 'POST',
-                entityType: 'Walkings',
+                requestType: "POST",
+                entityType: "Walkings",
                 entityBody: {
                   steps: stepsCounter,
                   caloriesBurnt: kcalBurnt,

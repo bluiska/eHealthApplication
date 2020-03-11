@@ -7,40 +7,50 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState } from 'react';
-import { IonContent, IonPage, IonLabel, IonItem, IonButton, IonAlert } from '@ionic/react';
-import BackButtonToolbar from '../components/BackButtonToolbar';
-import DeviceCard from '../components/DeviceCard';
+import React, { useState } from "react";
+import {
+  IonContent,
+  IonPage,
+  IonLabel,
+  IonItem,
+  IonButton,
+  IonAlert
+} from "@ionic/react";
+import BackButtonToolbar from "../components/BackButtonToolbar";
+import DeviceCard from "../components/DeviceCard";
 
 // Internal dependencies
-import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
+import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 // Styling
 const styles = {
-  labelContainer: { height: '100%', display: 'flex' },
+  labelContainer: {
+    height: "100%",
+    display: "flex"
+  },
   noDevicesLabel: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    fontSize: '30px'
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: "30px"
   },
   failText: {
-    fontSize: '20px',
-    textAlign: 'center'
+    fontSize: "20px",
+    textAlign: "center"
   },
   failButtonContainer: {
-    display: 'flex',
-    justifyContent: 'center'
+    display: "flex",
+    justifyContent: "center"
   },
   disconnectModalLabel: {
     // fontSize: '20px',
-    textAlign: 'center'
+    textAlign: "center"
   },
   disconnectModalButtonsContainer: {
-    display: 'flex',
-    justifyContent: 'space-around'
+    display: "flex",
+    justifyContent: "space-around"
   },
   button: {
-    width: '75px'
+    width: "75px"
   }
 };
 
@@ -57,23 +67,23 @@ const Devices = () => {
     const clickedDevice = pairedDevices.find(x => x.id === id);
     setClickedDeviceHolder(clickedDevice);
     if (
-      (clickedDevice.connectionStatus.toLowerCase() === 'paired' ||
-        clickedDevice.connectionStatus.toLowerCase() === 'disconnected') &&
+      (clickedDevice.connectionStatus.toLowerCase() === "paired" ||
+        clickedDevice.connectionStatus.toLowerCase() === "disconnected") &&
       clickedDevice.connected === false
     ) {
       // CONNECT
-      changeDeviceStatus(id, 'CONNECTING');
+      changeDeviceStatus(id, "CONNECTING");
       BluetoothSynchronisationManager.connectToDevice(id)
         .then(res => {
           clickedDevice.connect(res);
-          changeDeviceStatus(id, 'CONNECTED');
+          changeDeviceStatus(id, "CONNECTED");
         })
         .catch(err => {
-          changeDeviceStatus(id, 'FAILED');
+          changeDeviceStatus(id, "FAILED");
           setShowFailModal(true);
         });
     } else if (
-      clickedDevice.connectionStatus.toLowerCase() === 'connected' &&
+      clickedDevice.connectionStatus.toLowerCase() === "connected" &&
       clickedDevice.connected
     ) {
       // DISCONNECT
@@ -88,7 +98,7 @@ const Devices = () => {
    */
   const failConnectModalHandler = () => {
     setShowFailModal(false);
-    changeDeviceStatus(clickedDeviceHolder.id, 'PAIRED');
+    changeDeviceStatus(clickedDeviceHolder.id, "PAIRED");
   };
 
   /**
@@ -100,7 +110,7 @@ const Devices = () => {
     setShowDisconnectModal(false);
     if (disconnect) {
       clickedDeviceHolder.disconnect();
-      changeDeviceStatus(clickedDeviceHolder.id, 'DISCONNECTED');
+      changeDeviceStatus(clickedDeviceHolder.id, "DISCONNECTED");
       BluetoothSynchronisationManager.disconnect(clickedDeviceHolder.id);
       clickedDeviceHolder.disconnect();
     }
@@ -119,7 +129,9 @@ const Devices = () => {
     setPairedDevices(() => {
       const connectingDevice = pairedDevices.find(device => device.id === id);
       connectingDevice.changeConnectionStatus(status);
-      const filteredPairedDevices = pairedDevices.filter(device => device.id !== id);
+      const filteredPairedDevices = pairedDevices.filter(
+        device => device.id !== id
+      );
       filteredPairedDevices.push(connectingDevice);
       filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
       return filteredPairedDevices;
@@ -132,29 +144,29 @@ const Devices = () => {
       <IonAlert
         isOpen={showFailModal}
         onDidDismiss={failConnectModalHandler}
-        header={'Failed'}
-        message={'Failed pairing with a bluetooth device'}
+        header={"Failed"}
+        message={"Failed pairing with a bluetooth device"}
         buttons={[
           {
-            text: 'OK',
-            role: 'ok'
+            text: "OK",
+            role: "ok"
           }
         ]}
       />
       <IonAlert
         isOpen={showDisconnectModal}
         onDidDismiss={disconnectModalHandler.bind(this, false)}
-        header={'Disconnect?'}
-        message={'Do you want to disconnect from the device?'}
+        header={"Disconnect?"}
+        message={"Do you want to disconnect from the device?"}
         buttons={[
           {
-            text: 'Yes',
+            text: "Yes",
             handler: () => {
               disconnectModalHandler(true);
             }
           },
           {
-            text: 'No',
+            text: "No",
             handler: () => {
               disconnectModalHandler(false);
             }
@@ -185,9 +197,3 @@ const Devices = () => {
 };
 
 export default Devices;
-
-Devices.propTypes = {
-  /**
-   * No props
-   */
-};
