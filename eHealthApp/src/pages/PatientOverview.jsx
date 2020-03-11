@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState } from "react";
 import { IonPage, 
 		IonContent, 
 		IonCard,
@@ -15,16 +15,13 @@ import { IonPage,
 		IonLabel,
 		IonIcon,
 		IonTitle,
-		useIonViewWillEnter,
-		IonRow,
-		IonCol,
 		IonButton,
 		IonToolbar,
 		IonCardHeader} from "@ionic/react";
 import { heart, options } from 'ionicons/icons';
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
-import { Accordion, AccordionToggle, AccordionCollapse, Button, Card, Row, Col, Image } from "react-bootstrap";
+import { Accordion, Row, Col, Image, Container } from "react-bootstrap";
 
 import exercise_img from "../resources/exercise.jpg";
 import weight_img from "../resources/weight_scale.jpg";
@@ -52,6 +49,7 @@ const PatientOverview = props => {
 
 	const [selectedFilter, setSelectedFilter] = useState([])
 	const [displayFilter, setDisplayFilter] = useState(false)
+	const [showMore, setShowMore] = useState(false)
 
 	const dataForToday = userData.filter(val => val.date === todaysDate.toDateString())
 	const dataForYesterday = userData.filter(val => val.date === yesterdaysDate.toDateString())
@@ -77,6 +75,11 @@ const PatientOverview = props => {
 			width: "20px",
 			height: "20px",
 			margin: "auto"
+		},
+		show: {
+			width: "60%",
+			margin: "0 auto",
+			marginTop: "7%"
 		}
 	};
 
@@ -134,11 +137,11 @@ const PatientOverview = props => {
 		}
 	}
 
-    return(
-        <IonPage>
-            {!displayFilter && <BackButtonToolbar title={props.match.params.name + "'s " + "Overview"}/>}
-			
-			<IonToolbar>
+  return (
+    <IonPage>
+      {!displayFilter && (
+        <BackButtonToolbar title={"Patient Name's " + "Overview"} />)}
+		<IonToolbar>
 				{displayFilter && <IonTitle>Filter by</IonTitle>}
 				
 				{!displayFilter &&
@@ -146,10 +149,8 @@ const PatientOverview = props => {
 						<IonIcon icon={options}/>
 						<IonTitle>Filter</IonTitle>
 					</IonButton>}
-			</IonToolbar>
-            <IonContent className="ion-padding">
-				{displayFilter && <FilterOverview selectedFilter={selectedFilter} setSelectedFilterHandler={setSelectedFilterHandler} setDisplayFilter={setDisplayFilter}/>}
-
+		</IonToolbar>
+		<IonContent className="ion-padding">
 				{!displayFilter && 
 				<IonList>
 					<IonItem>
@@ -170,7 +171,7 @@ const PatientOverview = props => {
 						<IonGrid>
 							<IonTitle>Yesterday</IonTitle>
 							{/* {console.log(yesterdaysDate)} */}
-							{userData
+							{dataForYesterday
 							.filter(val => selectedFilter.includes(val.name) || selectedFilter.length === 0)
 							.map((data) => 
 								data.date === yesterdaysDate.toDateString() && <RecordCard index={data.id} key={data.id} data={data}/>
@@ -178,10 +179,21 @@ const PatientOverview = props => {
 						</IonGrid>
 						}
 					</IonItem>
+					{!showMore
+					&&
+					<Container>
+						<Row className="justify-content-center">
+							<Col xs="8">
+								<IonButton size="small" expand="block" fill="outline" style={styles.show} onClick={() => setShowMore(true)}>
+									Show more
+								</IonButton>
+							</Col>
+						</Row>
+					</Container>
+					}
 				</IonList>}
             </IonContent>
         </IonPage>
     )
 }
-
 export default PatientOverview;
