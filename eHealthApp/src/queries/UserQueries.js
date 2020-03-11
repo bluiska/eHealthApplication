@@ -9,7 +9,7 @@ UserQueries.getAllPatients = () => {
 	});
 };
 UserQueries.getAllDoctors = () => {
-	BackendAccess.IssueODataRequest({
+	return BackendAccess.IssueODataRequest({
 		requestType: "GET",
 		entityType: "Doctors"
 	});
