@@ -44,34 +44,23 @@ import BloodPressure from "./pages/activity_submission/BloodPressure";
 import Weight from "./pages/activity_submission/Weight";
 
 const App = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
+	<IonApp>
+		<IonReactRouter>
+			<IonRouterOutlet>
+				<Route path="/home" component={Home} exact={true} />
+				<Route exact path="/" render={() => <Redirect to="/home" />} />
 
-        <Route path="/today/patient/:id" component={Today} exact={true} />
-        <Route path="/devices" component={Devices} exact={true} />
-        <Route path="/manualentry" component={ManualEntry} exact={true} />
-        <Route path="/patients/:docid" component={Patients} exact={true} />
-        <Route
-          path="/patientoverview/doctor/:doc/patient/:id"
-          component={PatientOverview}
-        />
-        <Route path="/activity_submission/type/:type" component={Exercise} />
-        <Route
-          path="/blood_pressure_activity_submission"
-          component={BloodPressure}
-          exact={true}
-        />
-        <Route
-          path="/weight_activity_submission"
-          component={Weight}
-          exact={true}
-        />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+				<Route path="/today/patient/:id" component={Today} exact={true} />
+				<Route path="/devices" component={Devices} exact={true} />
+				<Route path="/manualentry" component={ManualEntry} exact={true} />
+				<Route path="/patients/doctor/:docid" component={Patients} exact={true} />
+				<Route path="/patientoverview/doctor/:doc/patient/:id" component={PatientOverview} />
+				<Route path="/activity_submission/type/:type" component={Exercise} />
+				<Route path="/blood_pressure_activity_submission" component={BloodPressure} exact={true} />
+				<Route path="/weight_activity_submission" component={Weight} exact={true} />
+			</IonRouterOutlet>
+		</IonReactRouter>
+	</IonApp>
 );
 
 export default App;
