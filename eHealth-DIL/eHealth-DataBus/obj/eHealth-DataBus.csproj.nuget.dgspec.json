@@ -60,15 +60,15 @@
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.Extensions.Primitives": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
@@ -78,11 +78,11 @@
             },
             "Semiodesk.Trinity": {
               "target": "Package",
-              "version": "[1.0.3.22, )"
+              "version": "[1.0.3.28, )"
             },
             "Semiodesk.Trinity.Virtuoso": {
               "target": "Package",
-              "version": "[1.0.3.22, )"
+              "version": "[1.0.3.28, )"
             }
           },
           "imports": [

@@ -8,6 +8,9 @@ namespace eHealth_DataBus.Models
     public class LegSport : DistanceSport
     {
         public LegSport(Uri uri) : base(uri) { }
+        
+        [JsonConstructor]
+        public LegSport(string uri) : base(new Uri(uri)) { }
 
         [RdfProperty(EHS.steps)]
         public int Steps { get; set; }

@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 02/03/2020 12:54:54
+// Date: 10/03/2020 22:29:41
 
 using System;
 using System.Collections.Generic;
@@ -1447,9 +1447,9 @@ public class ehs : Ontology
 
     ///<summary>
     ///
-    ///<see cref="http://www.ehealth.ie/semantics#commits_to"/>
+    ///<see cref="http://www.ehealth.ie/semantics#committed_by"/>
     ///</summary>
-    public static readonly Property commits_to = new Property(new Uri("http://www.ehealth.ie/semantics#commits_to"));    
+    public static readonly Property committed_by = new Property(new Uri("http://www.ehealth.ie/semantics#committed_by"));    
 
     ///<summary>
     ///
@@ -1599,7 +1599,73 @@ public class ehs : Ontology
     ///
     ///<see cref="http://www.ehealth.ie/semantics#WeightReading"/>
     ///</summary>
-    public static readonly Class WeightReading = new Class(new Uri("http://www.ehealth.ie/semantics#WeightReading"));
+    public static readonly Class WeightReading = new Class(new Uri("http://www.ehealth.ie/semantics#WeightReading"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+    ///</summary>
+    public static readonly Resource TestDoctor_1 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestDoctor-1"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+    ///</summary>
+    public static readonly Resource TestDoctor_2 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestDoctor-2"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-3"/>
+    ///</summary>
+    public static readonly Resource TestDoctor_3 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestDoctor-3"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-1"/>
+    ///</summary>
+    public static readonly Resource TestPatient_1 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-1"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-2"/>
+    ///</summary>
+    public static readonly Resource TestPatient_2 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-2"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-3"/>
+    ///</summary>
+    public static readonly Resource TestPatient_3 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-3"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-4"/>
+    ///</summary>
+    public static readonly Resource TestPatient_4 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-4"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-5"/>
+    ///</summary>
+    public static readonly Resource TestPatient_5 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-5"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-6"/>
+    ///</summary>
+    public static readonly Resource TestPatient_6 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-6"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-7"/>
+    ///</summary>
+    public static readonly Resource TestPatient_7 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-7"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-8"/>
+    ///</summary>
+    public static readonly Resource TestPatient_8 = new Resource(new Uri("http://www.ehealth.ie/semantics#TestPatient-8"));
 }
 ///<summary>
 ///
@@ -1621,9 +1687,9 @@ public static class EHS
 
     ///<summary>
     ///
-    ///<see cref="http://www.ehealth.ie/semantics#commits_to"/>
+    ///<see cref="http://www.ehealth.ie/semantics#committed_by"/>
     ///</summary>
-    public const string commits_to = "http://www.ehealth.ie/semantics#commits_to";
+    public const string committed_by = "http://www.ehealth.ie/semantics#committed_by";
 
     ///<summary>
     ///
@@ -1774,5 +1840,71 @@ public static class EHS
     ///<see cref="http://www.ehealth.ie/semantics#WeightReading"/>
     ///</summary>
     public const string WeightReading = "http://www.ehealth.ie/semantics#WeightReading";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+    ///</summary>
+    public const string TestDoctor_1 = "http://www.ehealth.ie/semantics#TestDoctor-1";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+    ///</summary>
+    public const string TestDoctor_2 = "http://www.ehealth.ie/semantics#TestDoctor-2";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestDoctor-3"/>
+    ///</summary>
+    public const string TestDoctor_3 = "http://www.ehealth.ie/semantics#TestDoctor-3";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-1"/>
+    ///</summary>
+    public const string TestPatient_1 = "http://www.ehealth.ie/semantics#TestPatient-1";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-2"/>
+    ///</summary>
+    public const string TestPatient_2 = "http://www.ehealth.ie/semantics#TestPatient-2";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-3"/>
+    ///</summary>
+    public const string TestPatient_3 = "http://www.ehealth.ie/semantics#TestPatient-3";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-4"/>
+    ///</summary>
+    public const string TestPatient_4 = "http://www.ehealth.ie/semantics#TestPatient-4";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-5"/>
+    ///</summary>
+    public const string TestPatient_5 = "http://www.ehealth.ie/semantics#TestPatient-5";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-6"/>
+    ///</summary>
+    public const string TestPatient_6 = "http://www.ehealth.ie/semantics#TestPatient-6";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-7"/>
+    ///</summary>
+    public const string TestPatient_7 = "http://www.ehealth.ie/semantics#TestPatient-7";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#TestPatient-8"/>
+    ///</summary>
+    public const string TestPatient_8 = "http://www.ehealth.ie/semantics#TestPatient-8";
 }
 }
