@@ -20,24 +20,24 @@ var dummyData = [
     name: "Dr. Daniel",
     ID: "Doctor-1234",
     patients: [
-      { id: "Patient-1234", name: "Daniel" },
-      { id: "Patient-1234", name: "Irek" },
-      { id: "Patient-1234", name: "Andy" },
-      { id: "Patient-1234", name: "Greg" },
-      { id: "Patient-1234", name: "Daniel2" },
-      { id: "Patient-1234", name: "Irek2" },
-      { id: "Patient-1234", name: "Andy2" },
-      { id: "Patient-1234", name: "Greg2" }
+      { id: "Patient-1234", name: "Daniel", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Irek", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Andy", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Greg", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Daniel2", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Irek2", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Andy2", dob: "19/05/1998" },
+      { id: "Patient-1234", name: "Greg2", dob: "19/05/1998" }
     ]
   },
   {
     name: "Dr. Irek",
     ID: "Doctor-5678",
     patients: [
-      { id: "Patient-5678", name: "Sergio" },
-      { id: "Patient-5678", name: "Chris" },
-      { id: "Patient-5678", name: "Margory" },
-      { id: "Patient-5678", name: "Basu" }
+      { id: "Patient-5678", name: "Sergio", dob: "19/05/1998" },
+      { id: "Patient-5678", name: "Chris", dob: "19/05/1998" },
+      { id: "Patient-5678", name: "Margory", dob: "19/05/1998" },
+      { id: "Patient-5678", name: "Basu", dob: "19/05/1998" }
     ]
   }
 ];
@@ -57,7 +57,7 @@ const Patients = props => {
           <IonCardTitle>Patient's Name: {data.patient.name}</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
-          <p>Patient Id: {data.patient.id}</p>
+          <p>Date of birth: {data.patient.dob}</p>
         </IonCardContent>
       </IonCard>
     );
@@ -65,12 +65,10 @@ const Patients = props => {
 
   return (
     <IonPage>
-      {console.log("Rendered!")}
-      <BackButtonToolbar title={"Patients"} />
+      <BackButtonToolbar title={"Assigned Patients"} />
       <IonContent className="ion-padding">
         {doctor && (
           <Fragment>
-            <h2>Assigned Patients</h2>
             {dummyData
               .filter(doc => doc.name === doctor)
               .map((patients, i1) =>

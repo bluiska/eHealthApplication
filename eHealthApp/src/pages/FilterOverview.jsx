@@ -8,7 +8,10 @@ import {
   IonLabel,
   IonList,
   IonItem,
-  IonCheckbox
+  IonCheckbox,
+  IonRadioGroup,
+  IonRadio,
+  IonListHeader
 } from "@ionic/react";
 
 const FilterOverview = props => {
@@ -67,6 +70,30 @@ const FilterOverview = props => {
             ></IonCheckbox>
             <IonLabel style={style.label}>Weight</IonLabel>
           </IonItem>
+        </IonList>
+        <IonList>
+          <IonRadioGroup
+            onClick={e => props.setSelectedDateFilterHandler(e.target.value)}
+          >
+            <IonListHeader>
+              <IonLabel>Upload Date</IonLabel>
+            </IonListHeader>
+
+            <IonItem>
+              <IonRadio slot="start" value="7 days" />
+              <IonLabel>Last 7 days</IonLabel>
+            </IonItem>
+
+            <IonItem>
+              <IonRadio slot="start" value="14 days" />
+              <IonLabel>Last 14 days</IonLabel>
+            </IonItem>
+
+            <IonItem>
+              <IonRadio slot="start" value="30 days" />
+              <IonLabel>Last 30 days</IonLabel>
+            </IonItem>
+          </IonRadioGroup>
         </IonList>
       </IonContent>
       <IonFooter>
