@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 10/03/2020 22:29:41
+// Date: 12/03/2020 18:22:17
 
 using System;
 using System.Collections.Generic;
@@ -1465,6 +1465,12 @@ public class ehs : Ontology
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#birthdate"/>
+    ///</summary>
+    public static readonly Property birthdate = new Property(new Uri("http://www.ehealth.ie/semantics#birthdate"));    
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#calories_burnt"/>
     ///</summary>
     public static readonly Property calories_burnt = new Property(new Uri("http://www.ehealth.ie/semantics#calories_burnt"));    
@@ -1483,15 +1489,33 @@ public class ehs : Ontology
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#email"/>
+    ///</summary>
+    public static readonly Property email = new Property(new Uri("http://www.ehealth.ie/semantics#email"));    
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#end_time"/>
     ///</summary>
     public static readonly Property end_time = new Property(new Uri("http://www.ehealth.ie/semantics#end_time"));    
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#gender"/>
+    ///</summary>
+    public static readonly Property gender = new Property(new Uri("http://www.ehealth.ie/semantics#gender"));    
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#name"/>
     ///</summary>
     public static readonly Property name = new Property(new Uri("http://www.ehealth.ie/semantics#name"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#password"/>
+    ///</summary>
+    public static readonly Property password = new Property(new Uri("http://www.ehealth.ie/semantics#password"));    
 
     ///<summary>
     ///
@@ -1522,6 +1546,12 @@ public class ehs : Ontology
     ///<see cref="http://www.ehealth.ie/semantics#timestamp"/>
     ///</summary>
     public static readonly Property timestamp = new Property(new Uri("http://www.ehealth.ie/semantics#timestamp"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#username"/>
+    ///</summary>
+    public static readonly Property username = new Property(new Uri("http://www.ehealth.ie/semantics#username"));    
 
     ///<summary>
     ///
@@ -1705,6 +1735,12 @@ public static class EHS
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#birthdate"/>
+    ///</summary>
+    public const string birthdate = "http://www.ehealth.ie/semantics#birthdate";
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#calories_burnt"/>
     ///</summary>
     public const string calories_burnt = "http://www.ehealth.ie/semantics#calories_burnt";
@@ -1723,15 +1759,33 @@ public static class EHS
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#email"/>
+    ///</summary>
+    public const string email = "http://www.ehealth.ie/semantics#email";
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#end_time"/>
     ///</summary>
     public const string end_time = "http://www.ehealth.ie/semantics#end_time";
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#gender"/>
+    ///</summary>
+    public const string gender = "http://www.ehealth.ie/semantics#gender";
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#name"/>
     ///</summary>
     public const string name = "http://www.ehealth.ie/semantics#name";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#password"/>
+    ///</summary>
+    public const string password = "http://www.ehealth.ie/semantics#password";
 
     ///<summary>
     ///
@@ -1762,6 +1816,12 @@ public static class EHS
     ///<see cref="http://www.ehealth.ie/semantics#timestamp"/>
     ///</summary>
     public const string timestamp = "http://www.ehealth.ie/semantics#timestamp";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#username"/>
+    ///</summary>
+    public const string username = "http://www.ehealth.ie/semantics#username";
 
     ///<summary>
     ///

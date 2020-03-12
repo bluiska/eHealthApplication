@@ -58,6 +58,12 @@
     
 
 
+    <!-- http://www.ehealth.ie/semantics#birthdate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#birthdate"/>
+    
+
+
     <!-- http://www.ehealth.ie/semantics#calories_burnt -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#calories_burnt">
@@ -80,6 +86,12 @@
     
 
 
+    <!-- http://www.ehealth.ie/semantics#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#email"/>
+    
+
+
     <!-- http://www.ehealth.ie/semantics#end_time -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#end_time">
@@ -88,9 +100,21 @@
     
 
 
+    <!-- http://www.ehealth.ie/semantics#gender -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#gender"/>
+    
+
+
     <!-- http://www.ehealth.ie/semantics#name -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#name"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#password -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#password"/>
     
 
 
@@ -125,6 +149,12 @@
     <!-- http://www.ehealth.ie/semantics#timestamp -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#timestamp"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#username -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#username"/>
     
 
 
@@ -307,7 +337,42 @@
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#User">
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#birthdate"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#email"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#gender"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#password"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#username"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>

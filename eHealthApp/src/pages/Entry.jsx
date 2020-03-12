@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { IonHeader, IonContent, IonButton, IonCard, IonCardContent, IonCardHeader, IonInput, IonCardTitle, IonToolbar, IonIcon, IonItem, IonLabel, IonTitle, IonItemGroup, IonSlides, IonSlide, IonModal } from '@ionic/react';
+import { IonHeader, IonContent, IonButton, IonCard, IonCardContent, IonCardHeader, IonToast, IonInput, IonCardTitle, IonToolbar, IonIcon, IonItem, IonLabel, IonTitle, IonItemGroup, IonSlides, IonSlide, IonModal } from '@ionic/react';
 
 import RegistrationModal from '../components/RegistrationModal';
 import './Entry.css'
 
 const Entry = () => {
   const [showModal, setShowModal] = useState(false);
+  const [toastIsShown, setToastIsShown] = useState(false);
 
-  async function closeModal() {
+  async function closeModal(state) {
     await setShowModal(false);
+    if(state) await setToastIsShown(true);
   }
 
   return (
@@ -16,6 +18,11 @@ const Entry = () => {
     <IonModal isOpen={showModal}>
       <RegistrationModal closeAction={closeModal}></RegistrationModal>
     </IonModal>
+    <IonToast
+      isOpen={toastIsShown}
+      onDidDismiss={() => setToastIsShown(false)}
+      message="Registration successful!"
+      duration={3000} />
     <IonHeader>
       <IonToolbar>
           <IonTitle>E-Health</IonTitle>

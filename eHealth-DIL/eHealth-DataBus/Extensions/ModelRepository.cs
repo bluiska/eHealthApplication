@@ -36,13 +36,12 @@ namespace eHealth_DataBus.Extensions
         public void Create(TEntity obj)
         {
             _dbt.DefaultModel.AddResource(obj);
-            obj.Commit();
         }
 
         public void Update(TEntity obj)
         {
+            obj.IsNew = false;
             _dbt.DefaultModel.UpdateResource(obj);
-            obj.Commit();
         }
 
         public void Delete(Uri uri)

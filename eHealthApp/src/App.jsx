@@ -41,6 +41,7 @@ import Patients from './pages/Patients';
 import Exercise from './pages/activity_submission/Exercise';
 import BloodPressure from './pages/activity_submission/BloodPressure';
 import Weight from './pages/activity_submission/Weight';
+import PatientOverview from './pages/PatientOverview';
 import Entry from './pages/Entry';
 
 const App = () => (
