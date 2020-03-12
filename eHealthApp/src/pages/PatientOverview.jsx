@@ -196,4 +196,4 @@ const PatientOverview = props => {
         </IonPage>
     )
 }
-export default PatientOverview;
+export default PatientOverview; 
