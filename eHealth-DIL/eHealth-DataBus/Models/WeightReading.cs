@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Semiodesk.Trinity;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public WeightReading(string uri) : base(new Uri(uri)) { }
 
-        [RdfProperty(EHS.weight)]
-        public double Weight { get; set; }
+        [Required, RdfProperty(EHS.weight)]
+        public double? Weight { get; set; }
     }
 }

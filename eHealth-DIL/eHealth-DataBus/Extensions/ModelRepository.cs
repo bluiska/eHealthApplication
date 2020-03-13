@@ -51,12 +51,7 @@ namespace eHealth_DataBus.Extensions
 
         public void Delete(Uri uri)
         {
-            /* Usually IDs are auto-generated on the DIL in the ModelFormatter class but
-             * this is to ensure that exactly the entities of a certain class will be
-             * deleted. ID pattern: [Class name]-[Timestamp]
-             */
-            if(uri.ToString().Contains(typeof(T).Name))
-                _dbt.DefaultModel.DeleteResource(uri);
+            _dbt.DefaultModel.DeleteResource(uri);
         }
     }
 }
