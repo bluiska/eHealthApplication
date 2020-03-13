@@ -19,8 +19,7 @@ import {
   IonButton,
   IonToolbar,
   IonCardHeader,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent
+  IonSpinner
 } from "@ionic/react";
 import { heart, options } from "ionicons/icons";
 import BackButtonToolbar from "../components/BackButtonToolbar";
@@ -165,7 +164,9 @@ const PatientOverview = props => {
   searchDate.setDate(todaysDate.getDate() - counter);
 
   const [selectedFilter, setSelectedFilter] = useState([]);
-  const [selectedDateFilter, setSelectedDateFilterHandler] = useState("");
+  const [selectedDateFilter, setSelectedDateFilterHandler] = useState(
+    new Date("1970-01-01Z00:00:00:000")
+  );
   const [displayFilter, setDisplayFilter] = useState(false);
 
   const dataForToday = userData.filter(
@@ -177,6 +178,7 @@ const PatientOverview = props => {
   const [restOfTheData, setRestOFTheData] = useState([]);
 
   const [dates, setDates] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const styles = {
     activity: {
@@ -203,6 +205,11 @@ const PatientOverview = props => {
       width: "60%",
       margin: "0 auto",
       marginTop: "7%"
+    },
+    loadingSpinner: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     }
   };
 
@@ -261,18 +268,32 @@ const PatientOverview = props => {
   };
 
   const loadMoreData = () => {
+    setLoading(true);
     const results = moreData.filter(
       val => val.date === searchDate.toDateString()
     ); // the api call to the backend show be made here
-    console.log(results);
     if (results.length !== 0) {
       setDates([...dates, searchDate.toDateString()]);
+      setRestOFTheData([...restOfTheData, ...results]);
     }
-
-    setRestOFTheData([...restOfTheData, ...results]);
+    setLoading(false);
     setCounter(counter + 1);
     searchDate.setDate(todaysDate.getDate() - counter);
   };
+
+  function filterYear(date) {
+    // ((new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) <= todaysDate)
+    // && (new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) > selectedDateFilter))
+
+    const dateArray = date.split(" ");
+    console.log(dateArray);
+    const dateObj = new Date(dateArray[3], 2, dateArray[2]);
+    console.log("OBJ DATE:", dateObj);
+
+    console.log("SELECTED DATE:", selectedDateFilter);
+
+    return dateObj > selectedDateFilter;
+  }
 
   return (
     <IonPage>
@@ -294,11 +315,12 @@ const PatientOverview = props => {
         )}
       </IonToolbar>
       <IonContent className="ion-padding">
-        {console.log(selectedDateFilter)}
+        {console.log("DATEFILTER PO: ", selectedDateFilter)}
         {displayFilter && (
           <FilterOverview
-            setSelectedDateFilterHandler={setSelectedDateFilterHandler}
+            selectedDateFilter={selectedDateFilter}
             selectedFilter={selectedFilter}
+            setSelectedDateFilterHandler={setSelectedDateFilterHandler}
             setSelectedFilterHandler={setSelectedFilterHandler}
             setDisplayFilter={setDisplayFilter}
           />
@@ -361,26 +383,34 @@ const PatientOverview = props => {
 									</IonGrid>
 								</IonItem>	
 							} */}
-
+            {console.log("Selected Year: ", selectedDateFilter)}
+            {/* {console.log("Today: ", todaysDate.getUTCFullYear())} */}
             {dates.length !== 0 &&
               dates.map((date, index) => (
                 <IonItem key={index}>
+                  {console.log(restOfTheData[0].date.split(" "))}
                   <IonGrid>
-                    {console.log(date.substring(0, date.length - 5))}
                     <IonTitle>{date.substring(0, date.length - 5)}</IonTitle>
+                    {console.log(todaysDate)}
                     {restOfTheData
                       .filter(
                         val =>
                           selectedFilter.includes(val.name) ||
                           selectedFilter.length === 0
                       )
-                      .filter(v => v.date === date)
+                      .filter(v => v.date === date && filterYear(v.date))
                       .map(data => (
                         <RecordCard index={data.id} key={data.id} data={data} />
                       ))}
                   </IonGrid>
                 </IonItem>
               ))}
+
+            {loading && (
+              <div style={styles.loadingSpinner}>
+                <IonSpinner name="crescent" />
+              </div>
+            )}
 
             <Container>
               <Row className="justify-content-center">

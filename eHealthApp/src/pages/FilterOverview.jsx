@@ -20,6 +20,16 @@ const FilterOverview = props => {
       marginLeft: "20px"
     }
   };
+  const todaysDate = new Date();
+
+  let sevenDaysDate = new Date(todaysDate);
+  sevenDaysDate.setDate(todaysDate.getDate() - 7);
+
+  let fourteenDaysDate = new Date(todaysDate);
+  fourteenDaysDate.setDate(todaysDate.getDate() - 14);
+
+  let thirtyDaysDate = new Date(todaysDate);
+  thirtyDaysDate.setDate(todaysDate.getDate() - 30);
 
   return (
     <IonPage>
@@ -71,26 +81,28 @@ const FilterOverview = props => {
             <IonLabel style={style.label}>Weight</IonLabel>
           </IonItem>
         </IonList>
+
         <IonList>
           <IonRadioGroup
+            value={props.selectedDateFilter}
             onClick={e => props.setSelectedDateFilterHandler(e.target.value)}
           >
             <IonListHeader>
               <IonLabel>Upload Date</IonLabel>
             </IonListHeader>
-
+            {console.log("DATEFILTER FO: ", props.selectedDateFilter)}
             <IonItem>
-              <IonRadio slot="start" value="7 days" />
+              <IonRadio slot="start" value={sevenDaysDate} />
               <IonLabel>Last 7 days</IonLabel>
             </IonItem>
 
             <IonItem>
-              <IonRadio slot="start" value="14 days" />
+              <IonRadio slot="start" value={fourteenDaysDate} />
               <IonLabel>Last 14 days</IonLabel>
             </IonItem>
 
             <IonItem>
-              <IonRadio slot="start" value="30 days" />
+              <IonRadio slot="start" value={thirtyDaysDate} />
               <IonLabel>Last 30 days</IonLabel>
             </IonItem>
           </IonRadioGroup>
