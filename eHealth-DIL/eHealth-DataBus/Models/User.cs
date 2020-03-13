@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Semiodesk.Trinity;
 
@@ -12,7 +13,7 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public User(string uri) : base(new Uri(uri)) { }
 
-        [RdfProperty(EHS.name)]
+        [Required, RdfProperty(EHS.name)]
         public string Name { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Semiodesk.Trinity;
 using Newtonsoft.Json;
 
@@ -12,10 +13,10 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public BloodPressureReading(string uri) : base(new Uri(uri)) { }
 
-        [RdfProperty(EHS.diastolic_pressure)]
-        public double DiastolicPressure { get; set; }
+        [Required, RdfProperty(EHS.diastolic_pressure)]
+        public double? DiastolicPressure { get; set; }
 
-        [RdfProperty(EHS.systolic_pressure)]
-        public double SystolicPressure { get; set; }
+        [Required, RdfProperty(EHS.systolic_pressure)]
+        public double? SystolicPressure { get; set; }
     }
 }

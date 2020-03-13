@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Semiodesk.Trinity;
 
@@ -12,11 +13,11 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public Activity(string uri) : base(new Uri(uri)) { }
 
-        [RdfProperty(EHS.name)]
+        [Required, RdfProperty(EHS.name)]
         public string Name { get; set; }
 
-        [RdfProperty(EHS.timestamp)]
-        public DateTime Timestamp { get; set; }
+        [Required, RdfProperty(EHS.timestamp)]
+        public DateTime? Timestamp { get; set; }
 
         [RdfProperty(EHS.committed_by)]
         public Patient Patient { get; set; }
