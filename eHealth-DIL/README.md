@@ -62,8 +62,7 @@ To specify the relationship from one entity to another, it must be specified as 
 {
     "Name": "Dr. Max Mustermann"
     "Patients": [{
-        "Uri": "www.ehealth.ie/semantics#Patient-123456789"
+        "ID": "Patient-123456789"
     }]
 }
 ```
-Note that the relationship has used the URI instead of the ID. It is due to the face that the ID is a subset of the URI which begins after the hashtag symbol. The intention of using IDs instead of specifying the full URI is to reduce the need of writing and let the backend logic automatically handle the URI identification based on the ID. However, it is currently not possible to change the way of relating one entity to another by IDs since the Trinity library is maintained by Semiodesk.
