@@ -11,7 +11,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("Walkings")]
     public class WalkingsController : ODataController
     {
-        private readonly ModelRepository<Walking> repo;
+        private readonly IRepository<Walking> repo;
         private readonly ModelFormatter<Walking> shaper;
 
         public WalkingsController(DbContextTrinity trinity)
