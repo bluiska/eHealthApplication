@@ -11,7 +11,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("Doctors")]
     public class DoctorsController : ODataController
     {
-        private readonly ModelRepository<Doctor> repo;
+        private readonly IRepository<Doctor> repo;
         private readonly ModelFormatter<Doctor> shaper;
 
         public DoctorsController(DbContextTrinity trinity)

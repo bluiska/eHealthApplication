@@ -10,17 +10,24 @@ using Semiodesk.Trinity.Store.Virtuoso;
 
 namespace eHealth_DataBus.Extensions
 {
+    /// <summary>
+    /// The DbContextTrinity class creates a Data Access Layer for the business model.
+    /// </summary>
     public class DbContextTrinity
     {
-        public IStore Store { get { return StoreFactory.CreateStore(_connectionString); } }
-
+        /// <summary>Contains the credentials of connecting to the Virtuoso database.</summary>
         private string _connectionString = "provider=virtuoso;host=127.0.0.1;port=1111;uid=dba;pw=dba;rule=urn:example/ruleset";
-        public IModel DefaultModel { get { return Store.GetModel(_defaultModelUri); } }
 
+        /// <summary>Contains the URI of an Ontology stored in the Virtuoso database.</summary>
         Uri _defaultModelUri = new Uri("http://www.ehealth.ie/semantics");
 
-        public DbContextTrinity() {}
+        /// <summary>Attempts a connection to the Virtuoso database.</summary>
+        public IStore Store { get { return StoreFactory.CreateStore(_connectionString); } }
 
+        /// <summary>Retrieves the Ontology from Virtuoso.</summary>
+        public IModel DefaultModel { get { return Store.GetModel(_defaultModelUri); } }
+
+        /// <summary>Activates the interaction between the Trinity library and an active Virtuoso database.</summary>
         public void Initialise()
         {
             StoreFactory.LoadProvider<VirtuosoStoreProvider>();
@@ -29,6 +36,8 @@ namespace eHealth_DataBus.Extensions
             MappingDiscovery.RegisterCallingAssembly();
         }
 
+        /// <summary>Builds the Entity-Data-Model for enabling OData.</summary>
+        /// <returns>The EDM constructed for enabling OData capabilities.</returns>
         public static IEdmModel GetEdmModel()
         {
             // Set up Entity Data Model for OData
@@ -38,6 +47,8 @@ namespace eHealth_DataBus.Extensions
             return builder.GetEdmModel();
         }
 
+        /// <summary>Registers the references of every entity of the business model in the EDM.</summary>
+        /// <param name="b">Reference of the EDM.</param>
         private static void SetEntitySets(ODataConventionModelBuilder b)
         {
             b.EntitySet<Master>("Masters");

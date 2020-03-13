@@ -11,7 +11,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("BloodPressureReadings")]
     public class BloodPressureReadingsController : ODataController
     {
-        private readonly ModelRepository<BloodPressureReading> repo;
+        private readonly IRepository<BloodPressureReading> repo;
         private readonly ModelFormatter<BloodPressureReading> shaper;
 
         public BloodPressureReadingsController(DbContextTrinity trinity)

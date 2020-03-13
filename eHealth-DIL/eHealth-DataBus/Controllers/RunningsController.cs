@@ -11,7 +11,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("Runnings")]
     public class RunningsController : ODataController
     {
-        private readonly ModelRepository<Running> repo;
+        private readonly IRepository<Running> repo;
         private readonly ModelFormatter<Running> shaper;
 
         public RunningsController(DbContextTrinity trinity)
