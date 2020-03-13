@@ -12,7 +12,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("Activities")]
     public class ActivitiesController : ODataController
     {
-        private readonly ModelRepository<Activity> repo;
+        private readonly IRepository<Activity> repo;
 
         public ActivitiesController(DbContextTrinity trinity)
         {

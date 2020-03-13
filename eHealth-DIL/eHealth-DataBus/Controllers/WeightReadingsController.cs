@@ -11,7 +11,7 @@ namespace eHealth_DataBus.Controllers
     [ODataRoutePrefix("WeightReadings")]
     public class WeightReadingsController : ODataController
     {
-        private readonly ModelRepository<WeightReading> repo;
+        private readonly IRepository<WeightReading> repo;
         private readonly ModelFormatter<WeightReading> shaper;
 
         public WeightReadingsController(DbContextTrinity trinity)
