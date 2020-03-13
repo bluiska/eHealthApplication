@@ -13,11 +13,13 @@ namespace eHealth_DataBus.Controllers
     {
         private readonly IRepository<Patient> repo;
         private readonly ModelFormatter<Patient> shaper;
+        private readonly ModelValidator<Patient> checker;
 
         public PatientsController(DbContextTrinity trinity)
         {
             repo = new ModelRepository<Patient>(trinity);
             shaper = new ModelFormatter<Patient>(trinity);
+            checker = new ModelValidator<Patient>();
         }
 
         [EnableQuery]
@@ -26,27 +28,55 @@ namespace eHealth_DataBus.Controllers
             return repo.Read();
         }
 
-        public void Post([FromBody] Object obj)
+        public IActionResult Post([FromBody] Object obj)
         {
-            repo.Create(shaper.FormatObject(obj));
+            var resource = shaper.FormatObject(obj);
+            if (checker.ValidateModel(resource))
+            {
+                repo.Create(resource);
+                return Created(resource);
+            }
+
+            return BadRequest();
         }
 
         [ODataRoute("{uri_id}")]
-        public void Put([FromBody] Object obj, [FromODataUri] string uri_id)
+        public IActionResult Put([FromBody] Object obj, [FromODataUri] string uri_id)
         {
-            repo.Update(shaper.FormatObject(obj, uri_id));
+            var resource = shaper.FormatObject(obj);
+            if (checker.ValidateModel(resource))
+            {
+                repo.Update(shaper.FormatObject(obj, uri_id));
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [ODataRoute("{uri_id}")]
-        public void Patch([FromBody] Object obj, [FromODataUri] string uri_id)
+        public IActionResult Patch([FromBody] Object obj, [FromODataUri] string uri_id)
         {
-            repo.Update(shaper.FormatObject(obj, uri_id));
+            var resource = shaper.FormatObject(obj);
+            if (checker.ValidateModel(resource))
+            {
+                repo.Update(shaper.FormatObject(obj, uri_id));
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [ODataRoute("{uri_id}")]
-        public void Delete([FromODataUri] string uri_id)
+        public IActionResult Delete([FromODataUri] string uri_id)
         {
-            repo.Delete(shaper.GetObjectUriByID(uri_id));
+            var resource = shaper.GetObjectUriByID(uri_id);
+            if (checker.ValidateModelByUri(resource))
+            {
+                repo.Delete(resource);
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }
