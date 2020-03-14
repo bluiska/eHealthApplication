@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 14/03/2020 13:27:26
+// Date: 14/03/2020 17:53:50
 
 using System;
 using System.Collections.Generic;
@@ -1465,12 +1465,6 @@ public class ehs : Ontology
 
     ///<summary>
     ///
-    ///<see cref="http://www.ehealth.ie/semantics#birthdate"/>
-    ///</summary>
-    public static readonly Property birthdate = new Property(new Uri("http://www.ehealth.ie/semantics#birthdate"));
-
-    ///<summary>
-    ///
     ///<see cref="http://www.ehealth.ie/semantics#calories_burnt"/>
     ///</summary>
     public static readonly Property calories_burnt = new Property(new Uri("http://www.ehealth.ie/semantics#calories_burnt"));
@@ -1486,6 +1480,12 @@ public class ehs : Ontology
     ///<see cref="http://www.ehealth.ie/semantics#distance"/>
     ///</summary>
     public static readonly Property distance = new Property(new Uri("http://www.ehealth.ie/semantics#distance"));
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#dob"/>
+    ///</summary>
+    public static readonly Property dob = new Property(new Uri("http://www.ehealth.ie/semantics#dob"));
 
     ///<summary>
     ///
@@ -1510,12 +1510,6 @@ public class ehs : Ontology
     ///<see cref="http://www.ehealth.ie/semantics#name"/>
     ///</summary>
     public static readonly Property name = new Property(new Uri("http://www.ehealth.ie/semantics#name"));
-
-    ///<summary>
-    ///
-    ///<see cref="http://www.ehealth.ie/semantics#password"/>
-    ///</summary>
-    public static readonly Property password = new Property(new Uri("http://www.ehealth.ie/semantics#password"));
 
     ///<summary>
     ///
@@ -1546,12 +1540,6 @@ public class ehs : Ontology
     ///<see cref="http://www.ehealth.ie/semantics#timestamp"/>
     ///</summary>
     public static readonly Property timestamp = new Property(new Uri("http://www.ehealth.ie/semantics#timestamp"));
-
-    ///<summary>
-    ///
-    ///<see cref="http://www.ehealth.ie/semantics#username"/>
-    ///</summary>
-    public static readonly Property username = new Property(new Uri("http://www.ehealth.ie/semantics#username"));
 
     ///<summary>
     ///
@@ -1756,6 +1744,12 @@ public static class EHS
     ///<see cref="http://www.ehealth.ie/semantics#distance"/>
     ///</summary>
     public const string distance = "http://www.ehealth.ie/semantics#distance";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#dob"/>
+    ///</summary>
+    public const string dob = "http://www.ehealth.ie/semantics#dob";
 
     ///<summary>
     ///
