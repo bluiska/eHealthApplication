@@ -8,72 +8,66 @@ Author: Gergo Kekesi
 
 import React from "react";
 import {
-  IonPage,
-  IonContent,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonFabList,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonImg
+	IonPage,
+	IonContent,
+	IonFab,
+	IonFabButton,
+	IonIcon,
+	IonFabList,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonCardContent,
+	IonImg
 } from "@ionic/react";
 
 import { sync, add } from "ionicons/icons";
 import pencil from "../resources/pencil.png";
 import "./Today.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
+import { withRouter } from "react-router-dom";
 
 /*props:
  */
 const Today = props => {
-  return (
-    <IonPage>
-      <BackButtonToolbar title="Today: Activities" />
-      <IonContent className="ion-padding">
-        {/*Activity*/}
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>No activity today</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <p>
-              No activity for today. Synchronize your devices or add an entry
-              manually using the plus button below.
-            </p>
-          </IonCardContent>
-        </IonCard>
+	const patientId = props.match.params.patientid || "unknown";
 
-        {/*Floating action button*/}
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton color="secondary">
-            <IonIcon icon={add} />
-          </IonFabButton>
+	return (
+		<IonPage>
+			<BackButtonToolbar title="Today: Activities" />
+			<IonContent className="ion-padding">
+				{/*Activity*/}
+				<IonCard>
+					<IonCardHeader>
+						<IonCardTitle>No activity today</IonCardTitle>
+					</IonCardHeader>
+					<IonCardContent>
+						<p>No activity for today. Synchronize your devices or add an entry manually using the plus button below.</p>
+					</IonCardContent>
+				</IonCard>
 
-          <IonFabList side="top">
-            <IonFabButton
-              color="tertiary"
-              routerDirection="forward"
-              routerLink="/devices"
-              data-desc="Synchronize"
-            >
-              <IonIcon icon={sync} />
-            </IonFabButton>
-            <IonFabButton
-              color="tertiary"
-              routerDirection="forward"
-              routerLink="/manualentry"
-              data-desc="Manual entry"
-            >
-              <IonImg src={pencil} style={{ width: "20px", height: "20px" }} />
-            </IonFabButton>
-          </IonFabList>
-        </IonFab>
-      </IonContent>
-    </IonPage>
-  );
+				{/*Floating action button*/}
+				<IonFab vertical="bottom" horizontal="end" slot="fixed">
+					<IonFabButton color="secondary">
+						<IonIcon icon={add} />
+					</IonFabButton>
+
+					<IonFabList side="top">
+						<IonFabButton color="tertiary" routerDirection="forward" routerLink="/devices" data-desc="Synchronize">
+							<IonIcon icon={sync} />
+						</IonFabButton>
+						<IonFabButton
+							color="tertiary"
+							routerDirection="forward"
+							routerLink={"/manualentry/patient/" + patientId}
+							data-desc="Manual entry">
+							<IonImg src={pencil} style={{ width: "20px", height: "20px" }} />
+						</IonFabButton>
+					</IonFabList>
+				</IonFab>
+			</IonContent>
+		</IonPage>
+	);
 };
 
-export default Today;
+export default withRouter(Today);
