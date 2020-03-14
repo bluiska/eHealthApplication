@@ -62,8 +62,9 @@ To specify the relationship from one entity to another, it must be specified as 
 {
     "Name": "Dr. Max Mustermann"
     "Patients": [{
-        "Uri": "www.ehealth.ie/semantics#Patient-123456789"
+        "ID": "Patient-123456789"
     }]
 }
 ```
-Note that the relationship has used the URI instead of the ID. It is due to the face that the ID is a subset of the URI which begins after the hashtag symbol. The intention of using IDs instead of specifying the full URI is to reduce the need of writing and let the backend logic automatically handle the URI identification based on the ID. However, it is currently not possible to change the way of relating one entity to another by IDs since the Trinity library is maintained by Semiodesk.
+## 6. Integration Testing
+To consume OData, the DIL's endpoint (https://localhost:5001/odata) must be specified on an OData Client. Services like SAP's open-source Web Framework [OpenUI5 (JavaScript)](https://openui5.org/), [o.js (JavaScript)](https://github.com/janhommes/o.js), or [Simple.OData.Client (C#)](https://github.com/simple-odata-client/Simple.OData.Client) have built-in OData client capabilities that take advantage of the OData metadata in order to unleash its full data management potential. However, since the DIL is developed in ASP.NET Core, the Web API remains as a viable backdrop option since OData is an extension to it. The frontend application of the eHealth system uses o.js for consuming OData. Refer to the documentation of the example services mentioned in this section that detail the means of consuming OData.

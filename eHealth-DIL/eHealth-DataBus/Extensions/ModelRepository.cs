@@ -2,52 +2,56 @@
 using System.Collections.Generic;
 using System.Linq;
 using eHealth_DataBus.Models;
+using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Extensions
 {
-    public class ModelRepository<TEntity> : IRepository<TEntity> where TEntity : Master
+    /// <summary>The ModelRepository is a class that implements the IRepository interface for embodying the Repository Pattern.</summary>
+    /// <typeparam name="T">T represents the Master class which is a subclass of the Resource class.</typeparam>
+    public class ModelRepository<T> : IRepository<T> where T : Master
     {
-        internal DbContextTrinity _dbt;
+        /// <summary>References the model responsible for enforcing CRUD operations against the Virtuoso database.</summary>
+        internal IModel _dbt;
 
-        public ModelRepository(DbContextTrinity trinity)
+        /// <summary>Default constructor of the ModelRepository class</summary>
+        /// <param name="trinity">References the instance of an ontology which enables the data binding capabilities with Virtuoso.</param>
+        public ModelRepository(IModel trinity)
         {
             _dbt = trinity;
         }
 
-        public IEnumerable<TEntity> Read()
+        public IEnumerable<T> Read()
         {
-            var items = _dbt.DefaultModel
-                            .GetResources<TEntity>(true)
-                            .ToList();
-
-            foreach (var item in items)
-            {
-                if (item.ID == null)
-                {
-                    var uri = item.Uri.ToString();
-                    var separatorIndex = uri.IndexOf("#");
-                    item.ID = uri.Substring(separatorIndex + 1);
-                }
-            }
-
-            return items;
+            // Retrieves a list of every instance related to class T.
+            return _dbt.GetResources<T>(true)
+                       .ToList();
         }
 
-        public void Create(TEntity obj)
+        public void Create(T obj)
         {
-            _dbt.DefaultModel.AddResource(obj);
-            obj.Commit();
+            // Persists a new instance on the database
+            _dbt.AddResource(obj);
         }
 
-        public void Update(TEntity obj)
+        public void Update(T obj)
         {
-            _dbt.DefaultModel.UpdateResource(obj);
+            _dbt.UpdateResource(obj);
+
+            /* According to Semiodesk, the Commit() function is not necessary for persisting
+             * the changes on the backend as it is already calling UpdateResource().
+             * However, the UpdateResource() function itself is slightly erroneous and I
+             * have raised this issue and it aware with the developers responsible for
+             * Trinity for fixing the bus. For now, the .Commit() function is required for
+             * seeing the changes on the OData layer. The minor error is that the changed
+             * data will be adding a new property to a model instead of overwriting it on
+             * the DB side. Link: https://github.com/semiodesk/trinity-rdf/issues/7
+             */
             obj.Commit();
         }
 
         public void Delete(Uri uri)
         {
-            _dbt.DefaultModel.DeleteResource(uri);
+            _dbt.DeleteResource(uri);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace eHealth_DataBus
                         .AllowCredentials();
                 });
             });
+
             services.AddMvcCore(action => action.EnableEndpointRouting = false);
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
