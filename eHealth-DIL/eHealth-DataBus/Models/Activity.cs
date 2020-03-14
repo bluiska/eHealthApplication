@@ -13,9 +13,6 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public Activity(string uri) : base(new Uri(uri)) { }
 
-        [Required, RdfProperty(EHS.name)]
-        public string Name { get; set; }
-
         [Required, RdfProperty(EHS.timestamp)]
         public DateTime? Timestamp { get; set; }
 
