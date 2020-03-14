@@ -1,31 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using eHealth_DataBus.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Extensions
 {
-    public class ModelFormatter<T> where T : Resource
+    /// <summary>The ModelFormatter class is responsible for data transformation which translates a simple JSON into a Trinity-compliant object.</summary>
+    /// <typeparam name="T">Represents an instance of an RDF class in Virtuoso.</typeparam>
+    public class ModelFormatter<T> where T : Master
     {
         private readonly string uri, classType;
-        public ModelFormatter(DbContextTrinity trinity)
+
+        /// <summary>The default constructor of the ModelFormatter class.</summary>
+        /// <param name="trinity_uri">The Uri of the Ontology that namespaces every entity related to it.</param>
+        public ModelFormatter(string trinity_uri)
         {
             classType = typeof(T).Name;
-            uri = trinity.DefaultModel.Uri.AbsoluteUri;
+            uri = trinity_uri;
         }
 
-        //public T FormatObject(dynamic obj)
-        //{
-        //    // Add a URI ID to the new Object
-        //    obj.uri = $"{uri}#{classType}_{DateTime.Now.ToString("HHmmss_ddMMyyyy")}";
-        //    return obj.ToObject<T>();
-        //}
-
+        /// <summary>Formats a new instance for a Read operation by auto-generating a URI for it.</summary>
+        /// <param name="obj">Represents the new instance.</param>
+        /// <returns>Returns the new instance as its actual class.</returns>
         public T FormatObject(dynamic obj)
         {
             // Add a URI ID to the new Object
@@ -35,23 +32,36 @@ namespace eHealth_DataBus.Extensions
             return obj.ToObject<T>();
         }
 
+        /// <summary>Formats an existing instance for an Update operation by appending the Ontology URI to its ID.</summary>
+        /// <param name="obj">Represents the instance that needs to be changed.</param>
+        /// <param name="uri_id">Represents the ID of the instance.</param>
+        /// <returns>Returns the changed instance as its actual class.</returns>
         public T FormatObject(dynamic obj, string uri_id)
         {
             obj = PortIdToUri(obj, GetObjectReference(uri_id));
             return obj.ToObject<T>();
         }
 
+        /// <summary>Retrieves an existing instance's URI by its ID.</summary>
+        /// <param name="uri_id">Represents the ID of the instance.</param>
+        /// <returns>Returns the full URI of the instance.</returns>
         public Uri GetObjectUriByID(string uri_id)
         {
             // Take the URI ID to retrieve the URI of the object
             return new Uri(GetObjectReference(uri_id));
         }
 
+        /// <summary>Constructs the URI of an existing instance's URI by its ID.</summary>
+        /// <param name="uri_id">Represents the ID of the instance.</param>
+        /// <returns>Returns the full URI of the instance in string representation.</returns>
         public string GetObjectReference(string uri_id)
         {
             return $"{uri}#{uri_id}";
         }
 
+        /// <summary>Transforms an instance that needs to be linked to another one by ID instead of URI.</summary>
+        /// <param name="obj">Represents the instance.</param>
+        /// <returns>Returns the transformed instance.</returns>
         public dynamic PortIdToUri(dynamic obj, string absoluteUri)
         {
             var objAsDict = new Dictionary<string, object>();
@@ -73,6 +83,9 @@ namespace eHealth_DataBus.Extensions
             return JObject.Parse(dictAsObj);
         }
 
+        /// <summary>Searches for IDs in the list of other existing instances that a changing instance wants to be linked to and rewrites the ID into URI in order to be compliant with the Trinity standards.</summary>
+        /// <param name="prop">Represents the list of other existing instances.</param>
+        /// <returns>Returns a list of URIs instead of IDs.</returns>
         public dynamic TransformIdsToUris(dynamic prop)
         {
             List<Dictionary<string, string>> uris = new List<Dictionary<string, string>>();
@@ -80,15 +93,20 @@ namespace eHealth_DataBus.Extensions
             {
                 foreach (var ids in jObj)
                 {
-                    Dictionary<string, string> uri = new Dictionary<string, string>();
-                    uri["URI"] = GetObjectReference(ids.Value.ToString());
-                    uris.Add(uri);
+                    if(ids.Name == "ID") {
+                        Dictionary<string, string> uri = new Dictionary<string, string>();
+                        uri["URI"] = GetObjectReference(ids.Value.ToString());
+                        uris.Add(uri);
+                    }
                 }
             }
 
             return uris;
         }
 
+        /// <summary>Searches for an ID in another existing instance that a changing instance wants to be linked to and rewrites the ID into URI in order to be compliant with the Trinity standards.</summary>
+        /// <param name="prop">Represents the body of an existing instance.</param>
+        /// <returns>Returns the body of an existing instance by its URI instead of ID.</returns>
         public dynamic TransformIdToUri(dynamic prop)
         {
             Dictionary<string, string> uri = new Dictionary<string, string>();
