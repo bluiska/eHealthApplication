@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using eHealth_DataBus.Models;
+using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Extensions
 {
@@ -9,12 +10,12 @@ namespace eHealth_DataBus.Extensions
     /// <typeparam name="T">T represents the Master class which is a subclass of the Resource class.</typeparam>
     public class ModelRepository<T> : IRepository<T> where T : Master
     {
-        /// <summary>References the instance responsible for enforcing CRUD operations against the Virtuoso database.</summary>
-        internal DbContextTrinity _dbt;
+        /// <summary>References the model responsible for enforcing CRUD operations against the Virtuoso database.</summary>
+        internal IModel _dbt;
 
         /// <summary>Default constructor of the ModelRepository class</summary>
-        /// <param name="trinity"></param>
-        public ModelRepository(DbContextTrinity trinity)
+        /// <param name="trinity">References the instance of an ontology which enables the data binding capabilities with Virtuoso.</param>
+        public ModelRepository(IModel trinity)
         {
             _dbt = trinity;
         }
@@ -22,20 +23,19 @@ namespace eHealth_DataBus.Extensions
         public IEnumerable<T> Read()
         {
             // Retrieves a list of every instance related to class T.
-            return _dbt.DefaultModel
-                       .GetResources<T>(true)
+            return _dbt.GetResources<T>(true)
                        .ToList();
         }
 
         public void Create(T obj)
         {
             // Persists a new instance on the database
-            _dbt.DefaultModel.AddResource(obj);
+            _dbt.AddResource(obj);
         }
 
         public void Update(T obj)
         {
-            _dbt.DefaultModel.UpdateResource(obj);
+            _dbt.UpdateResource(obj);
 
             /* According to Semiodesk, the Commit() function is not necessary for persisting
              * the changes on the backend as it is already calling UpdateResource().
@@ -51,7 +51,7 @@ namespace eHealth_DataBus.Extensions
 
         public void Delete(Uri uri)
         {
-            _dbt.DefaultModel.DeleteResource(uri);
+            _dbt.DeleteResource(uri);
         }
     }
 }
