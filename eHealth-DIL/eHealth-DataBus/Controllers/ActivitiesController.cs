@@ -13,7 +13,7 @@ namespace eHealth_DataBus.Controllers
 
         public ActivitiesController(DbContextTrinity trinity)
         {
-            repo = new ModelRepository<Activity>(trinity);
+            repo = new ModelRepository<Activity>(trinity.DefaultModel);
         }
 
         [EnableQuery]
