@@ -55,7 +55,7 @@ const App = () => (
         <Route path="/manualentry" component={ManualEntry} exact={true} />
         <Route path="/patients/:docid" component={Patients} exact={true} />
         <Route
-          path="/patientoverview/doctor/:doc/patient/:id"
+          path="/patientoverview/doctor/:doc/patient/:patientid"
           component={PatientOverview}
         />
         <Route path="/activity_submission/type/:type" component={Exercise} />

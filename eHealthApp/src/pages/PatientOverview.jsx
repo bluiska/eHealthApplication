@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import {
   IonPage,
   IonContent,
@@ -19,23 +19,36 @@ import {
   IonButton,
   IonToolbar,
   IonCardHeader,
-  IonSpinner
+  IonSpinner,
+  IonCardTitle
 } from "@ionic/react";
 import { heart, options } from "ionicons/icons";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
 import { Accordion, Row, Col, Image, Container } from "react-bootstrap";
+import {withRouter} from 'react-router-dom'
 
 import exercise_img from "../resources/exercise.jpg";
 import weight_img from "../resources/weight_scale.jpg";
 import walk_img from "../resources/walk.png";
 import run_img from "../resources/run.png";
 import cycle_img from "../resources/cycle.png";
+import ActivityQueries from "../queries/ActivityQueries";
 
 /*props:
  */
 
 const PatientOverview = props => {
+
+
+  useEffect(() => {
+    ActivityQueries.getActivitiesByDateRange(props.match.params.patientid, "2020-03-14", "2020-03-14").then(res => {
+      console.log(res)
+    })
+  }, [])
+
+
+
   const [counter, setCounter] = useState(2);
 
   const todaysDate = new Date();
@@ -272,10 +285,9 @@ const PatientOverview = props => {
     const results = moreData.filter(
       val => val.date === searchDate.toDateString()
     ); // the api call to the backend show be made here
-    if (results.length !== 0) {
-      setDates([...dates, searchDate.toDateString()]);
-      setRestOFTheData([...restOfTheData, ...results]);
-    }
+	setDates([...dates, searchDate.toDateString()]);
+	setRestOFTheData([...restOfTheData, ...results]);
+    
     setLoading(false);
     setCounter(counter + 1);
     searchDate.setDate(todaysDate.getDate() - counter);
@@ -388,11 +400,25 @@ const PatientOverview = props => {
             {dates.length !== 0 &&
               dates.map((date, index) => (
                 <IonItem key={index}>
-                  {console.log(restOfTheData[0].date.split(" "))}
                   <IonGrid>
                     <IonTitle>{date.substring(0, date.length - 5)}</IonTitle>
                     {console.log(todaysDate)}
-                    {restOfTheData
+					{(restOfTheData
+					.filter(v => v.date === date && filterYear(v.date))
+					.length === 0
+					&&
+					filterYear(date) !== true
+					&&
+					<IonCard>
+						<IonCardHeader>
+							<IonCardTitle>No activity for this day</IonCardTitle>
+						</IonCardHeader>
+				  	</IonCard>
+					)
+
+					||
+					
+					restOfTheData
                       .filter(
                         val =>
                           selectedFilter.includes(val.name) ||
@@ -433,4 +459,30 @@ const PatientOverview = props => {
     </IonPage>
   );
 };
-export default PatientOverview;
+export default withRouter(PatientOverview);
+
+
+/*
+
+todaysANdYesterdaysData = Query.data()
+
+<IonList>
+
+
+
+[[today] [yesterday] [yesterday - 1] [yesterday - n]
+
+todaysANdyYesterdaysData.map(day => {
+
+  if(day.length === 0){
+    render no activity card
+  } else {
+    day.map(activity => {
+      render the activity card
+    })
+  }
+})
+
+</IonList>
+
+*/
