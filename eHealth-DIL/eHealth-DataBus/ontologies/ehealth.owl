@@ -80,11 +80,29 @@
     
 
 
+    <!-- http://www.ehealth.ie/semantics#dob -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#dob"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#email"/>
+    
+
+
     <!-- http://www.ehealth.ie/semantics#end_time -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#end_time">
         <rdfs:label>end time</rdfs:label>
     </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#gender -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#gender"/>
     
 
 
@@ -305,6 +323,27 @@
     <!-- http://www.ehealth.ie/semantics#User -->
 
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#User">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#dob"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#email"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#gender"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>

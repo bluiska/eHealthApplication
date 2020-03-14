@@ -1,5 +1,5 @@
 // Attention: This file is generated. Any modifications will eventually be overwritten.
-// Date: 14/03/2020 12:44:06
+// Date: 14/03/2020 17:05:19
 
 using System;
 using System.Collections.Generic;
@@ -1483,9 +1483,27 @@ public class ehs : Ontology
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#dob"/>
+    ///</summary>
+    public static readonly Property dob = new Property(new Uri("http://www.ehealth.ie/semantics#dob"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#email"/>
+    ///</summary>
+    public static readonly Property email = new Property(new Uri("http://www.ehealth.ie/semantics#email"));    
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#end_time"/>
     ///</summary>
     public static readonly Property end_time = new Property(new Uri("http://www.ehealth.ie/semantics#end_time"));    
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#gender"/>
+    ///</summary>
+    public static readonly Property gender = new Property(new Uri("http://www.ehealth.ie/semantics#gender"));    
 
     ///<summary>
     ///
@@ -1723,9 +1741,27 @@ public static class EHS
 
     ///<summary>
     ///
+    ///<see cref="http://www.ehealth.ie/semantics#dob"/>
+    ///</summary>
+    public const string dob = "http://www.ehealth.ie/semantics#dob";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#email"/>
+    ///</summary>
+    public const string email = "http://www.ehealth.ie/semantics#email";
+
+    ///<summary>
+    ///
     ///<see cref="http://www.ehealth.ie/semantics#end_time"/>
     ///</summary>
     public const string end_time = "http://www.ehealth.ie/semantics#end_time";
+
+    ///<summary>
+    ///
+    ///<see cref="http://www.ehealth.ie/semantics#gender"/>
+    ///</summary>
+    public const string gender = "http://www.ehealth.ie/semantics#gender";
 
     ///<summary>
     ///

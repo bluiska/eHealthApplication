@@ -15,5 +15,14 @@ namespace eHealth_DataBus.Models
 
         [Required, RdfProperty(EHS.name)]
         public string Name { get; set; }
+
+        [Required, RdfProperty(EHS.email)]
+        public string Email { get; set; }
+
+        [Required, RdfProperty(EHS.gender)]
+        public string Gender { get; set; }
+
+        [Required, RdfProperty(EHS.dob)]
+        public DateTime? Dob { get; set; }
     }
 }
