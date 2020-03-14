@@ -53,7 +53,11 @@ const App = () => (
         <Route path="/today/patient/:id" component={Today} exact={true} />
         <Route path="/devices" component={Devices} exact={true} />
         <Route path="/manualentry" component={ManualEntry} exact={true} />
-        <Route path="/patients/:docid" component={Patients} exact={true} />
+        <Route
+          path="/patients/doctor/:docid"
+          component={Patients}
+          exact={true}
+        />
         <Route
           path="/patientoverview/doctor/:doc/patient/:patientid"
           component={PatientOverview}
