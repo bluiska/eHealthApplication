@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using eHealth_DataBus.Models;
+using Semiodesk.Trinity;
 
 namespace eHealth_DataBus.Extensions
 {
@@ -9,8 +10,15 @@ namespace eHealth_DataBus.Extensions
     /// <typeparam name="T">Represents an instance of an RDF class in Virtuoso.</typeparam>
     public class ModelValidator<T> where T : Master
     {
-        /// <summary>The default constructor of the ModelValidator class.</summary>
-        public ModelValidator() {}
+        /// <summary>References the model responsible for enforcing validation operations on an entity against the Virtuoso database.</summary>
+        internal IModel _dbt;
+
+        /// <summary>Default constructor of the ModelValidator class</summary>
+        /// <param name="trinity">References the instance of an ontology which enables the data binding capabilities with Virtuoso.</param>
+        public ModelValidator(IModel trinity)
+        {
+            _dbt = trinity;
+        }
 
         /// <summary>Validates an instance.</summary>
         /// <param name="obj">Represents the instance.</param>
@@ -29,11 +37,8 @@ namespace eHealth_DataBus.Extensions
         /// <returns>Returns a Boolean.</returns>
         public bool ValidateModelByUri(Uri uri)
         {
-            /* Usually IDs are auto-generated on the DIL in the ModelFormatter class but
-             * this is to ensure that exactly the entities of a certain class will be
-             * deleted. ID pattern: [Class name]-[Timestamp]
-             */
-            return uri.ToString().Contains(typeof(T).Name);
+            // uri.ToString().Contains(typeof(T).Name)
+            return _dbt.ContainsResource(uri);
         }
     }
 }

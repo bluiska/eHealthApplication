@@ -13,11 +13,11 @@ namespace eHealth_DataBus.Extensions
         private readonly string uri, classType;
 
         /// <summary>The default constructor of the ModelFormatter class.</summary>
-        /// <param name="trinity"></param>
-        public ModelFormatter(DbContextTrinity trinity)
+        /// <param name="trinity_uri">The Uri of the Ontology that namespaces every entity related to it.</param>
+        public ModelFormatter(string trinity_uri)
         {
             classType = typeof(T).Name;
-            uri = trinity.DefaultModel.Uri.AbsoluteUri;
+            uri = trinity_uri;
         }
 
         /// <summary>Formats a new instance for a Read operation by auto-generating a URI for it.</summary>

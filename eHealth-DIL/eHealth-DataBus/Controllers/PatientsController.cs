@@ -17,9 +17,9 @@ namespace eHealth_DataBus.Controllers
 
         public PatientsController(DbContextTrinity trinity)
         {
-            repo = new ModelRepository<Patient>(trinity);
-            shaper = new ModelFormatter<Patient>(trinity);
-            checker = new ModelValidator<Patient>();
+            repo = new ModelRepository<Patient>(trinity.DefaultModel);
+            shaper = new ModelFormatter<Patient>(trinity.DefaultModel.Uri.AbsoluteUri);
+            checker = new ModelValidator<Patient>(trinity.DefaultModel);
         }
 
         [EnableQuery]
@@ -43,10 +43,10 @@ namespace eHealth_DataBus.Controllers
         [ODataRoute("{uri_id}")]
         public IActionResult Put([FromBody] Object obj, [FromODataUri] string uri_id)
         {
-            var resource = shaper.FormatObject(obj);
-            if (checker.ValidateModel(resource))
+            var resource = shaper.FormatObject(obj, uri_id);
+            if (checker.ValidateModelByUri(resource.Uri))
             {
-                repo.Update(shaper.FormatObject(obj, uri_id));
+                repo.Update(resource);
                 return Ok();
             }
 
@@ -56,10 +56,10 @@ namespace eHealth_DataBus.Controllers
         [ODataRoute("{uri_id}")]
         public IActionResult Patch([FromBody] Object obj, [FromODataUri] string uri_id)
         {
-            var resource = shaper.FormatObject(obj);
-            if (checker.ValidateModel(resource))
+            var resource = shaper.FormatObject(obj, uri_id);
+            if (checker.ValidateModelByUri(resource.Uri))
             {
-                repo.Update(shaper.FormatObject(obj, uri_id));
+                repo.Update(resource);
                 return Ok();
             }
 
