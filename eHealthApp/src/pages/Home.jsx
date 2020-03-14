@@ -20,15 +20,27 @@ import background_image from "../resources/home_background_blur.jpg";
 
 import "./Home.css";
 import { withRouter } from "react-router-dom";
-
-var doctors = ["Dr. Greg", "Dr. Irek", "Dr. Daniel"];
-var patients = ["Andy", "Lee", "Tennant"];
+import UserQueries from "./../queries/UserQueries";
+import { useEffect } from "react";
 
 /*props:
  */
 const Home = props => {
   const [showDoctorActionSheet, setShowDoctorActionSheet] = useState(false);
   const [showPatientActionSheet, setShowPatientActionSheet] = useState(false);
+
+  const [doctors, setDoctors] = useState([]);
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    UserQueries.getAllDoctors().then(res => {
+      setDoctors(res);
+    });
+
+    UserQueries.getAllPatients().then(res => {
+      setPatients(res);
+    });
+  }, []);
 
   const styles = {
     home: {
@@ -41,24 +53,25 @@ const Home = props => {
 
   const docButton = doc => {
     return {
-      text: doc,
+      text: doc.name,
       handler: () => {
-        props.history.push(`/patients/${doc}`);
+        props.history.push(`/patients/doctor/${doc.id}`);
       }
     };
   };
 
   const patientButton = patient => {
     return {
-      text: patient,
+      text: patient.name,
       handler: () => {
-        props.history.push(`/today/patient/${patient}`);
+        props.history.push(`/today/patient/${patient.id}`);
       }
     };
   };
 
   return (
     <IonPage>
+      {console.log(doctors, patients)}
       <IonHeader>
         <IonToolbar>
           <IonTitle>eHealth Application</IonTitle>
