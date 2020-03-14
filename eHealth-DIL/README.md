@@ -18,7 +18,7 @@ To verify the deployment of Virtuoso, access the platform on http://localhost:88
 ## 3. Deploying the eHealth Ontology on Virtuoso
 On the bar located on the left-hand side of the page, click on "Conductor". Then, use the base credentials "dba" for both "Account" and "Password" in order to login.
 
-Click on the "Linked Data" tab and then click on the "Quad Store Upload" subtab. Select the 
+Click on the "Linked Data" tab and then click on the "Quad Store Upload" subtab. Select the
 "ehealth.owl" file located inside the eHealth-DataBus/ontologies directory and change the "Named Graph IRI" to "http://www.ehealth.ie/semantics". Click on the "Upload" button. The whole procedure is visualised in this screenshot below:
 
 ![Upload](./MD-Images/Virtuoso-Upload.bmp)
