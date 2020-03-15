@@ -32,7 +32,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-backend": "cd eHealthPredictionBackend && flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
@@ -58,6 +57,5 @@
     "husky": "^4.2.3",
     "pre-commit": "^1.2.2",
     "react-scripts": "^3.4.0"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }
