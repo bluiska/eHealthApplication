@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Semiodesk.Trinity;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace eHealth_DataBus.Models
         [JsonConstructor]
         public LegSport(string uri) : base(new Uri(uri)) { }
 
-        [RdfProperty(EHS.steps)]
-        public int Steps { get; set; }
+        [Required, RdfProperty(EHS.steps)]
+        public int? Steps { get; set; }
     }
 }

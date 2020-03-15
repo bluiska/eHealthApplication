@@ -8,7 +8,10 @@ import {
   IonLabel,
   IonList,
   IonItem,
-  IonCheckbox
+  IonCheckbox,
+  IonRadioGroup,
+  IonRadio,
+  IonListHeader
 } from "@ionic/react";
 
 const FilterOverview = props => {
@@ -17,6 +20,16 @@ const FilterOverview = props => {
       marginLeft: "20px"
     }
   };
+  const todaysDate = new Date();
+
+  let sevenDaysDate = new Date(todaysDate);
+  sevenDaysDate.setDate(todaysDate.getDate() - 7);
+
+  let fourteenDaysDate = new Date(todaysDate);
+  fourteenDaysDate.setDate(todaysDate.getDate() - 14);
+
+  let thirtyDaysDate = new Date(todaysDate);
+  thirtyDaysDate.setDate(todaysDate.getDate() - 30);
 
   return (
     <IonPage>
@@ -24,49 +37,77 @@ const FilterOverview = props => {
         <IonList>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Blood pressure")}
-              onClick={() => props.setSelectedFilterHandler("Blood pressure")}
+              checked={props.selectedFilter.includes("BloodPressureReading")}
+              onClick={() =>
+                props.setSelectedFilterHandler("BloodPressureReading")
+              }
               color="danger"
-              value="Blood pressure"
+              value="BloodPressureReading"
             ></IonCheckbox>
             <IonLabel style={style.label}>Blood pressure</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Run")}
-              onClick={() => props.setSelectedFilterHandler("Run")}
+              checked={props.selectedFilter.includes("Running")}
+              onClick={() => props.setSelectedFilterHandler("Running")}
               color="primary"
-              value="Run"
+              value="Running"
             ></IonCheckbox>
             <IonLabel style={style.label}>Run</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Walk")}
-              onClick={() => props.setSelectedFilterHandler("Walk")}
+              checked={props.selectedFilter.includes("Walking")}
+              onClick={() => props.setSelectedFilterHandler("Walking")}
               color="secondary"
-              value="Walk"
+              value="Walking"
             ></IonCheckbox>
             <IonLabel style={style.label}>Walk</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Cycle")}
-              onClick={() => props.setSelectedFilterHandler("Cycle")}
+              checked={props.selectedFilter.includes("Cycling")}
+              onClick={() => props.setSelectedFilterHandler("Cycling")}
               color="danger"
-              value="Cycle"
+              value="Cycling"
             ></IonCheckbox>
             <IonLabel style={style.label}>Cycle</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Weight")}
-              onClick={() => props.setSelectedFilterHandler("Weight")}
+              checked={props.selectedFilter.includes("WeightReading")}
+              onClick={() => props.setSelectedFilterHandler("WeightReading")}
               color="primary"
-              value="Weight"
+              value="WeightReading"
             ></IonCheckbox>
             <IonLabel style={style.label}>Weight</IonLabel>
           </IonItem>
+        </IonList>
+
+        <IonList>
+          <IonRadioGroup
+            value={props.selectedDateFilter}
+            onClick={e => props.setSelectedDateFilterHandler(e.target.value)}
+          >
+            <IonListHeader>
+              <IonLabel>Upload Date</IonLabel>
+            </IonListHeader>
+            {console.log("DATEFILTER FO: ", props.selectedDateFilter)}
+            <IonItem>
+              <IonRadio slot="start" value={sevenDaysDate} />
+              <IonLabel>Last 7 days</IonLabel>
+            </IonItem>
+
+            <IonItem>
+              <IonRadio slot="start" value={fourteenDaysDate} />
+              <IonLabel>Last 14 days</IonLabel>
+            </IonItem>
+
+            <IonItem>
+              <IonRadio slot="start" value={thirtyDaysDate} />
+              <IonLabel>Last 30 days</IonLabel>
+            </IonItem>
+          </IonRadioGroup>
         </IonList>
       </IonContent>
       <IonFooter>
