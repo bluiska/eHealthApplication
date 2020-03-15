@@ -215,6 +215,17 @@ const PatientOverview = props => {
     return date;
   };
 
+  const filterByActivityType = act => {
+    return (
+      selectedFilter.includes(act.id.split("_")[0]) ||
+      selectedFilter.length === 0
+    );
+  };
+
+  const filterByDate = act => {
+    return new Date(act) > selectedDateFilter;
+  };
+
   return (
     <IonPage>
       {!displayFilter && (
@@ -250,50 +261,54 @@ const PatientOverview = props => {
         {!displayFilter && (
           <IonList lines="inset">
             {/* Load the activities */}
-            {console.log(selectedFilter)}
             {activityList.length > 0 &&
-              activityList.map(date => {
-                return (
-                  <IonItem key={date[0]}>
-                    <Container>
-                      <Row>
-                        <Col>
-                          <IonTitle>{dateTitle(date[0])}</IonTitle>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          {date[1].length === 0 ? (
-                            <IonCard>
-                              <IonCardHeader>
-                                {console.log(activityList[0])}
-                                <IonLabel
-                                  style={{
-                                    textAlign: "center",
-                                    fontSize: "1.2em"
-                                  }}
-                                >
-                                  No activity for this day
-                                </IonLabel>
-                              </IonCardHeader>
-                            </IonCard>
-                          ) : (
-                            date[1].map(activity => {
-                              return (
-                                <RecordCard
-                                  key={activity.id}
-                                  index={activity.id}
-                                  data={activity}
-                                />
-                              );
-                            })
-                          )}
-                        </Col>
-                      </Row>
-                    </Container>
-                  </IonItem>
-                );
-              })}
+              activityList
+                .filter(dateVal => filterByDate(dateVal[0]))
+                .map(date => {
+                  return (
+                    <IonItem key={date[0]}>
+                      <Container>
+                        <Row>
+                          <Col>
+                            <IonTitle>{dateTitle(date[0])}</IonTitle>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            {date[1].length === 0 ||
+                            date[1].filter(act => filterByActivityType(act))
+                              .length === 0 ? (
+                              <IonCard>
+                                <IonCardHeader>
+                                  <IonLabel
+                                    style={{
+                                      textAlign: "center",
+                                      fontSize: "1.2em"
+                                    }}
+                                  >
+                                    No activity for this day
+                                  </IonLabel>
+                                </IonCardHeader>
+                              </IonCard>
+                            ) : (
+                              date[1]
+                                .filter(act => filterByActivityType(act))
+                                .map(activity => {
+                                  return (
+                                    <RecordCard
+                                      key={activity.id}
+                                      index={activity.id}
+                                      data={activity}
+                                    />
+                                  );
+                                })
+                            )}
+                          </Col>
+                        </Row>
+                      </Container>
+                    </IonItem>
+                  );
+                })}
 
             {loading && (
               <div style={styles.loadingSpinner}>

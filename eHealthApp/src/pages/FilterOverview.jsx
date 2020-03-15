@@ -37,46 +37,48 @@ const FilterOverview = props => {
         <IonList>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Blood pressure")}
-              onClick={() => props.setSelectedFilterHandler("Blood pressure")}
+              checked={props.selectedFilter.includes("BloodPressureReading")}
+              onClick={() =>
+                props.setSelectedFilterHandler("BloodPressureReading")
+              }
               color="danger"
-              value="Blood pressure"
+              value="BloodPressureReading"
             ></IonCheckbox>
             <IonLabel style={style.label}>Blood pressure</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Run")}
-              onClick={() => props.setSelectedFilterHandler("Run")}
+              checked={props.selectedFilter.includes("Running")}
+              onClick={() => props.setSelectedFilterHandler("Running")}
               color="primary"
-              value="Run"
+              value="Running"
             ></IonCheckbox>
             <IonLabel style={style.label}>Run</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Walk")}
-              onClick={() => props.setSelectedFilterHandler("Walk")}
+              checked={props.selectedFilter.includes("Walking")}
+              onClick={() => props.setSelectedFilterHandler("Walking")}
               color="secondary"
-              value="Walk"
+              value="Walking"
             ></IonCheckbox>
             <IonLabel style={style.label}>Walk</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Cycle")}
-              onClick={() => props.setSelectedFilterHandler("Cycle")}
+              checked={props.selectedFilter.includes("Cycling")}
+              onClick={() => props.setSelectedFilterHandler("Cycling")}
               color="danger"
-              value="Cycle"
+              value="Cycling"
             ></IonCheckbox>
             <IonLabel style={style.label}>Cycle</IonLabel>
           </IonItem>
           <IonItem>
             <IonCheckbox
-              checked={props.selectedFilter.includes("Weight")}
-              onClick={() => props.setSelectedFilterHandler("Weight")}
+              checked={props.selectedFilter.includes("WeightReading")}
+              onClick={() => props.setSelectedFilterHandler("WeightReading")}
               color="primary"
-              value="Weight"
+              value="WeightReading"
             ></IonCheckbox>
             <IonLabel style={style.label}>Weight</IonLabel>
           </IonItem>

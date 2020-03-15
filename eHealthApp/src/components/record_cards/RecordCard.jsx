@@ -140,6 +140,7 @@ const RecordCard = props => {
         <Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
           <Row className="align-content-center justify-content-center">
             <Col xs="2">
+              {console.log(props.data.id.index)}
               {activityType === "BloodPressureReading" && (
                 <div style={styles.iconimg}>
                   <IonIcon icon={heart} style={styles.iconimg} />
