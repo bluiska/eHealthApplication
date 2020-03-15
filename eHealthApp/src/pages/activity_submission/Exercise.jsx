@@ -1,18 +1,5 @@
 import React, { useState } from "react";
-import {
-	IonPage,
-	IonContent,
-	IonInput,
-	IonItem,
-	IonLabel,
-	IonText,
-	IonDatetime,
-	IonRadioGroup,
-	IonListHeader,
-	IonRadio
-} from "@ionic/react";
-import BackButtonToolbar from "../../components/BackButtonToolbar";
-import FooterSubmitButton from "../../components/FooterSubmitButton";
+import { IonInput, IonItem, IonLabel, IonText, IonDatetime, IonRadioGroup, IonListHeader, IonRadio } from "@ionic/react";
 import { Container, Row, Col } from "react-bootstrap";
 import ActivitySubmissionPage from "./ActivitySubmissionPage";
 
@@ -29,16 +16,6 @@ const Exercise = props => {
 		star: {
 			fontSize: "1.4em"
 		}
-	};
-
-	const getCurrentDate = () => {
-		var today = new Date();
-		return today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-	};
-
-	const getCurrentTime = () => {
-		var today = new Date();
-		return today.toISOString();
 	};
 
 	const exerciseType = props.match.params.type;
