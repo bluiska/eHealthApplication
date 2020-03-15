@@ -21,7 +21,8 @@ import {
   IonCardHeader,
   IonSpinner,
   IonCardTitle,
-  IonListHeader
+  IonListHeader,
+  IonFooter
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
@@ -36,6 +37,7 @@ import ActivityQueries from "../queries/ActivityQueries";
 import UserQueries from "../queries/UserQueries";
 import { get } from "http";
 import { act } from "react-dom/test-utils";
+import PredictionsOverview from "./PredictionsOverview";
 
 /*props:
  */
@@ -47,6 +49,7 @@ const PatientOverview = props => {
     new Date("1970-01-01Z00:00:00:000")
   );
   const [displayFilter, setDisplayFilter] = useState(false);
+  const [displayPredictions, setDisplayPredictions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activityList, setActivityList] = useState([]);
   const [from, setFrom] = useState("");
@@ -185,7 +188,7 @@ const PatientOverview = props => {
 
   const loadMoreData = () => {
     setLoading(true);
-    console.log("Loading: ", loading);
+    console.log("Loading:", loading);
     // the api call to the backend show be made here
     let dayBeforeFrom = new Date(from);
     dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
@@ -231,14 +234,17 @@ const PatientOverview = props => {
 
   return (
     <IonPage>
-      {!displayFilter && (
+      {!displayFilter && !displayPredictions && (
         <BackButtonToolbar title={`${patientName}'s Overview`} />
       )}
       {/* Filter button */}
       <IonToolbar>
-        {displayFilter && <IonTitle>Filter by</IonTitle>}
+        {displayFilter && !displayPredictions && <IonTitle>Filter by</IonTitle>}
+        {!displayFilter && displayPredictions && (
+          <IonTitle>Predictions</IonTitle>
+        )}
 
-        {!displayFilter && (
+        {!displayFilter && !displayPredictions && (
           <IonButton
             size="large"
             expand="block"
@@ -251,7 +257,7 @@ const PatientOverview = props => {
       </IonToolbar>
       <IonContent>
         {/* Filter Screen */}
-        {displayFilter && (
+        {displayFilter && !displayPredictions && (
           <FilterOverview
             selectedDateFilter={selectedDateFilter}
             selectedFilter={selectedFilter}
@@ -260,8 +266,11 @@ const PatientOverview = props => {
             setDisplayFilter={setDisplayFilter}
           />
         )}
+        {!displayFilter && displayPredictions && (
+          <PredictionsOverview setDisplayPredictions={setDisplayPredictions} />
+        )}
         {/* Main Content */}
-        {!displayFilter && (
+        {!displayFilter && !displayPredictions && (
           <IonList lines="inset">
             {/* Load the activities */}
             {activityList.length > 0 &&
@@ -339,6 +348,20 @@ const PatientOverview = props => {
           </IonList>
         )}
       </IonContent>
+
+      {!displayFilter && !displayPredictions && (
+        <IonFooter>
+          <IonToolbar>
+            <IonButton
+              size="large"
+              expand="block"
+              onClick={() => setDisplayPredictions(!displayPredictions)}
+            >
+              <IonTitle>View Predictions</IonTitle>
+            </IonButton>
+          </IonToolbar>
+        </IonFooter>
+      )}
     </IonPage>
   );
 };
