@@ -1,6 +1,6 @@
 import PAIRED_DEVICES from "../../data/paired_devices";
-import ODataClient from "../../utilities/BackendAccess";
-import Exercise from "../../models/Activity";
+import Exercise from "../../models/Exercise";
+import ActivityQueries from '../../queries/ActivityQueries';
 
 const PORT = 3000;
 const URL = `localhost`;
@@ -11,9 +11,9 @@ let foundDevices = [];
 
 class BluetoothSynchronisationManager {
   constructor() {
-    setTimeout(() => {
+    setInterval(() => {
       this.synchroniseData();
-    }, 20000);
+    }, 3000);
   }
   getPairedDevices = () => {
     foundDevices = PAIRED_DEVICES;
@@ -32,6 +32,7 @@ class BluetoothSynchronisationManager {
      * Connect to one device
      */
     return new Promise(async (resolve, reject) => {
+      console.log(`clicked on ${id}`)
       const connectingDevice = foundDevices.find(device => device.id === id);
       if (connectingDevice) {
         try {
@@ -82,7 +83,6 @@ class BluetoothSynchronisationManager {
     /**
      * Asks for data
      */
-    const client = new ODataClient();
     foundDevices.forEach(async device => {
       if (device.connected) {
         try {
@@ -100,22 +100,24 @@ class BluetoothSynchronisationManager {
           });
           const data = await response.json();
 
-          console.log(data);
           if (data.length !== 0) {
-            console.log("Retrieved data: ", data);
-            const { stepsCounter, distance, kcalBurnt } = data;
+            data.forEach(log => {
+              const {type, stepsCounted, kcalBurnt, startTime, stopTime, distance} = log;
+              const newExercise = new Exercise(type, stepsCounted, kcalBurnt, startTime, stopTime, distance);
+              ActivityQueries.uploadNewExercise(0, newExercise)
+            })
             // SEND DATA TO THE DATABASE
-            try {
-              await client.IssueODataRequest({
-                requestType: "POST",
-                entityType: "Walkings",
-                entityBody: {
-                  steps: stepsCounter,
-                  caloriesBurnt: kcalBurnt,
-                  distance: distance
-                }
-              });
-            } catch (err) {}
+            // try {
+            //   await client.IssueODataRequest({
+            //     requestType: "POST",
+            //     entityType: "Walkings",
+            //     entityBody: {
+            //       steps: stepsCounter,
+            //       caloriesBurnt: kcalBurnt,
+            //       distance: distance
+            //     }
+            //   });
+            // } catch (err) {}
           }
         } catch (err) {
           console.log(err.message);

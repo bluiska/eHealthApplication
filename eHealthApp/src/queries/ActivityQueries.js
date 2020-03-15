@@ -41,6 +41,7 @@ ActivityQueries.uploadNewExercise = (patient, exercise) => {
 };
 
 ActivityQueries.uploadNewMeasurement = (patient, measurement) => {
+  console.log("bazinga got here ", patient, "  ", measurement)
   switch (measurement.type) {
     case "walk":
       BackendAccess.IssueODataRequest({

@@ -94,7 +94,7 @@ class Sensor {
     }
 
     startActivity(type) {
-        this.cleanActivity()
+        // this.cleanActivity()
 
         if (!this.measuringActivity) {
             this.currentActivityStartTime = new Date().toISOString();
@@ -115,20 +115,22 @@ class Sensor {
                     this.currentActivityType = ACTIVITY_TYPES.UNKNOWN;
             }
             this.stepCounterInterval = setInterval(() => {
-                this.stepsCounter++;
+                this.stepsCounter = this.stepsCounter + 1;
                 this.distance = this.stepsCounter * STEP_TO_KM_RATE;
                 this.kcalBurnt = this.distance * KCAL_BY_M_RATE;
+                console.log(`Steps: ${this.stepsCounter}`)
             }, 2000);
         }
     }
 
     stopActivity() {
-        this.cleanActivity()
         this.currentActivityStopTime = new Date().toISOString();
         Logger.log(`Stopping: ${this.distance}`)
 
         this.activities.push(new Activity(this.currentActivityStartTime, this.currentActivityStopTime, this.stepsCounter,
                             this.distance, this.kcalBurnt, this.currentActivityType))
+        
+        // this.cleanActivity()
     }
 
     getSyncData() {

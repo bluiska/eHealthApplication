@@ -23,6 +23,8 @@ class Activity {
   }
 
   validateType(type) {
-    Object.values(ACTIVITY_TYPE).indexOf(type) > -1 ? true : false;
+    return Object.values(ACTIVITY_TYPE).indexOf(type) > -1 ? true : false;
   }
 }
+
+export default Activity;

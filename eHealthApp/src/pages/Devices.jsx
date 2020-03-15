@@ -13,7 +13,6 @@ import {
   IonPage,
   IonLabel,
   IonItem,
-  IonButton,
   IonAlert
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
