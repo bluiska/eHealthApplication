@@ -23,40 +23,29 @@ ActivityQueries.getTodaysActivities = (patientID, today) => {
 };
 
 ActivityQueries.uploadNewExercise = (patient, exercise) => {
-  switch (exercise.type) {
-    case "walk":
-      BackendAccess.IssueODataRequest({
-        requestType: "POST",
-        entityType: exercise.type,
-        entityBody: {
-          patient: { ID: patient },
-          ...exercise
-        }
-      });
-      break;
-
-    default:
-      break;
-  }
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: exercise.type,
+    entityBody: {
+      patient: { ID: patient },
+      timestamp: new Date(),
+      ...exercise.data,
+      steps: exercise.data.steps || -1,
+      caloriesburnt: exercise.data.caloriesburnt || -1
+    }
+  });
 };
 
-ActivityQueries.uploadNewMeasurement = (patient, measurement) => {
-  console.log("bazinga got here ", patient, "  ", measurement)
-  switch (measurement.type) {
-    case "walk":
-      BackendAccess.IssueODataRequest({
-        requestType: "POST",
-        entityType: measurement.type,
-        entityBody: {
-          patient: { ID: patient },
-          ...measurement
-        }
-      });
-      break;
-
-    default:
-      break;
-  }
+ActivityQueries.uploadNewMeasurement = async (patient, measurement) => {
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: measurement.type,
+    entityBody: {
+      patient: { ID: patient },
+      timestamp: new Date(),
+      ...measurement.data
+    }
+  });
 };
 
 export default ActivityQueries;

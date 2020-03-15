@@ -27,6 +27,8 @@ props:
 const ManualEntry = props => {
   const [exerciseOptionsOpen, setExerciseOptionsOpen] = useState(false);
 
+  const patientId = props.match.params.patientid || "unknown";
+
   return (
     <IonPage>
       <BackButtonToolbar title={"Select an activity"} />
@@ -36,7 +38,6 @@ const ManualEntry = props => {
             title="Exercise"
             image={exercise_img}
             onClick={() => {
-              console.log(exerciseOptionsOpen);
               setExerciseOptionsOpen(!exerciseOptionsOpen);
             }}
           >
@@ -46,21 +47,27 @@ const ManualEntry = props => {
                   <IconButton
                     image={walk_img}
                     onClick={() =>
-                      props.history.push("/activity_submission/type/walk")
+                      props.history.push(
+                        `/activity_submission/patient/${patientId}/type/walk`
+                      )
                     }
                     ripple
                   />
                   <IconButton
                     image={run_img}
                     onClick={() =>
-                      props.history.push("/activity_submission/type/run")
+                      props.history.push(
+                        `/activity_submission/patient/${patientId}/type/run`
+                      )
                     }
                     ripple
                   />
                   <IconButton
                     image={cycle_img}
                     onClick={() =>
-                      props.history.push("/activity_submission/type/cycle")
+                      props.history.push(
+                        `/activity_submission/patient/${patientId}/type/cycle`
+                      )
                     }
                     ripple
                   />
@@ -72,13 +79,19 @@ const ManualEntry = props => {
             title="Blood Pressure"
             image={blood_pressure_img}
             onClick={() =>
-              props.history.push("/blood_pressure_activity_submission")
+              props.history.push(
+                `/blood_pressure_activity_submission/patient/${patientId}`
+              )
             }
           />
           <ImageCard
             title="Weight"
             image={weight_img}
-            onClick={() => props.history.push("/weight_activity_submission")}
+            onClick={() =>
+              props.history.push(
+                `/weight_activity_submission/patient/${patientId}`
+              )
+            }
           />
         </IonList>
       </IonContent>

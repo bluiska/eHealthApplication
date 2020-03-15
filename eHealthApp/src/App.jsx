@@ -50,9 +50,17 @@ const App = () => (
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
 
-        <Route path="/today/patient/:id" component={Today} exact={true} />
+        <Route
+          path="/today/patient/:patientid"
+          component={Today}
+          exact={true}
+        />
         <Route path="/devices" component={Devices} exact={true} />
-        <Route path="/manualentry" component={ManualEntry} exact={true} />
+        <Route
+          path="/manualentry/patient/:patientid"
+          component={ManualEntry}
+          exact={true}
+        />
         <Route
           path="/patients/doctor/:docid"
           component={Patients}
@@ -62,14 +70,17 @@ const App = () => (
           path="/patientoverview/doctor/:doc/patient/:patientid/:patientname"
           component={PatientOverview}
         />
-        <Route path="/activity_submission/type/:type" component={Exercise} />
         <Route
-          path="/blood_pressure_activity_submission"
+          path="/activity_submission/patient/:patientid/type/:type"
+          component={Exercise}
+        />
+        <Route
+          path="/blood_pressure_activity_submission/patient/:patientid"
           component={BloodPressure}
           exact={true}
         />
         <Route
-          path="/weight_activity_submission"
+          path="/weight_activity_submission/patient/:patientid"
           component={Weight}
           exact={true}
         />

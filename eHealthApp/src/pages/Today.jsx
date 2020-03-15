@@ -25,10 +25,13 @@ import { sync, add } from "ionicons/icons";
 import pencil from "../resources/pencil.png";
 import "./Today.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
+import { withRouter } from "react-router-dom";
 
 /*props:
  */
 const Today = props => {
+  const patientId = props.match.params.patientid || "unknown";
+
   return (
     <IonPage>
       <BackButtonToolbar title="Today: Activities" />
@@ -63,7 +66,7 @@ const Today = props => {
             <IonFabButton
               color="tertiary"
               routerDirection="forward"
-              routerLink="/manualentry"
+              routerLink={"/manualentry/patient/" + patientId}
               data-desc="Manual entry"
             >
               <IonImg src={pencil} style={{ width: "20px", height: "20px" }} />
@@ -75,4 +78,4 @@ const Today = props => {
   );
 };
 
-export default Today;
+export default withRouter(Today);
