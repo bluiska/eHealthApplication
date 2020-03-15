@@ -229,6 +229,12 @@ const PatientOverview = props => {
     return new Date(act) > selectedDateFilter;
   };
 
+  const sortActivities = (a, b) => {
+    const aDate = new Date(a.timestamp);
+    const bDate = new Date(b.timestamp);
+    return aDate.getTime() > bDate.getTime() ? -1 : 1;
+  };
+
   return (
     <IonPage>
       {!displayFilter && (
@@ -295,6 +301,7 @@ const PatientOverview = props => {
                               </IonCard>
                             ) : (
                               date[1]
+                                .sort((a, b) => sortActivities(a, b))
                                 .filter(act => filterByActivityType(act))
                                 .map(activity => {
                                   return (
