@@ -1,18 +1,18 @@
 {
-	"id": "3e112079-13ad-4987-b084-9667bdae73dd",
+	"id": "c9a31bcc-6eff-408c-9458-f2378f314a03",
 	"name": "eHealth API Testing",
-	"timestamp": "2020-03-14T11:56:18.334Z",
-	"collection_id": "1fc5ceee-a962-414c-8065-0309c689008e",
+	"timestamp": "2020-03-14T18:53:39.056Z",
+	"collection_id": "2d170ce1-6a09-4435-9809-2ca5696071ef",
 	"folder_id": 0,
 	"environment_id": "0",
 	"totalPass": 20,
 	"totalFail": 0,
 	"results": [
 		{
-			"id": "64d5e979-5c2a-42eb-8253-ffc9a5ceeafe",
+			"id": "6c39c63d-a18a-49cc-bac3-e2613eaf4744",
 			"name": "READ: Is OData endpoint valid (OK)",
 			"url": "https://localhost:5001/odata/",
-			"time": 380,
+			"time": 336,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -57,7 +57,7 @@
 				}
 			},
 			"times": [
-				380
+				336
 			],
 			"allTests": [
 				{
@@ -72,10 +72,10 @@
 			]
 		},
 		{
-			"id": "76930805-1ca3-4cdc-a653-695e35b580d7",
+			"id": "b00305de-a314-43aa-9246-2f38599ed06d",
 			"name": "READ: Retrieve all patients (OK)",
 			"url": "https://localhost:5001/odata/patients",
-			"time": 320,
+			"time": 298,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -110,7 +110,7 @@
 				}
 			},
 			"times": [
-				320
+				298
 			],
 			"allTests": [
 				{
@@ -123,10 +123,10 @@
 			]
 		},
 		{
-			"id": "6551c5d3-8255-4002-8a64-d866ff51e60f",
+			"id": "8dfce7b5-a116-4e6f-942d-d7f89f3633c1",
 			"name": "CREATE: Add a new Activity to a Patient (Created)",
 			"url": "https://localhost:5001/odata/runnings",
-			"time": 450,
+			"time": 403,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -151,7 +151,7 @@
 				}
 			},
 			"times": [
-				450
+				403
 			],
 			"allTests": [
 				{
@@ -162,10 +162,10 @@
 			]
 		},
 		{
-			"id": "1442e858-984a-44ae-b162-d9405a49a0ee",
+			"id": "5ccf6bc3-a589-408f-9ac7-c0245a98f3bd",
 			"name": "CREATE: Add a new Activity (Bad Request)",
 			"url": "https://localhost:5001/odata/runnings/",
-			"time": 30,
+			"time": 27,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -180,7 +180,7 @@
 				}
 			},
 			"times": [
-				30
+				27
 			],
 			"allTests": [
 				{
@@ -189,7 +189,7 @@
 			]
 		},
 		{
-			"id": "e7522e38-3f9d-4e73-a69b-12645059b9d7",
+			"id": "1c194423-bf57-4e76-87d5-7bb5ed1cc8a1",
 			"name": "UPDATE: Assign Patients to an existing Doctor (OK)",
 			"url": "https://localhost:5001/odata/doctors/TestDoctor-1",
 			"time": 77,
@@ -216,10 +216,10 @@
 			]
 		},
 		{
-			"id": "3fbaf354-55d5-4857-afe5-c0727c83d18b",
+			"id": "123c62ba-a368-42fd-abbe-5bb0dcc3b9d0",
 			"name": "UPDATE: Assign Patients to a non-existent Doctor",
 			"url": "https://localhost:5001/odata/doctors/TestDoctor-9",
-			"time": 22,
+			"time": 21,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -234,7 +234,7 @@
 				}
 			},
 			"times": [
-				22
+				21
 			],
 			"allTests": [
 				{
@@ -243,10 +243,10 @@
 			]
 		},
 		{
-			"id": "8ca2f68e-f6ae-4698-9b94-2d80f8c734b0",
+			"id": "9d98ccb0-fc3c-4ad7-bb7a-c0e607e8f0f1",
 			"name": "DELETE: Remove an existing Doctor",
 			"url": "https://localhost:5001/odata/doctors/TestDoctor-2",
-			"time": 35,
+			"time": 27,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -261,7 +261,7 @@
 				}
 			},
 			"times": [
-				35
+				27
 			],
 			"allTests": [
 				{
@@ -270,10 +270,10 @@
 			]
 		},
 		{
-			"id": "c718adfb-69fa-43fc-959a-fd858daa1718",
+			"id": "deef2856-9664-4a10-863d-9df86aa75cf4",
 			"name": "DELETE: Remove an already-removed Doctor",
 			"url": "https://localhost:5001/odata/doctors/TestDoctor-2",
-			"time": 25,
+			"time": 26,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -288,7 +288,7 @@
 				}
 			},
 			"times": [
-				25
+				26
 			],
 			"allTests": [
 				{
@@ -301,35 +301,35 @@
 	"collection": {
 		"requests": [
 			{
-				"id": "64d5e979-5c2a-42eb-8253-ffc9a5ceeafe",
+				"id": "6c39c63d-a18a-49cc-bac3-e2613eaf4744",
 				"method": "GET"
 			},
 			{
-				"id": "76930805-1ca3-4cdc-a653-695e35b580d7",
+				"id": "b00305de-a314-43aa-9246-2f38599ed06d",
 				"method": "GET"
 			},
 			{
-				"id": "6551c5d3-8255-4002-8a64-d866ff51e60f",
+				"id": "8dfce7b5-a116-4e6f-942d-d7f89f3633c1",
 				"method": "POST"
 			},
 			{
-				"id": "1442e858-984a-44ae-b162-d9405a49a0ee",
+				"id": "5ccf6bc3-a589-408f-9ac7-c0245a98f3bd",
 				"method": "POST"
 			},
 			{
-				"id": "e7522e38-3f9d-4e73-a69b-12645059b9d7",
+				"id": "1c194423-bf57-4e76-87d5-7bb5ed1cc8a1",
 				"method": "PUT"
 			},
 			{
-				"id": "3fbaf354-55d5-4857-afe5-c0727c83d18b",
+				"id": "123c62ba-a368-42fd-abbe-5bb0dcc3b9d0",
 				"method": "PUT"
 			},
 			{
-				"id": "8ca2f68e-f6ae-4698-9b94-2d80f8c734b0",
+				"id": "9d98ccb0-fc3c-4ad7-bb7a-c0e607e8f0f1",
 				"method": "DELETE"
 			},
 			{
-				"id": "c718adfb-69fa-43fc-959a-fd858daa1718",
+				"id": "deef2856-9664-4a10-863d-9df86aa75cf4",
 				"method": "DELETE"
 			}
 		]
