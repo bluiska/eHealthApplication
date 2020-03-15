@@ -8,13 +8,7 @@ Author: Ireneusz Janusz
 
 // External dependencies
 import React, { useState } from "react";
-import {
-  IonContent,
-  IonPage,
-  IonLabel,
-  IonItem,
-  IonAlert
-} from "@ionic/react";
+import { IonContent, IonPage, IonLabel, IonItem, IonAlert } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
 

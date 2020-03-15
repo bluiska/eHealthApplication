@@ -1,6 +1,6 @@
 import PAIRED_DEVICES from "../../data/paired_devices";
 import Exercise from "../../models/Exercise";
-import ActivityQueries from '../../queries/ActivityQueries';
+import ActivityQueries from "../../queries/ActivityQueries";
 
 const PORT = 3000;
 const URL = `localhost`;
@@ -32,7 +32,7 @@ class BluetoothSynchronisationManager {
      * Connect to one device
      */
     return new Promise(async (resolve, reject) => {
-      console.log(`clicked on ${id}`)
+      console.log(`clicked on ${id}`);
       const connectingDevice = foundDevices.find(device => device.id === id);
       if (connectingDevice) {
         try {
@@ -102,10 +102,24 @@ class BluetoothSynchronisationManager {
 
           if (data.length !== 0) {
             data.forEach(log => {
-              const {type, stepsCounted, kcalBurnt, startTime, stopTime, distance} = log;
-              const newExercise = new Exercise(type, stepsCounted, kcalBurnt, startTime, stopTime, distance);
-              ActivityQueries.uploadNewExercise(0, newExercise)
-            })
+              const {
+                type,
+                stepsCounted,
+                kcalBurnt,
+                startTime,
+                stopTime,
+                distance
+              } = log;
+              const newExercise = new Exercise(
+                type,
+                stepsCounted,
+                kcalBurnt,
+                startTime,
+                stopTime,
+                distance
+              );
+              ActivityQueries.uploadNewExercise(0, newExercise);
+            });
             // SEND DATA TO THE DATABASE
             // try {
             //   await client.IssueODataRequest({
