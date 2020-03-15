@@ -63,7 +63,7 @@ const App = () => (
         />
         <Route path="/patients/:docid" component={Patients} exact={true} />
         <Route
-          path="/patientoverview/doctor/:doc/patient/:id"
+          path="/patientoverview/doctor/:doc/patient/:patientid/:patientname"
           component={PatientOverview}
         />
         <Route

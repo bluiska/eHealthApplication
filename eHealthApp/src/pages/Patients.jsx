@@ -4,60 +4,59 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   IonPage,
   IonContent,
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardTitle
+  IonCardTitle,
+  IonLabel
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
-
-var dummyData = [
-  {
-    name: "Dr. Daniel",
-    ID: "Doctor-1234",
-    patients: [
-      { id: "Patient-1234", name: "Daniel" },
-      { id: "Patient-1234", name: "Irek" },
-      { id: "Patient-1234", name: "Andy" },
-      { id: "Patient-1234", name: "Greg" },
-      { id: "Patient-1234", name: "Daniel2" },
-      { id: "Patient-1234", name: "Irek2" },
-      { id: "Patient-1234", name: "Andy2" },
-      { id: "Patient-1234", name: "Greg2" }
-    ]
-  },
-  {
-    name: "Dr. Irek",
-    ID: "Doctor-5678",
-    patients: [
-      { id: "Patient-5678", name: "Sergio" },
-      { id: "Patient-5678", name: "Chris" },
-      { id: "Patient-5678", name: "Margory" },
-      { id: "Patient-5678", name: "Basu" }
-    ]
-  }
-];
+import UserQueries from "../queries/UserQueries";
+import { Row, Container } from "react-bootstrap";
 
 /*props:
  */
 const Patients = props => {
   const doctor = props.match.params.docid;
 
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    UserQueries.getDoctorById(doctor).then(res => {
+      setPatients(res);
+    });
+  }, []);
+
   const Patient = data => {
     return (
       <IonCard
         routerDirection="forward"
-        routerLink={`/patientoverview/doctor/${doctor}/patient/${data.patient.id}`}
+        routerLink={`/patientoverview/doctor/${doctor}/patient/${data.patient.id}/${data.patient.name}`}
       >
         <IonCardHeader>
-          <IonCardTitle>Patient's Name: {data.patient.name}</IonCardTitle>
+          <IonCardTitle>{data.patient.name}</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
-          <p>Patient Id: {data.patient.id}</p>
+          <Container>
+            <Row>
+              <IonLabel>Patient id: {data.patient.id}</IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>Gender: {data.patient.gender}</IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>
+                Date of birth: {new Date(data.patient.dob).toDateString()}
+              </IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>Email: {data.patient.email}</IonLabel>
+            </Row>
+          </Container>
         </IonCardContent>
       </IonCard>
     );
@@ -65,19 +64,14 @@ const Patients = props => {
 
   return (
     <IonPage>
-      {console.log("Rendered!")}
-      <BackButtonToolbar title={"Patients"} />
+      <BackButtonToolbar title={"Assigned Patients"} />
       <IonContent className="ion-padding">
         {doctor && (
           <Fragment>
-            <h2>Assigned Patients</h2>
-            {dummyData
-              .filter(doc => doc.name === doctor)
-              .map((patients, i1) =>
-                patients.patients.map((patient, i2) => (
-                  <Patient key={i1 + i2} patient={patient} />
-                ))
-              )}
+            {patients.length !== 0 &&
+              patients.map((patient, index) => (
+                <Patient key={index} patient={patient} />
+              ))}
           </Fragment>
         )}
       </IonContent>

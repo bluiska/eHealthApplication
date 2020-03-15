@@ -80,11 +80,29 @@
     
 
 
+    <!-- http://www.ehealth.ie/semantics#dob -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#dob"/>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#email"/>
+    
+
+
     <!-- http://www.ehealth.ie/semantics#end_time -->
 
     <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#end_time">
         <rdfs:label>end time</rdfs:label>
     </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ehealth.ie/semantics#gender -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ehealth.ie/semantics#gender"/>
     
 
 
@@ -157,16 +175,9 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#timestamp"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -226,14 +237,14 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#end_time"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#start_time"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>Distance Sport</rdfs:label>
@@ -307,6 +318,27 @@
     <owl:Class rdf:about="http://www.ehealth.ie/semantics#User">
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#dob"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#email"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#gender"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ehealth.ie/semantics#name"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -359,6 +391,9 @@
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-4"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-5"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-7"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1995-11-01T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">madeleine.girard@ehs.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Madeleine Girard</name>
     </owl:NamedIndividual>
     
@@ -370,6 +405,9 @@
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-2"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-6"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1981-06-11T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">esteban.escobar@ehs.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Male</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Esteban Escobar</name>
     </owl:NamedIndividual>
     
@@ -381,6 +419,9 @@
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Doctor"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-1"/>
         <provides_treatment_to rdf:resource="http://www.ehealth.ie/semantics#TestPatient-8"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1990-04-01T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">stefan.hainer@ehs.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Male</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. Stefan Hainer</name>
     </owl:NamedIndividual>
     
@@ -391,6 +432,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-1">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-3"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1999-10-13T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kucharski.marianski@gmail.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maria Kucharski</name>
     </owl:NamedIndividual>
     
@@ -401,6 +445,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-2">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1967-09-07T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mohammad.elislam19670907@gmail.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Male</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mohammad el-Islam</name>
     </owl:NamedIndividual>
     
@@ -411,6 +458,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-3">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1994-03-14T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aoife.na.heireann@outlook.ie</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aoife O&apos;Connell</name>
     </owl:NamedIndividual>
     
@@ -421,6 +471,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-4">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1995-06-07T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">elise.leclair13@outlook.fr</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Elise Leclair</name>
     </owl:NamedIndividual>
     
@@ -431,6 +484,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-5">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1976-11-13T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">johannsenroland76@outlook.de</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Male</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roland Johannsen</name>
     </owl:NamedIndividual>
     
@@ -441,6 +497,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-6">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-2"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1976-04-16T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giulianadimilano@gmail.com</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Giuliana Auditore</name>
     </owl:NamedIndividual>
     
@@ -451,6 +510,9 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-7">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-1"/>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1996-02-28T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">genevieve.la.toulousaine@outlook.fr</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Female</gender>
         <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Genevieve Leblanc</name>
     </owl:NamedIndividual>
     
@@ -461,7 +523,10 @@
     <owl:NamedIndividual rdf:about="http://www.ehealth.ie/semantics#TestPatient-8">
         <rdf:type rdf:resource="http://www.ehealth.ie/semantics#Patient"/>
         <is_assigned_to rdf:resource="http://www.ehealth.ie/semantics#TestDoctor-3"/>
-        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thomas von Bayern</name>
+        <dob rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">1970-02-05T00:00:00Z</dob>
+        <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jonathan.wills70@outlook.co.uk</email>
+        <gender rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Male</gender>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jonathan Wills</name>
     </owl:NamedIndividual>
 </rdf:RDF>
 
