@@ -11,10 +11,12 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardTitle
+  IonCardTitle,
+  IonLabel
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import UserQueries from "../queries/UserQueries";
+import { Row, Container } from "react-bootstrap";
 
 /*props:
  */
@@ -39,7 +41,22 @@ const Patients = props => {
           <IonCardTitle>{data.patient.name}</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
-          <p>Patient id: {data.patient.id}</p>
+          <Container>
+            <Row>
+              <IonLabel>Patient id: {data.patient.id}</IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>Gender: {data.patient.gender}</IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>
+                Date of birth: {new Date(data.patient.dob).toDateString()}
+              </IonLabel>
+            </Row>
+            <Row>
+              <IonLabel>Email: {data.patient.email}</IonLabel>
+            </Row>
+          </Container>
         </IonCardContent>
       </IonCard>
     );
