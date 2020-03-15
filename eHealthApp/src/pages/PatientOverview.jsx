@@ -185,9 +185,12 @@ const PatientOverview = props => {
 
   const loadMoreData = () => {
     setLoading(true);
-
+    console.log("Loading: ", loading);
     // the api call to the backend show be made here
-
+    let dayBeforeFrom = new Date(from);
+    dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
+    appendPreviousActivity(dayBeforeFrom.toDateString());
+    setFrom(dayBeforeFrom);
     setLoading(false);
   };
 
@@ -325,10 +328,7 @@ const PatientOverview = props => {
                     fill="outline"
                     style={styles.show}
                     onClick={() => {
-                      let dayBeforeFrom = new Date(from);
-                      dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
-                      appendPreviousActivity(dayBeforeFrom.toDateString());
-                      setFrom(dayBeforeFrom);
+                      loadMoreData();
                     }}
                   >
                     Show more
