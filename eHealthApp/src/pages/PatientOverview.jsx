@@ -4,7 +4,7 @@ Add description
 Author: Daniel Madu
 */
 
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   IonPage,
   IonContent,
@@ -20,178 +20,129 @@ import {
   IonToolbar,
   IonCardHeader,
   IonSpinner,
-  IonCardTitle
+  IonCardTitle,
+  IonListHeader
 } from "@ionic/react";
-import { heart, options } from "ionicons/icons";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
 import { Accordion, Row, Col, Image, Container } from "react-bootstrap";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
+import RecordCard from "../components/record_cards/RecordCard";
 
+import { options } from "ionicons/icons";
 import exercise_img from "../resources/exercise.jpg";
 import weight_img from "../resources/weight_scale.jpg";
-import walk_img from "../resources/walk.png";
-import run_img from "../resources/run.png";
-import cycle_img from "../resources/cycle.png";
 import ActivityQueries from "../queries/ActivityQueries";
+import UserQueries from "../queries/UserQueries";
+import { get } from "http";
+import { act } from "react-dom/test-utils";
 
 /*props:
  */
 
 const PatientOverview = props => {
-
-
-  useEffect(() => {
-    ActivityQueries.getActivitiesByDateRange(props.match.params.patientid, "2020-03-14", "2020-03-14").then(res => {
-      console.log(res)
-    })
-  }, [])
-
-
-
-  const [counter, setCounter] = useState(2);
-
-  const todaysDate = new Date();
-  const [userData, setUserData] = useState([
-    {
-      id: "activity1",
-      name: "Blood pressure",
-      value: "120 mmHg",
-      date: "Thu Mar 12 2020",
-      time: "17:41"
-    },
-    {
-      id: "activity2",
-      name: "Blood pressure",
-      value: "130 mmHg",
-      date: "Thu Mar 12 2020",
-      time: "15:31"
-    },
-    {
-      id: "activity3",
-      name: "Cycle",
-      value: "20 mins",
-      date: "Thu Mar 12 2020",
-      time: "13:21"
-    },
-    {
-      id: "activity4",
-      name: "Run",
-      value: "25 mins",
-      date: "Thu Mar 12 2020",
-      time: "14:11"
-    },
-    {
-      id: "activity5",
-      name: "Blood pressure",
-      value: "135 mmHg",
-      date: "Wed Mar 11 2020",
-      time: "05:43"
-    },
-    {
-      id: "activity6",
-      name: "Blood pressure",
-      value: "140 mmHg",
-      date: "Wed Mar 11 2020",
-      time: "16:31"
-    }
-  ]);
-
-  const moreData = [
-    {
-      id: "activity7",
-      name: "Blood pressure",
-      value: "140 mmHg",
-      date: "Tue Mar 10 2020",
-      time: "16:21"
-    },
-    {
-      id: "activity8",
-      name: "Run",
-      value: "25 mins",
-      date: "Tue Mar 10 2020",
-      time: "14:11"
-    },
-    {
-      id: "activity9",
-      name: "Cycle",
-      value: "20 mins",
-      date: "Mon Mar 09 2020",
-      time: "13:21"
-    },
-    {
-      id: "activity10",
-      name: "Blood pressure",
-      value: "140 mmHg",
-      date: "Mon Mar 09 2020",
-      time: "16:21"
-    },
-    {
-      id: "activity11",
-      name: "Run",
-      value: "25 mins",
-      date: "Sun Mar 08 2020",
-      time: "14:11"
-    },
-    {
-      id: "activity12",
-      name: "Run",
-      value: "25 mins",
-      date: "Sun Mar 08 2020",
-      time: "14:11"
-    },
-    {
-      id: "activity13",
-      name: "Blood pressure",
-      value: "140 mmHg",
-      date: "Sat Mar 07 2020",
-      time: "16:21"
-    },
-    {
-      id: "activity14",
-      name: "Cycle",
-      value: "20 mins",
-      date: "Sat Mar 07 2020",
-      time: "13:21"
-    },
-    {
-      id: "activity15",
-      name: "Run",
-      value: "25 mins",
-      date: "Fri Mar 06 2020",
-      time: "14:11"
-    },
-    {
-      id: "activity16",
-      name: "Run",
-      value: "25 mins",
-      date: "Fri Mar 06 2020",
-      time: "14:11"
-    }
-  ];
-
-  let yesterdaysDate = new Date(todaysDate);
-  yesterdaysDate.setDate(todaysDate.getDate() - 1);
-
-  let searchDate = new Date(todaysDate);
-  searchDate.setDate(todaysDate.getDate() - counter);
-
+  //State
   const [selectedFilter, setSelectedFilter] = useState([]);
   const [selectedDateFilter, setSelectedDateFilterHandler] = useState(
     new Date("1970-01-01Z00:00:00:000")
   );
   const [displayFilter, setDisplayFilter] = useState(false);
-
-  const dataForToday = userData.filter(
-    val => val.date === todaysDate.toDateString()
-  );
-  const dataForYesterday = userData.filter(
-    val => val.date === yesterdaysDate.toDateString()
-  );
-  const [restOfTheData, setRestOFTheData] = useState([]);
-
-  const [dates, setDates] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activityList, setActivityList] = useState([]);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const today = new Date();
+
+  const yesterday = () => {
+    let yesterdaysDate = new Date(today);
+    yesterdaysDate.setDate(today.getDate() - 1);
+    return yesterdaysDate;
+  };
+
+  const patientId = props.match.params.patientid;
+  const patientName = props.match.params.patientname;
+
+  /**
+   to - 12th of March
+
+   from - 9th of March
+
+   (show more)
+
+   query( from - 1);
+   append to array of activities
+    
+   */
+
+  const getActivities = (from, to) => {
+    let activities = {};
+
+    let toDate = new Date(to);
+    for (var d = new Date(from); d <= toDate; d.setDate(d.getDate() + 1)) {
+      activities[d.toDateString()] = [];
+    }
+
+    ActivityQueries.getActivitiesByDateRange(
+      patientId,
+      new Date(from).toISOString().slice(0, 10),
+      new Date(to).toISOString().slice(0, 10)
+    ).then(res => {
+      //Separate into dates...
+      res.map(activity => {
+        let date = new Date(activity.timestamp).toDateString();
+        activities[date].push(activity);
+      });
+
+      let sortedActivities = Object.entries(activities).sort((a, b) => {
+        let aDate = new Date(a[0]);
+        let bDate = new Date(b[0]);
+        return aDate > bDate ? -1 : 1;
+      });
+
+      setActivityList(sortedActivities);
+    });
+  };
+
+  /**
+   *
+   * @param {string} date //The date a .toDateString format
+   */
+  const appendPreviousActivity = date => {
+    let activities = [...activityList];
+
+    console.log("APPENDING: ", activities);
+
+    ActivityQueries.getActivitiesByDateRange(
+      patientId,
+      new Date(date).toISOString().slice(0, 10),
+      new Date(date).toISOString().slice(0, 10)
+    ).then(res => {
+      //Separate into dates...
+
+      if (res.length > 0) {
+        res.map(activity => {
+          let date = new Date(activity.timestamp).toDateString();
+          activities.push([date, activity]);
+        });
+      } else {
+        activities.push([date, []]);
+      }
+
+      setActivityList(activities);
+    });
+  };
+
+  useEffect(() => {
+    let todayString = today.toDateString();
+    let yesterdayString = yesterday().toDateString();
+
+    console.log(todayString, yesterdayString);
+
+    setFrom(yesterdayString);
+    setTo(todayString);
+
+    getActivities(yesterdayString, todayString);
+  }, []);
 
   const styles = {
     activity: {
@@ -209,11 +160,6 @@ const PatientOverview = props => {
     filter: {
       width: "20%"
     },
-    iconimg: {
-      width: "20px",
-      height: "20px",
-      margin: "auto"
-    },
     show: {
       width: "60%",
       margin: "0 auto",
@@ -224,49 +170,6 @@ const PatientOverview = props => {
       alignItems: "center",
       justifyContent: "center"
     }
-  };
-
-  const RecordCard = props => {
-    return (
-      <Accordion>
-        <IonCard key={props.index}>
-          <Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
-            <Row className="align-content-center justify-content-center">
-              <Col xs="3">
-                {props.data.name === "Blood pressure" && (
-                  <div style={styles.iconimg}>
-                    <IonIcon icon={heart} style={styles.iconimg} />
-                  </div>
-                )}
-                {props.data.name === "Cycle" && (
-                  <Image src={cycle_img} style={styles.iconimg} />
-                )}
-                {props.data.name === "Run" && (
-                  <Image src={run_img} style={styles.iconimg} />
-                )}
-              </Col>
-              <Col xs="7">
-                <IonLabel style={styles.title}>
-                  <h2>{props.data.name}</h2>
-                </IonLabel>
-              </Col>
-              <Col xs="2">
-                <IonLabel style={styles.value}>
-                  <h3>{props.data.value}</h3>
-                </IonLabel>
-              </Col>
-            </Row>
-          </Accordion.Toggle>
-
-          <Accordion.Collapse eventKey={props.index}>
-            <IonCardContent>
-              <IonLabel>Date: {props.data.date}</IonLabel>
-              <IonLabel>Time: {props.data.time}</IonLabel>
-            </IonCardContent>
-          </Accordion.Collapse>
-        </IonCard>
-      </Accordion>
-    );
   };
 
   const setSelectedFilterHandler = value => {
@@ -282,15 +185,10 @@ const PatientOverview = props => {
 
   const loadMoreData = () => {
     setLoading(true);
-    const results = moreData.filter(
-      val => val.date === searchDate.toDateString()
-    ); // the api call to the backend show be made here
-	setDates([...dates, searchDate.toDateString()]);
-	setRestOFTheData([...restOfTheData, ...results]);
-    
+
+    // the api call to the backend show be made here
+
     setLoading(false);
-    setCounter(counter + 1);
-    searchDate.setDate(todaysDate.getDate() - counter);
   };
 
   function filterYear(date) {
@@ -307,11 +205,22 @@ const PatientOverview = props => {
     return dateObj > selectedDateFilter;
   }
 
+  const dateTitle = date => {
+    let displayDate = new Date(date);
+    if (displayDate.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (displayDate.toDateString() === yesterday().toDateString()) {
+      return "Yesterday";
+    }
+    return date;
+  };
+
   return (
     <IonPage>
       {!displayFilter && (
-        <BackButtonToolbar title={"Patient Name's " + "Overview"} />
+        <BackButtonToolbar title={`${patientName}'s Overview`} />
       )}
+      {/* Filter button */}
       <IonToolbar>
         {displayFilter && <IonTitle>Filter by</IonTitle>}
 
@@ -326,8 +235,8 @@ const PatientOverview = props => {
           </IonButton>
         )}
       </IonToolbar>
-      <IonContent className="ion-padding">
-        {console.log("DATEFILTER PO: ", selectedDateFilter)}
+      <IonContent>
+        {/* Filter Screen */}
         {displayFilter && (
           <FilterOverview
             selectedDateFilter={selectedDateFilter}
@@ -337,100 +246,54 @@ const PatientOverview = props => {
             setDisplayFilter={setDisplayFilter}
           />
         )}
+        {/* Main Content */}
         {!displayFilter && (
-          <IonList>
-            {dataForToday.length !== 0 && (
-              <IonItem>
-                <IonGrid>
-                  <IonTitle>Today</IonTitle>
-                  {dataForToday
-                    .filter(
-                      val =>
-                        selectedFilter.includes(val.name) ||
-                        selectedFilter.length === 0
-                    )
-                    .map(
-                      data =>
-                        data.date === todaysDate.toDateString() && (
-                          <RecordCard
-                            index={data.id}
-                            key={data.id}
-                            data={data}
-                          />
-                        )
-                    )}
-                </IonGrid>
-              </IonItem>
-            )}
-            {dataForYesterday.length !== 0 && (
-              <IonItem>
-                <IonGrid>
-                  <IonTitle>Yesterday</IonTitle>
-                  {dataForYesterday
-                    .filter(
-                      val =>
-                        selectedFilter.includes(val.name) ||
-                        selectedFilter.length === 0
-                    )
-                    .map(
-                      data =>
-                        data.date === yesterdaysDate.toDateString() && (
-                          <RecordCard
-                            index={data.id}
-                            key={data.id}
-                            data={data}
-                          />
-                        )
-                    )}
-                </IonGrid>
-              </IonItem>
-            )}
-            {/* {(restOfTheData.length !== 0) &&
-								<IonItem>
-									<IonGrid>
-										<IonTitle>Past activities</IonTitle>
-										{restOfTheData
-										.filter(val => selectedFilter.includes(val.name) || selectedFilter.length === 0)
-										.map((data) => <RecordCard index={data.id} key={data.id} data={data}/>)}
-									</IonGrid>
-								</IonItem>	
-							} */}
-            {console.log("Selected Year: ", selectedDateFilter)}
-            {/* {console.log("Today: ", todaysDate.getUTCFullYear())} */}
-            {dates.length !== 0 &&
-              dates.map((date, index) => (
-                <IonItem key={index}>
-                  <IonGrid>
-                    <IonTitle>{date.substring(0, date.length - 5)}</IonTitle>
-                    {console.log(todaysDate)}
-					{(restOfTheData
-					.filter(v => v.date === date && filterYear(v.date))
-					.length === 0
-					&&
-					filterYear(date) !== true
-					&&
-					<IonCard>
-						<IonCardHeader>
-							<IonCardTitle>No activity for this day</IonCardTitle>
-						</IonCardHeader>
-				  	</IonCard>
-					)
-
-					||
-					
-					restOfTheData
-                      .filter(
-                        val =>
-                          selectedFilter.includes(val.name) ||
-                          selectedFilter.length === 0
-                      )
-                      .filter(v => v.date === date && filterYear(v.date))
-                      .map(data => (
-                        <RecordCard index={data.id} key={data.id} data={data} />
-                      ))}
-                  </IonGrid>
-                </IonItem>
-              ))}
+          <IonList lines="inset">
+            {/* Load the activities */}
+            {console.log(selectedFilter)}
+            {activityList.length > 0 &&
+              activityList.map(date => {
+                return (
+                  <IonItem key={date[0]}>
+                    <Container>
+                      <Row>
+                        <Col>
+                          <IonTitle>{dateTitle(date[0])}</IonTitle>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          {date[1].length === 0 ? (
+                            <IonCard>
+                              <IonCardHeader>
+                                {console.log(activityList[0])}
+                                <IonLabel
+                                  style={{
+                                    textAlign: "center",
+                                    fontSize: "1.2em"
+                                  }}
+                                >
+                                  No activity for this day
+                                </IonLabel>
+                              </IonCardHeader>
+                            </IonCard>
+                          ) : (
+                            date[1].map(activity => {
+                              return (
+                                <RecordCard
+                                  key={activity.id}
+                                  index={activity.id}
+                                  data={activity}
+                                />
+                              );
+                            })
+                          )}
+                        </Col>
+                      </Row>
+                    </Container>
+                  </IonItem>
+                );
+              })}
 
             {loading && (
               <div style={styles.loadingSpinner}>
@@ -446,7 +309,12 @@ const PatientOverview = props => {
                     expand="block"
                     fill="outline"
                     style={styles.show}
-                    onClick={() => loadMoreData()}
+                    onClick={() => {
+                      let dayBeforeFrom = new Date(from);
+                      dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
+                      appendPreviousActivity(dayBeforeFrom.toDateString());
+                      setFrom(dayBeforeFrom);
+                    }}
                   >
                     Show more
                   </IonButton>
@@ -461,16 +329,13 @@ const PatientOverview = props => {
 };
 export default withRouter(PatientOverview);
 
-
 /*
 
 todaysANdYesterdaysData = Query.data()
 
 <IonList>
 
-
-
-[[today] [yesterday] [yesterday - 1] [yesterday - n]
+[[today] [yesterday] yesterday - 1] [yesterday - n]]
 
 todaysANdyYesterdaysData.map(day => {
 
@@ -484,5 +349,18 @@ todaysANdyYesterdaysData.map(day => {
 })
 
 </IonList>
+
+*/
+
+/*
+
+					<IonCard>
+						<IonCardHeader>
+							<IonCardTitle>No activity for this day</IonCardTitle>
+						</IonCardHeader>
+				  	</IonCard>
+
+
+<RecordCard index={data.id} key={data.id} data={data} />
 
 */

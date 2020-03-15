@@ -7,7 +7,7 @@ ActivityQueries.getActivitiesByDateRange = (patientID, from, to) => {
     requestType: "GET",
     entityType: "Activities",
     query: {
-      $filter: `patient/ID eq '${patientID}' and date(timestamp) ge ${from} and date(timestamp) le ${to} patient/ID eq '${patientID}'`
+      $filter: `patient/ID eq '${patientID}' and date(timestamp) le ${to} and date(timestamp) ge ${from}`
     }
   });
 };

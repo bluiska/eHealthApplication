@@ -59,7 +59,7 @@ const App = () => (
           exact={true}
         />
         <Route
-          path="/patientoverview/doctor/:doc/patient/:patientid"
+          path="/patientoverview/doctor/:doc/patient/:patientid/:patientname"
           component={PatientOverview}
         />
         <Route path="/activity_submission/type/:type" component={Exercise} />
