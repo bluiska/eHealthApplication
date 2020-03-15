@@ -74,8 +74,12 @@ const RecordCard = props => {
       case "Cycling":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            {data.caloriesBurnt && (
+              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+            )}
+            {data.distance && (
+              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            )}
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
             </IonLabel>
@@ -87,9 +91,13 @@ const RecordCard = props => {
       case "Running":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
-            <IonLabel>Steps taken: {data.steps}</IonLabel>
+            {data.caloriesBurnt && (
+              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+            )}
+            {data.distance && (
+              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            )}
+            {data.steps && <IonLabel>Steps taken: {data.steps}</IonLabel>}
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
             </IonLabel>
@@ -101,9 +109,13 @@ const RecordCard = props => {
       case "Walking":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
-            <IonLabel>Steps taken: {data.steps}</IonLabel>
+            {data.caloriesBurnt && (
+              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+            )}
+            {data.distance && (
+              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            )}
+            {data.steps && <IonLabel>Steps taken: {data.steps}</IonLabel>}
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
             </IonLabel>
