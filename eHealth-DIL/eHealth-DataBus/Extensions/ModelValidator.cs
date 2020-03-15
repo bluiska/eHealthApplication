@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using eHealth_DataBus.Models;
 using Semiodesk.Trinity;
 
@@ -39,6 +40,23 @@ namespace eHealth_DataBus.Extensions
         {
             // uri.ToString().Contains(typeof(T).Name)
             return _dbt.ContainsResource(uri);
+        }
+
+        public bool ValidateUsername(IEnumerable<Credential> creds, string username)
+        {
+            var cred = creds.Where(x => x.Username == username).ToList();
+
+            return cred.Count == 1;
+        }
+
+        public Credential GetCredentialByUsernameValidation(IEnumerable<Credential> creds, string username)
+        {
+            var cred = creds.Where(x => x.Username == username).ToList();
+
+            if (cred.Count == 1)
+                return cred[0];
+
+            return null;
         }
     }
 }

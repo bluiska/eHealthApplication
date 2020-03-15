@@ -43,6 +43,9 @@ namespace eHealth_DataBus.Extensions
             var builder = new ODataConventionModelBuilder();
             SetEntitySets(builder);
 
+            // Activate Credential Actions in OData
+            ActivateCredentialManager(builder.EntityType<Credential>());
+
             return builder.GetEdmModel();
         }
 
@@ -52,6 +55,7 @@ namespace eHealth_DataBus.Extensions
         {
             b.EntitySet<Master>("Masters");
             b.EntitySet<User>("Users");
+            b.EntitySet<Credential>("Credentials");
             b.EntitySet<Patient>("Patients");
             b.EntitySet<Doctor>("Doctors");
             b.EntitySet<Activity>("Activities");
@@ -63,6 +67,16 @@ namespace eHealth_DataBus.Extensions
             b.EntitySet<Cycling>("Cyclings");
             b.EntitySet<WeightReading>("WeightReadings");
             b.EntitySet<BloodPressureReading>("BloodPressureReadings");
+        }
+
+        private static void ActivateCredentialManager<T>(EntityTypeConfiguration<T> c) where T : Credential
+        {
+            c.Collection.Function("ValidateUsername")
+                        .Returns<bool>()
+                        .Parameter<string>("username");
+
+            c.Collection.Action("Register");
+            c.Collection.Action("Login");
         }
     }
 }

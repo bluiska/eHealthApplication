@@ -1,9 +1,10 @@
 import BackendAccess from "../utilities/BackendAccess";
 
+var odataClient = new BackendAccess();
 var ActivityQueries = {};
 
 ActivityQueries.getActivitiesByDateRange = (patientID, from, to) => {
-  return BackendAccess.IssueODataRequest({
+  return odataClient.IssueODataRequest({
     requestType: "GET",
     entityType: "Activities",
     query: {
@@ -13,7 +14,7 @@ ActivityQueries.getActivitiesByDateRange = (patientID, from, to) => {
 };
 
 ActivityQueries.getTodaysActivities = (patientID, today) => {
-  return BackendAccess.IssueODataRequest({
+  return odataClient.IssueODataRequest({
     requestType: "GET",
     entityType: "Activities",
     query: {
@@ -25,7 +26,7 @@ ActivityQueries.getTodaysActivities = (patientID, today) => {
 ActivityQueries.uploadNewExercise = (patient, exercise) => {
   switch (exercise.type) {
     case "walk":
-      BackendAccess.IssueODataRequest({
+      odataClient.IssueODataRequest({
         requestType: "POST",
         entityType: exercise.type,
         entityBody: {
@@ -43,7 +44,7 @@ ActivityQueries.uploadNewExercise = (patient, exercise) => {
 ActivityQueries.uploadNewMeasurement = (patient, measurement) => {
   switch (measurement.type) {
     case "walk":
-      BackendAccess.IssueODataRequest({
+      odataClient.IssueODataRequest({
         requestType: "POST",
         entityType: measurement.type,
         entityBody: {

@@ -44,6 +44,22 @@ namespace eHealth_DataBus
 
             DbContextTrinity trinity = new DbContextTrinity();
             trinity.Initialise();
+
+            services.AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme = "eHealthCookie";
+                    config.DefaultSignInScheme = "eHealthCookie";
+                    config.DefaultChallengeScheme = "eHealthServer";
+                })
+                .AddCookie("eHealthCookie")
+                .AddOAuth("eHealthServer", config =>
+                {
+                    config.ClientId = "client_id";
+                    config.ClientSecret = "client_secret";
+                    config.CallbackPath = "/oauth/callback";
+                    config.AuthorizationEndpoint = "https://localhost:5001/oauth/authorise";
+                    config.TokenEndpoint = "https://localhost:5001/oauth/token";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
