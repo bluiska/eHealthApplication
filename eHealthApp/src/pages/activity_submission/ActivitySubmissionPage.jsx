@@ -58,7 +58,7 @@ const ActivitySubmissionPage = props => {
 					} else {
 						ActivityQueries.uploadNewExercise(props.patientId, {
 							type: props.measurementType,
-							...props.submitData
+							data: { ...props.submitData }
 						}).then(res => {
 							if (res && res.ID && res.ID.length > 0) {
 								setSubmitAlertContent({

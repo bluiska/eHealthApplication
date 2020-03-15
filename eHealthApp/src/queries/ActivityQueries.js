@@ -29,7 +29,9 @@ ActivityQueries.uploadNewExercise = (patient, exercise) => {
 		entityBody: {
 			patient: { ID: patient },
 			timestamp: new Date(),
-			...exercise
+			...exercise.data,
+			steps: exercise.data.steps || -1,
+			caloriesburnt: exercise.data.caloriesburnt || -1
 		}
 	});
 };
