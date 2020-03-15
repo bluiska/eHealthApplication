@@ -120,18 +120,6 @@ class BluetoothSynchronisationManager {
               );
               ActivityQueries.uploadNewExercise(0, newExercise);
             });
-            // SEND DATA TO THE DATABASE
-            // try {
-            //   await client.IssueODataRequest({
-            //     requestType: "POST",
-            //     entityType: "Walkings",
-            //     entityBody: {
-            //       steps: stepsCounter,
-            //       caloriesBurnt: kcalBurnt,
-            //       distance: distance
-            //     }
-            //   });
-            // } catch (err) {}
           }
         } catch (err) {
           console.log(err.message);
