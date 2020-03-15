@@ -71,7 +71,6 @@ const Home = props => {
 
   return (
     <IonPage>
-      {console.log(doctors, patients)}
       <IonHeader>
         <IonToolbar>
           <IonTitle>eHealth Application</IonTitle>

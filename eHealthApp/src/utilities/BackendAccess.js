@@ -35,7 +35,6 @@ export default new (class BackendAccess {
         .patch(`${entityType}('${entityID}')`, entityBody)
         .query();
 
-      console.log(res);
       return ProduceResponseBody(res);
     };
     let Delete = async (entityType, entityID) => {
@@ -47,7 +46,7 @@ export default new (class BackendAccess {
     };
 
     this.IssueODataRequest = async req => {
-      var context = new Object();
+      var context = {};
       switch (req.requestType) {
         case "GET":
           context.res = await Read(req.entityType, req.query);
@@ -68,6 +67,7 @@ export default new (class BackendAccess {
             req.entityID,
             req.entityBody
           );
+          break;
         case "DELETE":
           context.res = await Delete(req.entityType, req.entityID);
           break;
