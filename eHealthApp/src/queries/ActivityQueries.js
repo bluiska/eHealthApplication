@@ -1,20 +1,19 @@
 import BackendAccess from "../utilities/BackendAccess";
 
-var odataClient = new BackendAccess();
 var ActivityQueries = {};
 
 ActivityQueries.getActivitiesByDateRange = (patientID, from, to) => {
-  return odataClient.IssueODataRequest({
+  return BackendAccess.IssueODataRequest({
     requestType: "GET",
     entityType: "Activities",
     query: {
-      $filter: `patient/ID eq '${patientID}' and date(timestamp) ge ${from} and date(timestamp) le ${to} patient/ID eq '${patientID}'`
+      $filter: `patient/ID eq '${patientID}' and date(timestamp) le ${to} and date(timestamp) ge ${from}`
     }
   });
 };
 
 ActivityQueries.getTodaysActivities = (patientID, today) => {
-  return odataClient.IssueODataRequest({
+  return BackendAccess.IssueODataRequest({
     requestType: "GET",
     entityType: "Activities",
     query: {
@@ -24,39 +23,29 @@ ActivityQueries.getTodaysActivities = (patientID, today) => {
 };
 
 ActivityQueries.uploadNewExercise = (patient, exercise) => {
-  switch (exercise.type) {
-    case "walk":
-      odataClient.IssueODataRequest({
-        requestType: "POST",
-        entityType: exercise.type,
-        entityBody: {
-          patient: { ID: patient },
-          ...exercise
-        }
-      });
-      break;
-
-    default:
-      break;
-  }
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: exercise.type,
+    entityBody: {
+      patient: { ID: patient },
+      timestamp: new Date(),
+      ...exercise.data,
+      steps: exercise.data.steps || -1,
+      caloriesburnt: exercise.data.caloriesburnt || -1
+    }
+  });
 };
 
-ActivityQueries.uploadNewMeasurement = (patient, measurement) => {
-  switch (measurement.type) {
-    case "walk":
-      odataClient.IssueODataRequest({
-        requestType: "POST",
-        entityType: measurement.type,
-        entityBody: {
-          patient: { ID: patient },
-          ...measurement
-        }
-      });
-      break;
-
-    default:
-      break;
-  }
+ActivityQueries.uploadNewMeasurement = async (patient, measurement) => {
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: measurement.type,
+    entityBody: {
+      patient: { ID: patient },
+      timestamp: new Date(),
+      ...measurement.data
+    }
+  });
 };
 
 export default ActivityQueries;
