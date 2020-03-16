@@ -94,17 +94,17 @@ const FilterOverview = props => {
               <IonLabel>Upload Date</IonLabel>
             </IonListHeader>
             <IonItem>
-              <IonRadio slot="start" value={sevenDaysDate} />
+              <IonRadio slot="start" value={sevenDaysDate.toDateString()} />
               <IonLabel>Last 7 days</IonLabel>
             </IonItem>
 
             <IonItem>
-              <IonRadio slot="start" value={fourteenDaysDate} />
+              <IonRadio slot="start" value={fourteenDaysDate.toDateString()} />
               <IonLabel>Last 14 days</IonLabel>
             </IonItem>
 
             <IonItem>
-              <IonRadio slot="start" value={thirtyDaysDate} />
+              <IonRadio slot="start" value={thirtyDaysDate.toDateString()} />
               <IonLabel>Last 30 days</IonLabel>
             </IonItem>
           </IonRadioGroup>

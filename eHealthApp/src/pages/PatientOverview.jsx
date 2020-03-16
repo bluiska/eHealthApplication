@@ -203,7 +203,7 @@ const PatientOverview = props => {
   };
 
   const filterByDate = act => {
-    return new Date(act) > selectedDateFilter;
+    return new Date(act) > new Date(selectedDateFilter);
   };
 
   const sortActivities = (a, b) => {
