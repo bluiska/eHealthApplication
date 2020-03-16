@@ -1,55 +1,30 @@
-import Fitbit from "../devices/Fitbit";
+import PAIRED_DEVICES from "../../data/paired_devices";
+import Exercise from "../../models/Exercise";
+import ActivityQueries from "../../queries/ActivityQueries";
 
 const PORT = 3000;
 const URL = `localhost`;
-const getBluetoothDevicesUrl = `http://${URL}:${PORT}/getBluetoothDevices/`;
 const connectDevice = `http://${URL}:${PORT}/connectDevice/`;
 const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
+var patient = null;
+
 class BluetoothSynchronisationManager {
-  getPairedDevices = async () => {
-    /**
-     * Returns the list of available paired devices
-     */
-    if (foundDevices.length === 0) {
-      try {
-        const result = await fetch(getBluetoothDevicesUrl);
-        const data = await result.json();
-        const devices = data.devices;
-        for (const x in devices) {
-          const {
-            id,
-            name,
-            batteryLevel,
-            connectionStatus,
-            activityStatus,
-            connected,
-            stepsCounter,
-            heartRate,
-            kcalBurnt
-          } = devices[x];
-          const bluetoothDevice = new Fitbit(
-            id,
-            name,
-            batteryLevel,
-            connectionStatus,
-            activityStatus,
-            connected,
-            stepsCounter,
-            heartRate,
-            kcalBurnt
-          );
-          foundDevices.push(bluetoothDevice);
-          foundDevices = [...new Set(foundDevices)];
-        }
-        return foundDevices;
-      } catch (err) {
-        throw new Error(err);
-      }
-    }
+  constructor() {
+    this.newDataAvailable = false;
+    setInterval(() => {
+      this.synchroniseData();
+    }, 3000);
+  }
+  getPairedDevices = () => {
+    foundDevices = PAIRED_DEVICES;
     return foundDevices;
+  };
+
+  setPatient = p => {
+    patient = p;
   };
 
   getConnectedDevices = () => {
@@ -57,6 +32,14 @@ class BluetoothSynchronisationManager {
      * Returns the list of connected devices
      */
     return {};
+  };
+
+  isNewDataAvailable = () => {
+    if (this.newDataAvailable) {
+      this.newDataAvailable = false;
+      return true;
+    }
+    return false;
   };
 
   connectToDevice = id => {
@@ -79,16 +62,20 @@ class BluetoothSynchronisationManager {
           const data = await response.json();
           if (data) {
             resolve(data);
+            return;
           } else {
             reject();
+            return;
           }
         } catch (err) {
           // Device is disconnected (Simulation server not running)
-          const deviceConnectionStatus = {
-            connected: false,
-            connectionStatus: "FAILED"
-          };
-          reject(deviceConnectionStatus);
+          // const deviceConnectionStatus = {
+          //   connected: false,
+          //   connectionStatus: 'FAILED'
+          // };
+          // reject(deviceConnectionStatus);
+          reject();
+          return;
         }
       }
     });
@@ -106,27 +93,43 @@ class BluetoothSynchronisationManager {
     });
   };
 
-  synchroniseData = params => {
+  synchroniseData = () => {
     /**
      * Asks for data
      */
     foundDevices.forEach(async device => {
-      try {
-        let fetchData = {
-          id: device.id
-        };
-        const response = await fetch(synchorniseDataUrl, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(fetchData)
-        });
-        const data = await response.json();
-      } catch (err) {
-        console.log(err.message);
+      if (device.connected) {
+        try {
+          let fetchData = {
+            id: device.id
+          };
+          const response = await fetch(synchorniseDataUrl, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(fetchData)
+          });
+          const data = await response.json();
+
+          if (data.length !== 0) {
+            data.forEach(log => {
+              log.data = {
+                caloriesburnt: parseFloat(log.kcalBurnt),
+                steps: parseFloat(log.stepsCounted),
+                startTime: log.startTime,
+                endTime: log.stopTime,
+                distance: parseFloat(log.distance)
+              };
+              ActivityQueries.uploadNewExercise(patient, log);
+              this.newDataAvailable = !this.newDataAvailable;
+            });
+          }
+        } catch (err) {
+          console.log(err.message);
+        }
       }
     });
   };

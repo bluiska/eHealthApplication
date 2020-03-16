@@ -14,14 +14,14 @@ import {
   IonButton,
   IonActionSheet
 } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import background_image from "../resources/home_background_blur.jpg";
 
 import "./Home.css";
 import { withRouter } from "react-router-dom";
 import UserQueries from "./../queries/UserQueries";
-import { useEffect } from "react";
+import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
  */
@@ -65,6 +65,7 @@ const Home = props => {
       text: patient.name,
       handler: () => {
         props.history.push(`/today/patient/${patient.id}`);
+        BluetoothSynchronisationManager.setPatient(patient.id);
       }
     };
   };

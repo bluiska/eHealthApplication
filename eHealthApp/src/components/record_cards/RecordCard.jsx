@@ -8,7 +8,8 @@ import {
   IonCardHeader,
   IonIcon,
   IonLabel,
-  IonCardContent
+  IonCardContent,
+  IonList
 } from "@ionic/react";
 import { Accordion, Row, Col, Image } from "react-bootstrap";
 import { heart } from "ionicons/icons";
@@ -27,6 +28,10 @@ const RecordCard = props => {
       height: "20px",
       margin: "auto"
     }
+  };
+
+  const formatValue = value => {
+    return (Math.round(value * 100) / 100).toFixed(2);
   };
 
   const renderActivityTitle = activityType => {
