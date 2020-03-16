@@ -30,50 +30,58 @@ const ActivitySubmissionPage = props => {
       <FooterSubmitButton
         onSubmit={() => {
           console.log(props.submitData);
-          if (props.submissionType === "measurement") {
-            ActivityQueries.uploadNewMeasurement(props.patientId, {
-              type: props.measurementType,
-              data: { ...props.submitData }
-            })
-              .then(res => {
-                if (res && res.ID && res.ID.length > 0) {
-                  setSubmitAlertContent({
-                    header: HEADER.SUCCESS,
-                    message: props.successMessage
-                  });
-                } else {
+          if (props.validated) {
+            if (props.submissionType === "measurement") {
+              ActivityQueries.uploadNewMeasurement(props.patientId, {
+                type: props.measurementType,
+                data: { ...props.submitData }
+              })
+                .then(res => {
+                  if (res && res.ID && res.ID.length > 0) {
+                    setSubmitAlertContent({
+                      header: HEADER.SUCCESS,
+                      message: props.successMessage
+                    });
+                  } else {
+                    setSubmitAlertContent({
+                      header: HEADER.FAIL,
+                      message: props.failMessage
+                    });
+                  }
+                  setShowSubmitAlert(true);
+                })
+                .catch(() => {
                   setSubmitAlertContent({
                     header: HEADER.FAIL,
                     message: props.failMessage
                   });
+                  setShowSubmitAlert(true);
+                });
+            } else {
+              ActivityQueries.uploadNewExercise(props.patientId, {
+                type: props.measurementType,
+                data: { ...props.submitData }
+              }).then(res => {
+                if (res && res.ID && res.ID.length > 0) {
+                  setSubmitAlertContent({
+                    header: "Submission successful.",
+                    message: props.successMessage
+                  });
+                } else {
+                  setSubmitAlertContent({
+                    header: "Submission failed!",
+                    message: props.failMessage
+                  });
                 }
                 setShowSubmitAlert(true);
-              })
-              .catch(() => {
-                setSubmitAlertContent({
-                  header: HEADER.FAIL,
-                  message: props.failMessage
-                });
-                setShowSubmitAlert(true);
               });
+            }
           } else {
-            ActivityQueries.uploadNewExercise(props.patientId, {
-              type: props.measurementType,
-              data: { ...props.submitData }
-            }).then(res => {
-              if (res && res.ID && res.ID.length > 0) {
-                setSubmitAlertContent({
-                  header: "Submission successful.",
-                  message: props.successMessage
-                });
-              } else {
-                setSubmitAlertContent({
-                  header: "Submission failed!",
-                  message: props.failMessage
-                });
-              }
-              setShowSubmitAlert(true);
+            setSubmitAlertContent({
+              header: HEADER.FAIL,
+              message: props.validateErrorMessage
             });
+            setShowSubmitAlert(true);
           }
         }}
       />
