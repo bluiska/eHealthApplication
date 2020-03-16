@@ -15,7 +15,6 @@ import { heart } from "ionicons/icons";
 
 const RecordCard = props => {
   const activityType = props.data.id.split("_")[0];
-  console.log(activityType);
 
   const styles = {
     iconimg: {
@@ -47,8 +46,12 @@ const RecordCard = props => {
     }
   };
 
+  // const cleanUpDistance = distance => {
+
+  // }
+
   const renderActivityValues = (activityType, data) => {
-    console.log(new Date(data.timestamp).toLocaleTimeString());
+    let date = new Date(data.timestamp);
     switch (activityType) {
       case "BloodPressureReading":
         return (
@@ -58,69 +61,104 @@ const RecordCard = props => {
             </IonLabel>
             <IonLabel>Systolic pressure: {data.systolicPressure}mmHg</IonLabel>
             <IonLabel>
-              Taken at: {new Date(data.timestamp).toLocaleTimeString()}
+              Time submitted: {date.getUTCHours()}:{date.getUTCMinutes()}
             </IonLabel>
           </div>
         );
       case "WeightReading":
+        // date = new Date(data.timestamp);
         return (
           <div>
-            <IonLabel>Weight: {data.weight}kg</IonLabel>
+            <IonLabel>Weight: {data.weight.toFixed(2)}kg</IonLabel>
             <IonLabel>
-              Taken at: {new Date(data.timestamp).toLocaleTimeString()}
+              Time submitted: {date.getUTCHours()}:{date.getUTCMinutes()}
             </IonLabel>
           </div>
         );
       case "Cycling":
+        const startDate = new Date(data.startTime);
+        const endDate = new Date(data.endTime);
         return (
           <div>
             {data.caloriesBurnt && (
-              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+              <IonLabel>
+                Calories burnt:{" "}
+                {data.caloriesBurnt === -1 ? "N/A" : data.caloriesBurnt}
+              </IonLabel>
             )}
             {data.distance && (
-              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+              <IonLabel>
+                Distance travelled: {data.distance.toFixed(2)}km
+              </IonLabel>
             )}
             <IonLabel>
-              Start time: {new Date(data.startTime).toLocaleTimeString()}
+              Start time: {startDate.getUTCHours()}:{startDate.getUTCMinutes()}
             </IonLabel>
             <IonLabel>
-              End time: {new Date(data.endTime).toLocaleTimeString()}
+              End time: {endDate.getUTCHours()}:{endDate.getUTCMinutes()}
+            </IonLabel>
+            <IonLabel>
+              Time submitted: {endDate.getUTCHours()}:{endDate.getUTCMinutes()}
             </IonLabel>
           </div>
         );
       case "Running":
+        const startDate2 = new Date(data.startTime);
+        const endDate2 = new Date(data.endTime);
         return (
           <div>
             {data.caloriesBurnt && (
-              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+              <IonLabel>
+                Calories burnt:{" "}
+                {data.caloriesBurnt === -1 ? "N/A" : data.caloriesBurnt}
+              </IonLabel>
             )}
             {data.distance && (
-              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+              <IonLabel>
+                Distance travelled: {data.distance.toFixed(2)}km
+              </IonLabel>
             )}
             {data.steps && <IonLabel>Steps taken: {data.steps}</IonLabel>}
             <IonLabel>
-              Start time: {new Date(data.startTime).toLocaleTimeString()}
+              Start time: {startDate2.getUTCHours()}:
+              {startDate2.getUTCMinutes()}
             </IonLabel>
             <IonLabel>
-              End time: {new Date(data.endTime).toLocaleTimeString()}
+              End time: {endDate2.getUTCHours()}:{endDate2.getUTCMinutes()}
+            </IonLabel>
+            <IonLabel>
+              Time submitted: {endDate2.getUTCHours()}:
+              {endDate2.getUTCMinutes()}
             </IonLabel>
           </div>
         );
       case "Walking":
+        const startDate3 = new Date(data.startTime);
+        const endDate3 = new Date(data.endTime);
         return (
           <div>
             {data.caloriesBurnt && (
-              <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
+              <IonLabel>
+                Calories burnt:{" "}
+                {data.caloriesBurnt === -1 ? "N/A" : data.caloriesBurnt}
+              </IonLabel>
             )}
             {data.distance && (
-              <IonLabel>Distance travelled: {data.distance}</IonLabel>
+              <IonLabel>
+                Distance travelled: {data.distance.toFixed(2)}km
+              </IonLabel>
             )}
             {data.steps && <IonLabel>Steps taken: {data.steps}</IonLabel>}
             <IonLabel>
-              Start time: {new Date(data.startTime).toLocaleTimeString()}
+              Start time: {startDate3.getUTCHours()}:
+              {startDate3.getUTCMinutes()}
             </IonLabel>
             <IonLabel>
-              End time: {new Date(data.endTime).toLocaleTimeString()}
+              End time: {endDate3.getUTCHours()}:{endDate3.getUTCMinutes()}
+            </IonLabel>
+            <IonLabel>
+              Time submitted: {endDate3.getUTCHours()}:
+              {endDate3.getUTCMinutes()}
             </IonLabel>
           </div>
         );
@@ -128,19 +166,45 @@ const RecordCard = props => {
         return <div></div>;
     }
   };
+  // time submitted
 
   const renderActivityValue = (activityType, data) => {
     switch (activityType) {
       case "BloodPressureReading":
-        return <div>{data.diastolicPressure}mmHg</div>;
+        const endDate = new Date(data.timestamp);
+        return (
+          <div>
+            {endDate.getUTCHours()}:{endDate.getUTCMinutes()}
+          </div>
+        );
       case "WeightReading":
-        return <div>{data.weight}</div>;
+        const endDate2 = new Date(data.timestamp);
+        return (
+          <div>
+            {endDate2.getUTCHours()}:{endDate2.getUTCMinutes()}
+          </div>
+        );
       case "Cycling":
-        return <div>{data.caloriesBurnt}</div>;
+        const endDate3 = new Date(data.endTime);
+        return (
+          <div>
+            {endDate3.getUTCHours()}:{endDate3.getUTCMinutes()}
+          </div>
+        );
       case "Running":
-        return <div>{data.caloriesBurnt}</div>;
+        const endDate4 = new Date(data.endTime);
+        return (
+          <div>
+            {endDate4.getUTCHours()}:{endDate4.getUTCMinutes()}
+          </div>
+        );
       case "Walking":
-        return <div>{data.caloriesBurnt}</div>;
+        const endDate5 = new Date(data.endTime);
+        return (
+          <div>
+            {endDate5.getUTCHours()}:{endDate5.getUTCMinutes()}
+          </div>
+        );
       default:
         return <div></div>;
     }
@@ -152,7 +216,6 @@ const RecordCard = props => {
         <Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
           <Row className="align-content-center justify-content-center">
             <Col xs="2">
-              {console.log(props.data.id.index)}
               {activityType === "BloodPressureReading" && (
                 <div style={styles.iconimg}>
                   <IonIcon icon={heart} style={styles.iconimg} />
@@ -180,7 +243,6 @@ const RecordCard = props => {
             </Col>
             <Col xs="4">
               <IonLabel style={styles.value}>
-                {console.log(props)}
                 <h3>{props.data.value}</h3>
                 {renderActivityValue(activityType, props.data)}
               </IonLabel>
