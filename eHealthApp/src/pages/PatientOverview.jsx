@@ -65,18 +65,6 @@ const PatientOverview = props => {
   const patientId = props.match.params.patientid;
   const patientName = props.match.params.patientname;
 
-  /**
-   to - 12th of March
-
-   from - 9th of March
-
-   (show more)
-
-   query( from - 1);
-   append to array of activities
-    
-   */
-
   const getActivities = (from, to) => {
     let activities = {};
 
@@ -267,7 +255,11 @@ const PatientOverview = props => {
           />
         )}
         {!displayFilter && displayPredictions && (
-          <PredictionsOverview setDisplayPredictions={setDisplayPredictions} />
+          <PredictionsOverview
+            setDisplayPredictions={setDisplayPredictions}
+            patientId={patientId}
+            activities={activityList[1]}
+          />
         )}
         {/* Main Content */}
         {!displayFilter && !displayPredictions && (

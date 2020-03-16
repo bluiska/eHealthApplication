@@ -30,7 +30,7 @@ UserQueries.getPatientById = pateintId => {
     requestType: "GET",
     entityType: "Patients",
     query: {
-      $filter: `patient/ID eq '${pateintId}'`
+      $filter: `id eq '${pateintId}'`
     }
   });
 };

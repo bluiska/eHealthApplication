@@ -13,8 +13,20 @@ import csv
 
 app = flask.Flask("__main__")
 
-@app.route("/predict")
-def my_index():
+@app.route("/predict/<age>/<gender>/<weight>/<dp>/<sp>/<distancetravelled>")
+def my_index(age, gender, weight, dp, sp, distancetravelled):
+    g = 1
+    if (gender == 'Female'):
+        g = 0
+
+    with open('Dataset/userTestData.csv', 'w', newline='') as f:
+        thewriter = csv.writer(f)
+        thewriter.writerow(['User_ID','Age','Gender','DP','SP','Distance'])
+        thewriter.writerow([0, age, g, dp, sp, distancetravelled])
+    result = predict_hypertension()
+    return result
+
+def predict_hypertension():
     #Load data files
     train=pd.read_csv("Dataset/userTrainData.csv")
     test=pd.read_csv("Dataset/userTestData.csv")
