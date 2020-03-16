@@ -21,15 +21,16 @@ const FilterOverview = props => {
     }
   };
   const todaysDate = new Date();
+  const date = new Date(todaysDate.toDateString());
 
-  let sevenDaysDate = new Date(todaysDate);
-  sevenDaysDate.setDate(todaysDate.getDate() - 7);
+  let sevenDaysDate = new Date(date);
+  sevenDaysDate.setDate(date.getDate() - 7);
 
-  let fourteenDaysDate = new Date(todaysDate);
-  fourteenDaysDate.setDate(todaysDate.getDate() - 14);
+  let fourteenDaysDate = new Date(date);
+  fourteenDaysDate.setDate(date.getDate() - 14);
 
-  let thirtyDaysDate = new Date(todaysDate);
-  thirtyDaysDate.setDate(todaysDate.getDate() - 30);
+  let thirtyDaysDate = new Date(date);
+  thirtyDaysDate.setDate(date.getDate() - 30);
 
   return (
     <IonPage>
@@ -92,7 +93,6 @@ const FilterOverview = props => {
             <IonListHeader>
               <IonLabel>Upload Date</IonLabel>
             </IonListHeader>
-            {console.log("DATEFILTER FO: ", props.selectedDateFilter)}
             <IonItem>
               <IonRadio slot="start" value={sevenDaysDate} />
               <IonLabel>Last 7 days</IonLabel>
