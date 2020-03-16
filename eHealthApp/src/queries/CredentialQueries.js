@@ -18,4 +18,12 @@ CredentialQueries.createUserCredential = (credentialDetails) => {
   });
 };
 
+CredentialQueries.verifyUserCredential = (credentialDetails) => {
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: "Credentials/Login",
+    entityBody: credentialDetails
+  });
+}
+
 export default CredentialQueries;
