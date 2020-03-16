@@ -21,8 +21,7 @@ import {
   IonCardHeader,
   IonSpinner,
   IonCardTitle,
-  IonListHeader,
-  IonFooter
+  IonListHeader
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
@@ -37,7 +36,6 @@ import ActivityQueries from "../queries/ActivityQueries";
 import UserQueries from "../queries/UserQueries";
 import { get } from "http";
 import { act } from "react-dom/test-utils";
-import PredictionsOverview from "./PredictionsOverview";
 
 /*props:
  */
@@ -49,7 +47,6 @@ const PatientOverview = props => {
     new Date("1970-01-01Z00:00:00:000")
   );
   const [displayFilter, setDisplayFilter] = useState(false);
-  const [displayPredictions, setDisplayPredictions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activityList, setActivityList] = useState([]);
   const [from, setFrom] = useState("");
@@ -100,8 +97,7 @@ const PatientOverview = props => {
    */
   const appendPreviousActivity = date => {
     let activities = [...activityList];
-
-    console.log("APPENDING: ", activities);
+    let newActivity = [date, []];
 
     ActivityQueries.getActivitiesByDateRange(
       patientId,
@@ -109,16 +105,11 @@ const PatientOverview = props => {
       new Date(date).toISOString().slice(0, 10)
     ).then(res => {
       //Separate into dates...
-
-      if (res.length > 0) {
-        res.map(activity => {
-          let date = new Date(activity.timestamp).toDateString();
-          activities.push([date, activity]);
-        });
-      } else {
-        activities.push([date, []]);
-      }
-
+      res.map(activity => {
+        let date = new Date(activity.timestamp).toDateString();
+        newActivity[1].push(activity);
+      });
+      activities.push(newActivity);
       setActivityList(activities);
     });
   };
@@ -126,8 +117,6 @@ const PatientOverview = props => {
   useEffect(() => {
     let todayString = today.toDateString();
     let yesterdayString = yesterday().toDateString();
-
-    console.log(todayString, yesterdayString);
 
     setFrom(yesterdayString);
     setTo(todayString);
@@ -176,7 +165,6 @@ const PatientOverview = props => {
 
   const loadMoreData = () => {
     setLoading(true);
-    console.log("Loading:", loading);
     // the api call to the backend show be made here
     let dayBeforeFrom = new Date(from);
     dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
@@ -184,20 +172,6 @@ const PatientOverview = props => {
     setFrom(dayBeforeFrom);
     setLoading(false);
   };
-
-  function filterYear(date) {
-    // ((new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) <= todaysDate)
-    // && (new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) > selectedDateFilter))
-
-    const dateArray = date.split(" ");
-    console.log(dateArray);
-    const dateObj = new Date(dateArray[3], 2, dateArray[2]);
-    console.log("OBJ DATE:", dateObj);
-
-    console.log("SELECTED DATE:", selectedDateFilter);
-
-    return dateObj > selectedDateFilter;
-  }
 
   const dateTitle = date => {
     let displayDate = new Date(date);
@@ -217,22 +191,25 @@ const PatientOverview = props => {
   };
 
   const filterByDate = act => {
-    return new Date(act) > selectedDateFilter;
+    return new Date(act) > new Date(selectedDateFilter);
+  };
+
+  const sortActivities = (a, b) => {
+    const aDate = new Date(a.timestamp);
+    const bDate = new Date(b.timestamp);
+    return aDate.getTime() > bDate.getTime() ? -1 : 1;
   };
 
   return (
     <IonPage>
-      {!displayFilter && !displayPredictions && (
+      {!displayFilter && (
         <BackButtonToolbar title={`${patientName}'s Overview`} />
       )}
       {/* Filter button */}
       <IonToolbar>
-        {displayFilter && !displayPredictions && <IonTitle>Filter by</IonTitle>}
-        {!displayFilter && displayPredictions && (
-          <IonTitle>Predictions</IonTitle>
-        )}
+        {displayFilter && <IonTitle>Filter by</IonTitle>}
 
-        {!displayFilter && !displayPredictions && (
+        {!displayFilter && (
           <IonButton
             size="large"
             expand="block"
@@ -245,7 +222,7 @@ const PatientOverview = props => {
       </IonToolbar>
       <IonContent>
         {/* Filter Screen */}
-        {displayFilter && !displayPredictions && (
+        {displayFilter && (
           <FilterOverview
             selectedDateFilter={selectedDateFilter}
             selectedFilter={selectedFilter}
@@ -262,7 +239,7 @@ const PatientOverview = props => {
           />
         )}
         {/* Main Content */}
-        {!displayFilter && !displayPredictions && (
+        {!displayFilter && (
           <IonList lines="inset">
             {/* Load the activities */}
             {activityList.length > 0 &&
@@ -296,6 +273,7 @@ const PatientOverview = props => {
                               </IonCard>
                             ) : (
                               date[1]
+                                .sort((a, b) => sortActivities(a, b))
                                 .filter(act => filterByActivityType(act))
                                 .map(activity => {
                                   return (
@@ -340,20 +318,6 @@ const PatientOverview = props => {
           </IonList>
         )}
       </IonContent>
-
-      {!displayFilter && !displayPredictions && (
-        <IonFooter>
-          <IonToolbar>
-            <IonButton
-              size="large"
-              expand="block"
-              onClick={() => setDisplayPredictions(!displayPredictions)}
-            >
-              <IonTitle>View Predictions</IonTitle>
-            </IonButton>
-          </IonToolbar>
-        </IonFooter>
-      )}
     </IonPage>
   );
 };
