@@ -109,8 +109,7 @@ const PatientOverview = props => {
    */
   const appendPreviousActivity = date => {
     let activities = [...activityList];
-
-    console.log("APPENDING: ", activities);
+    let newActivity = [date, []];
 
     ActivityQueries.getActivitiesByDateRange(
       patientId,
@@ -118,16 +117,11 @@ const PatientOverview = props => {
       new Date(date).toISOString().slice(0, 10)
     ).then(res => {
       //Separate into dates...
-
-      if (res.length > 0) {
-        res.map(activity => {
-          let date = new Date(activity.timestamp).toDateString();
-          activities.push([date, activity]);
-        });
-      } else {
-        activities.push([date, []]);
-      }
-
+      res.map(activity => {
+        let date = new Date(activity.timestamp).toDateString();
+        newActivity[1].push(activity);
+      });
+      activities.push(newActivity);
       setActivityList(activities);
     });
   };
@@ -135,8 +129,6 @@ const PatientOverview = props => {
   useEffect(() => {
     let todayString = today.toDateString();
     let yesterdayString = yesterday().toDateString();
-
-    console.log(todayString, yesterdayString);
 
     setFrom(yesterdayString);
     setTo(todayString);
@@ -185,7 +177,6 @@ const PatientOverview = props => {
 
   const loadMoreData = () => {
     setLoading(true);
-    console.log("Loading: ", loading);
     // the api call to the backend show be made here
     let dayBeforeFrom = new Date(from);
     dayBeforeFrom.setDate(dayBeforeFrom.getDate() - 1);
@@ -193,20 +184,6 @@ const PatientOverview = props => {
     setFrom(dayBeforeFrom);
     setLoading(false);
   };
-
-  function filterYear(date) {
-    // ((new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) <= todaysDate)
-    // && (new Date(v.date.split(' ')[3], 4, v.date.split(' ')[2]) > selectedDateFilter))
-
-    const dateArray = date.split(" ");
-    console.log(dateArray);
-    const dateObj = new Date(dateArray[3], 2, dateArray[2]);
-    console.log("OBJ DATE:", dateObj);
-
-    console.log("SELECTED DATE:", selectedDateFilter);
-
-    return dateObj > selectedDateFilter;
-  }
 
   const dateTitle = date => {
     let displayDate = new Date(date);
@@ -226,7 +203,7 @@ const PatientOverview = props => {
   };
 
   const filterByDate = act => {
-    return new Date(act) > selectedDateFilter;
+    return new Date(act) > new Date(selectedDateFilter);
   };
 
   const sortActivities = (a, b) => {

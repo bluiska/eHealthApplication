@@ -27,6 +27,7 @@
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-input-mask": "^3.0.0-alpha.2",
+    "react-modal": "^3.11.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "typescript": "^3.7.5"
@@ -55,6 +56,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
+    "eslint": "^6.8.0",
     "husky": "^4.2.3",
     "pre-commit": "^1.2.2",
     "react-scripts": "^3.4.0"

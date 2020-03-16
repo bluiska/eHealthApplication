@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const Logger = require('./singletons/Logger');
-const eventEmitter = require('../eventsHandler');
+const eventEmitter = require('./eventsHandler');
 
 const app = express();
 const PORT = 3000;
@@ -20,8 +20,8 @@ app
         eventEmitter.emit('onBluetoothDevicesRequest', res);
     })
     .post(`/synchroniseData`, (req, res) => {
-        if (req) {
-            console.log(req.body)
+        if (req && req.body) {
+            eventEmitter.emit('syncData', {id: req.body.id, res:res});
         }
     })
     .post(`/connectDevice`, (req, res) => {
@@ -36,8 +36,21 @@ app
             eventEmitter.emit(`disconnectSensor`, {id: deviceId, res: res});
         }
     })
+    .post('/startActivity', (req, res) => {
+        if (req && req.body) {
+            console.log(req.body)
+            Logger.log('[INFO] Activity started')
+            eventEmitter.emit('startActivity', {res: res, type: req.body.type})
+        }
+    })
+    .get('/stopActivity', (req, res) => {
+        Logger.log('[INFO] Activity has been stopped')
+        eventEmitter.emit('stopActivity', {res:res})
+    })
+
 
 app.listen(PORT, () => {
-    Logger.log(`Server's listening on port ${PORT}`);
+    Logger.log(`[INFO] Server's listening on port ${PORT}`);
+    eventEmitter.emit('serverRunning');
 });
 

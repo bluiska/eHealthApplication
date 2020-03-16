@@ -25,15 +25,50 @@ eventEmitter
             const deviceConnectionStatus = await sensor.connectToSensor();
             params.res.send(deviceConnectionStatus);
         } catch (err) {
-            Logger.log(`Failed connecting to a device...`);
-            params.res.send({deviceConnected: false});
+            setTimeout(() => {
+            params.res.send(false);
+            }, 3000);
         }
     })
-    .on('disonnectSensor', params => {
+    .on('disconnectSensor', params => {
         const deviceId = params.id;
         const sensor = devices.find(x => x.id === deviceId);
         sensor.disconnect();
         params.res.send(true);
+    })
+    .on('syncData', params => {
+        const bluetoothDevice = devices.find(x => x.id === params.id);
+        if (bluetoothDevice.connected) {
+            const syndData = bluetoothDevice.getSyncData();
+            params.res.send(syndData);
+        }
+    })
+    .on('startActivity', params => {
+        devices.forEach(device => {
+            if (device.connected && !device.measuringActivity){
+                Logger.log(`[INFO] Device #${device.id} started an activity`)
+                if (params.type) {
+                    device.startActivity(params.type)
+                    device.measuringActivity = !device.measuringActivity
+                } else {
+                    Logger.log(`[ERROR] StartActivity - Activity type not provided`)
+                }
+            } else {
+                Logger.log(`[INFO] Device #${device.id} is ${device.connected} == ${device.measuringActivity}`)
+            }
+        })
+        params.res.status(200).send(true)
+    })
+    .on('stopActivity', params => {
+        devices.forEach(device => {
+            if (device.connected && device.measuringActivity) {
+                Logger.log(`[INFO] Device #${device.id} stopped an activity`)
+                device.stopActivity()
+                device.measuringActivity = !device.measuringActivity
+                console.log("[INFO] Activities: ", device.activities)
+            }
+        })
+        params.res.status(200).send(true)
     })
 
 module.exports = eventEmitter;

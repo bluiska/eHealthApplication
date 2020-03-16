@@ -7,8 +7,8 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState, useEffect } from "react";
-import { IonContent, IonPage, IonLabel, IonItem } from "@ionic/react";
+import React, { useState } from "react";
+import { IonContent, IonPage, IonLabel, IonItem, IonAlert } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
 
@@ -25,65 +25,87 @@ const styles = {
     textAlign: "center",
     justifyContent: "center",
     fontSize: "30px"
+  },
+  failText: {
+    fontSize: "20px",
+    textAlign: "center"
+  },
+  failButtonContainer: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  disconnectModalLabel: {
+    // fontSize: '20px',
+    textAlign: "center"
+  },
+  disconnectModalButtonsContainer: {
+    display: "flex",
+    justifyContent: "space-around"
+  },
+  button: {
+    width: "75px"
   }
 };
 
-/*
- *props:
- */
-const Devices = props => {
-  const [pairedDevices, setPairedDevices] = useState([]);
-
-  useEffect(() => {
-    getPairedDevices();
-
-    const synchronisationListener = setInterval(() => {
-      // console.log("it lives");
-    }, 5000);
-  }, []);
-
-  const getPairedDevices = () => {
+const Devices = () => {
+  // Creating a state to keep a log of paired devices
+  const [pairedDevices, setPairedDevices] = useState(
     BluetoothSynchronisationManager.getPairedDevices()
-      .then(res => {
-        setPairedDevices(res);
-      })
-      .catch(err => {
-        console.log("failed:: ", err);
-        getPairedDevices();
-      });
-  };
+  );
+  const [showFailModal, setShowFailModal] = useState(false);
+  const [showDisconnectModal, setShowDisconnectModal] = useState(false);
+  const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
 
   const deviceClickHandler = id => {
-    const connectingDevice = pairedDevices.find(device => device.id === id);
-    if (connectingDevice.connected) {
-      setPairedDevices(() => {
-        return changeDeviceStatus(id, "DISCONNECT");
-      });
-    } else {
-      setPairedDevices(() => {
-        return changeDeviceStatus(id, "CONNECTING");
-      });
-
+    const clickedDevice = pairedDevices.find(x => x.id === id);
+    setClickedDeviceHolder(clickedDevice);
+    if (
+      (clickedDevice.connectionStatus.toLowerCase() === "paired" ||
+        clickedDevice.connectionStatus.toLowerCase() === "disconnected") &&
+      clickedDevice.connected === false
+    ) {
+      // CONNECT
+      changeDeviceStatus(id, "CONNECTING");
       BluetoothSynchronisationManager.connectToDevice(id)
         .then(res => {
-          setPairedDevices(() => {
-            const connectingDevice = pairedDevices.find(
-              device => device.id === id
-            );
-            connectingDevice.connect(res);
-            const filteredPairedDevices = pairedDevices.filter(
-              device => device.id !== id
-            );
-            filteredPairedDevices.push(connectingDevice);
-            filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
-            return filteredPairedDevices;
-          });
+          clickedDevice.connect(res);
+          changeDeviceStatus(id, "CONNECTED");
         })
-        .catch(res => {
-          setPairedDevices(() => {
-            return changeDeviceStatus(id, "FAILED");
-          });
+        .catch(err => {
+          changeDeviceStatus(id, "FAILED");
+          setShowFailModal(true);
         });
+    } else if (
+      clickedDevice.connectionStatus.toLowerCase() === "connected" &&
+      clickedDevice.connected
+    ) {
+      // DISCONNECT
+      setShowDisconnectModal(true);
+    }
+  };
+
+  /**
+   * Triggered on attempt to close the 'Failed connecting' modal
+   * Can be triggered either via button press, or clicking on the background
+   * Ensures that the modal is closed, and the device's connection status is cahnged to 'PAIRED'
+   */
+  const failConnectModalHandler = () => {
+    setShowFailModal(false);
+    changeDeviceStatus(clickedDeviceHolder.id, "PAIRED");
+  };
+
+  /**
+   * Handles click of a button on 'Disconnect Device' modal
+   * When 'Yes' is selected - disconnects the device
+   * When 'No' is selected - closes the modal
+   */
+  const disconnectModalHandler = disconnect => {
+    setShowDisconnectModal(false);
+    if (disconnect) {
+      clickedDeviceHolder.disconnect();
+      changeDeviceStatus(clickedDeviceHolder.id, "DISCONNECTED");
+      BluetoothSynchronisationManager.disconnect(clickedDeviceHolder.id);
+      clickedDeviceHolder.disconnect();
     }
   };
 
@@ -97,26 +119,53 @@ const Devices = props => {
    * @param {String} status - Connection status of the device
    */
   const changeDeviceStatus = (id, status) => {
-    const connectingDevice = pairedDevices.find(device => device.id === id);
-    if (status === "CONNECTING") {
+    setPairedDevices(() => {
+      const connectingDevice = pairedDevices.find(device => device.id === id);
       connectingDevice.changeConnectionStatus(status);
-    } else if (status === "DISCONNECT") {
-      BluetoothSynchronisationManager.disconnect(id);
-      connectingDevice.disconnect();
-    } else if (status === "FAILED") {
-      connectingDevice.failedToConnect();
-    }
-    const filteredPairedDevices = pairedDevices.filter(
-      device => device.id !== id
-    );
-    filteredPairedDevices.push(connectingDevice);
-    filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
-    return filteredPairedDevices;
+      const filteredPairedDevices = pairedDevices.filter(
+        device => device.id !== id
+      );
+      filteredPairedDevices.push(connectingDevice);
+      filteredPairedDevices.sort((a, b) => a.name.localeCompare(b.name));
+      return filteredPairedDevices;
+    });
   };
 
   return (
     <IonPage>
       <BackButtonToolbar title="Devices" />
+      <IonAlert
+        isOpen={showFailModal}
+        onDidDismiss={failConnectModalHandler}
+        header={"Failed"}
+        message={"Failed pairing with a bluetooth device"}
+        buttons={[
+          {
+            text: "OK",
+            role: "ok"
+          }
+        ]}
+      />
+      <IonAlert
+        isOpen={showDisconnectModal}
+        onDidDismiss={disconnectModalHandler.bind(this, false)}
+        header={"Disconnect?"}
+        message={"Do you want to disconnect from the device?"}
+        buttons={[
+          {
+            text: "Yes",
+            handler: () => {
+              disconnectModalHandler(true);
+            }
+          },
+          {
+            text: "No",
+            handler: () => {
+              disconnectModalHandler(false);
+            }
+          }
+        ]}
+      />
       <IonContent className="ion-padding">
         {pairedDevices.length > 0 ? (
           pairedDevices.map(x => {
