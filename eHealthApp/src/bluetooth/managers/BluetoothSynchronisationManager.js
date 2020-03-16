@@ -23,7 +23,7 @@ class BluetoothSynchronisationManager {
     return foundDevices;
   };
 
-  setPatient = (p) => {
+  setPatient = p => {
     patient = p;
   };
 
@@ -40,7 +40,7 @@ class BluetoothSynchronisationManager {
       return true;
     }
     return false;
-  }
+  };
 
   connectToDevice = id => {
     /**
@@ -122,7 +122,7 @@ class BluetoothSynchronisationManager {
                 startTime: log.startTime,
                 endTime: log.stopTime,
                 distance: parseFloat(log.distance)
-              }
+              };
               ActivityQueries.uploadNewExercise(patient, log);
               this.newDataAvailable = !this.newDataAvailable;
             });

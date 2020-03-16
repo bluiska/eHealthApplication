@@ -26,9 +26,9 @@ import "./Today.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { withRouter } from "react-router-dom";
 import ActivityQueries from "../queries/ActivityQueries";
-import RecordCard from '../components/record_cards/RecordCard';
+import RecordCard from "../components/record_cards/RecordCard";
 import { Container, Row, Col } from "react-bootstrap";
-import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
+import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
  */
@@ -42,21 +42,21 @@ const Today = props => {
       if (newDataAvailable) {
         getActivities();
       }
-    }, 1000)
+    }, 1000);
   }, [newDataAvailable]);
 
   useEffect(() => {
     setInterval(() => {
       checkForNewData();
-    }, 1000)
-  }, [])
+    }, 1000);
+  }, []);
 
   const checkForNewData = () => {
     const dataAvailable = BluetoothSynchronisationManager.isNewDataAvailable();
     if (newDataAvailable !== dataAvailable) {
       setNewDataAvailable(dataAvailable);
     }
-  }
+  };
 
   const getActivities = () => {
     const todayDate = new Date();
@@ -70,8 +70,8 @@ const Today = props => {
       formatedDate
     ).then(async res => {
       if (res.length > 0) {
-        const sortArray = (arr) => arr.sort((a, b) => b.endTime - a.endTime);
-        const sortedArray = await sortArray(res)
+        const sortArray = arr => arr.sort((a, b) => b.endTime - a.endTime);
+        const sortedArray = await sortArray(res);
         setTodaysActivities(sortedArray);
       }
     });
@@ -83,22 +83,23 @@ const Today = props => {
       <IonContent className="ion-padding">
         {/*Activity*/}
         <IonItem>
-        <IonList>
-              {
-          todaysActivities.length === 0 ? (
-              <div style={{alignContent: 'center', justifyContent: 'center'}}>
-              <IonSpinner />
+          <IonList>
+            {todaysActivities.length === 0 ? (
+              <div style={{ alignContent: "center", justifyContent: "center" }}>
+                <IonSpinner />
               </div>
-          ) : todaysActivities.map(activity => {
-            return (
-              <RecordCard 
-            key={activity.id}
-            index={activity.id}
-            data={activity}/>
-            )
-          })
-        }
-        </IonList>
+            ) : (
+              todaysActivities.map(activity => {
+                return (
+                  <RecordCard
+                    key={activity.id}
+                    index={activity.id}
+                    data={activity}
+                  />
+                );
+              })
+            )}
+          </IonList>
         </IonItem>
 
         {/*Floating action button*/}

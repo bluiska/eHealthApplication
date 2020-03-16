@@ -21,7 +21,7 @@ import background_image from "../resources/home_background_blur.jpg";
 import "./Home.css";
 import { withRouter } from "react-router-dom";
 import UserQueries from "./../queries/UserQueries";
-import BluetoothSynchronisationManager from '../bluetooth/managers/BluetoothSynchronisationManager';
+import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
  */

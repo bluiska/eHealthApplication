@@ -30,9 +30,9 @@ const RecordCard = props => {
     }
   };
 
-  const formatValue = (value) => {
-    return (Math.round(value * 100)/100).toFixed(2)
-  }
+  const formatValue = value => {
+    return (Math.round(value * 100) / 100).toFixed(2);
+  };
 
   const renderActivityTitle = activityType => {
     switch (activityType) {
@@ -77,8 +77,12 @@ const RecordCard = props => {
       case "Cycling":
         return (
           <div>
-            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
-            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
+            <IonLabel>
+              Calories burnt: {formatValue(data.caloriesBurnt)}
+            </IonLabel>
+            <IonLabel>
+              Distance travelled: {formatValue(data.distance)}
+            </IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
             </IonLabel>
@@ -90,8 +94,12 @@ const RecordCard = props => {
       case "Running":
         return (
           <div>
-            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
-            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
+            <IonLabel>
+              Calories burnt: {formatValue(data.caloriesBurnt)}
+            </IonLabel>
+            <IonLabel>
+              Distance travelled: {formatValue(data.distance)}
+            </IonLabel>
             <IonLabel>Steps taken: {data.steps}</IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
@@ -104,8 +112,12 @@ const RecordCard = props => {
       case "Walking":
         return (
           <div>
-            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
-            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
+            <IonLabel>
+              Calories burnt: {formatValue(data.caloriesBurnt)}
+            </IonLabel>
+            <IonLabel>
+              Distance travelled: {formatValue(data.distance)}
+            </IonLabel>
             <IonLabel>Steps taken: {data.steps}</IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
