@@ -75,6 +75,25 @@ const Entry = () => {
         </IonItemGroup>
       </IonCardContent>
     </IonCard>
+    <IonCard>
+      <IonCardHeader>
+        <IonCardTitle>Demo Sandbox</IonCardTitle>
+      </IonCardHeader>
+
+      <IonCardContent>
+        <IonItemGroup>
+          <section>
+          <IonButton
+                expand="block"
+                shape="round"
+                routerDirection="forward"
+                routerLink={"/home"}>
+                Try Demo
+            </IonButton>
+          </section>
+        </IonItemGroup>
+      </IonCardContent>
+    </IonCard>
   </IonContent>
 )};
 
