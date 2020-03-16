@@ -1,5 +1,6 @@
 import React from 'react'
 import { IonHeader, IonContent, IonToolbar, IonTitle, IonSlide, IonSlides, IonProgressBar, IonItem, IonInput, IonButton, IonButtons, IonIcon, IonNote, IonLabel, IonRadioGroup, IonRadio, IonList, IonFooter, IonGrid, IonCol, IonRow, IonDatetime } from '@ionic/react'
+import CredentialQueries from '../queries/CredentialQueries';
 import './RegistrationModal.css';
 
 const slideOpts = {
@@ -135,6 +136,23 @@ class RegistrationModal extends React.Component {
 
     onSubmission = () => {
         // Call Database
+        let details = this.state;
+        CredentialQueries.createUserProfile(`${details.role}s`, {
+            name: details.name,
+            email: details.email,
+            gender: details.gender,
+            dob: details.dob
+        })
+        .then(res => {
+            CredentialQueries.createUserCredential({
+                user: { ID: res.ID },
+                username: details.username,
+                password: details.password
+            })
+            .then(res => console.log(res))
+            .catch(err => alert(err));
+        })
+        .catch(err => alert(err));
 
         setTimeout(() => {
             this.props.closeAction(true);

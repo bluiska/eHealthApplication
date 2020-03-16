@@ -31,16 +31,15 @@ namespace eHealth_DataBus
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(MyAllowSpecificOrigins, builder =>
-            //    {
-            //        builder.AllowAnyOrigin()
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod()
-            //            .AllowCredentials();
-            //    });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsConfig", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             services.AddScoped<DbContextTrinity>();
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -78,12 +77,9 @@ namespace eHealth_DataBus
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseCors(MyAllowSpecificOrigins);
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("CorsConfig");
             app.UseAuthentication();
             app.UseAuthorization();
 

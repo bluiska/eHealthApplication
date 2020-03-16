@@ -2,29 +2,19 @@ import BackendAccess from "../utilities/BackendAccess";
 
 var CredentialQueries = {};
 
-CredentialQueries.uploadNewExercise = (patient, exercise) => {
+CredentialQueries.createUserProfile = (userType, userDetails) => {
   return BackendAccess.IssueODataRequest({
     requestType: "POST",
-    entityType: exercise.type,
-    entityBody: {
-      patient: { ID: patient },
-      timestamp: new Date(),
-      ...exercise.data,
-      steps: exercise.data.steps || -1,
-      caloriesburnt: exercise.data.caloriesburnt || -1
-    }
+    entityType: userType,
+    entityBody: userDetails
   });
 };
 
-CredentialQueries.uploadNewMeasurement = async (patient, measurement) => {
+CredentialQueries.createUserCredential = (credentialDetails) => {
   return BackendAccess.IssueODataRequest({
     requestType: "POST",
-    entityType: measurement.type,
-    entityBody: {
-      patient: { ID: patient },
-      timestamp: new Date(),
-      ...measurement.data
-    }
+    entityType: "Credentials/Register",
+    entityBody: credentialDetails
   });
 };
 
