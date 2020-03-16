@@ -8,14 +8,14 @@ import {
   IonCardHeader,
   IonIcon,
   IonLabel,
-  IonCardContent
+  IonCardContent,
+  IonList
 } from "@ionic/react";
 import { Accordion, Row, Col, Image } from "react-bootstrap";
 import { heart } from "ionicons/icons";
 
 const RecordCard = props => {
   const activityType = props.data.id.split("_")[0];
-  console.log(activityType);
 
   const styles = {
     iconimg: {
@@ -29,6 +29,10 @@ const RecordCard = props => {
       margin: "auto"
     }
   };
+
+  const formatValue = (value) => {
+    return (Math.round(value * 100)/100).toFixed(2)
+  }
 
   const renderActivityTitle = activityType => {
     switch (activityType) {
@@ -48,7 +52,6 @@ const RecordCard = props => {
   };
 
   const renderActivityValues = (activityType, data) => {
-    console.log(new Date(data.timestamp).toLocaleTimeString());
     switch (activityType) {
       case "BloodPressureReading":
         return (
@@ -74,8 +77,8 @@ const RecordCard = props => {
       case "Cycling":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
+            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
             </IonLabel>
@@ -87,8 +90,8 @@ const RecordCard = props => {
       case "Running":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
+            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
             <IonLabel>Steps taken: {data.steps}</IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
@@ -101,8 +104,8 @@ const RecordCard = props => {
       case "Walking":
         return (
           <div>
-            <IonLabel>Calories burnt: {data.caloriesBurnt}</IonLabel>
-            <IonLabel>Distance travelled: {data.distance}</IonLabel>
+            <IonLabel>Calories burnt: {formatValue(data.caloriesBurnt)}</IonLabel>
+            <IonLabel>Distance travelled: {formatValue(data.distance)}</IonLabel>
             <IonLabel>Steps taken: {data.steps}</IonLabel>
             <IonLabel>
               Start time: {new Date(data.startTime).toLocaleTimeString()}
@@ -124,11 +127,11 @@ const RecordCard = props => {
       case "WeightReading":
         return <div>{data.weight}</div>;
       case "Cycling":
-        return <div>{data.caloriesBurnt}</div>;
+        return <div>{formatValue(data.caloriesBurnt)}</div>;
       case "Running":
-        return <div>{data.caloriesBurnt}</div>;
+        return <div>{formatValue(data.caloriesBurnt)}</div>;
       case "Walking":
-        return <div>{data.caloriesBurnt}</div>;
+        return <div>{formatValue(data.caloriesBurnt)}</div>;
       default:
         return <div></div>;
     }
@@ -140,7 +143,6 @@ const RecordCard = props => {
         <Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
           <Row className="align-content-center justify-content-center">
             <Col xs="2">
-              {console.log(props.data.id.index)}
               {activityType === "BloodPressureReading" && (
                 <div style={styles.iconimg}>
                   <IonIcon icon={heart} style={styles.iconimg} />
@@ -168,7 +170,6 @@ const RecordCard = props => {
             </Col>
             <Col xs="4">
               <IonLabel style={styles.value}>
-                {console.log(props)}
                 <h3>{props.data.value}</h3>
                 {renderActivityValue(activityType, props.data)}
               </IonLabel>

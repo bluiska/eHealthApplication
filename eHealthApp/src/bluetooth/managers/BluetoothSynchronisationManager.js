@@ -9,8 +9,11 @@ const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 let foundDevices = [];
 
+var patient = null;
+
 class BluetoothSynchronisationManager {
   constructor() {
+    this.newDataAvailable = false;
     setInterval(() => {
       this.synchroniseData();
     }, 3000);
@@ -20,6 +23,10 @@ class BluetoothSynchronisationManager {
     return foundDevices;
   };
 
+  setPatient = (p) => {
+    patient = p;
+  };
+
   getConnectedDevices = () => {
     /**
      * Returns the list of connected devices
@@ -27,12 +34,19 @@ class BluetoothSynchronisationManager {
     return {};
   };
 
+  isNewDataAvailable = () => {
+    if (this.newDataAvailable) {
+      this.newDataAvailable = false;
+      return true;
+    }
+    return false;
+  }
+
   connectToDevice = id => {
     /**
      * Connect to one device
      */
     return new Promise(async (resolve, reject) => {
-      console.log(`clicked on ${id}`);
       const connectingDevice = foundDevices.find(device => device.id === id);
       if (connectingDevice) {
         try {
@@ -102,23 +116,15 @@ class BluetoothSynchronisationManager {
 
           if (data.length !== 0) {
             data.forEach(log => {
-              const {
-                type,
-                stepsCounted,
-                kcalBurnt,
-                startTime,
-                stopTime,
-                distance
-              } = log;
-              const newExercise = new Exercise(
-                type,
-                stepsCounted,
-                kcalBurnt,
-                startTime,
-                stopTime,
-                distance
-              );
-              ActivityQueries.uploadNewExercise(0, newExercise);
+              log.data = {
+                caloriesburnt: parseFloat(log.kcalBurnt),
+                steps: parseFloat(log.stepsCounted),
+                startTime: log.startTime,
+                endTime: log.stopTime,
+                distance: parseFloat(log.distance)
+              }
+              ActivityQueries.uploadNewExercise(patient, log);
+              this.newDataAvailable = !this.newDataAvailable;
             });
           }
         } catch (err) {

@@ -34,7 +34,6 @@ eventEmitter
         const deviceId = params.id;
         const sensor = devices.find(x => x.id === deviceId);
         sensor.disconnect();
-        console.log(devices);
         params.res.send(true);
     })
     .on('syncData', params => {

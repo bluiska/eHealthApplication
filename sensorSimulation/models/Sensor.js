@@ -11,10 +11,10 @@ const STEP_TO_KM_RATE = 0.8;
 const KCAL_BY_M_RATE = 0.072;
 
 const ACTIVITY_TYPES = Object.freeze({
-    WALKING: 'walking',
-    RUNNING: 'running',
-    CYCLING: 'cycling',
-    UNKNOWN: 'unknown'
+    WALKING: 'Walkings',
+    RUNNING: 'Runnings',
+    CYCLING: 'Cyclings',
+    UNKNOWN: 'Unknown'
 })
 
 class Activity {
@@ -118,7 +118,6 @@ class Sensor {
                 this.stepsCounter = this.stepsCounter + 1;
                 this.distance = this.stepsCounter * STEP_TO_KM_RATE;
                 this.kcalBurnt = this.distance * KCAL_BY_M_RATE;
-                console.log(`Steps: ${this.stepsCounter}`)
             }, 2000);
         }
     }
