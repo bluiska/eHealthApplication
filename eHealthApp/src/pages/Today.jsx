@@ -21,7 +21,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
+  IonCardContent
 } from "@ionic/react";
 
 import { sync, add, today } from "ionicons/icons";
@@ -38,7 +38,7 @@ const Today = props => {
   const [todaysActivities, setTodaysActivities] = useState([]);
   const patientId = props.match.params.patientid || "unknown";
 
-  let activitiesComponent = <IonSpinner />
+  let activitiesComponent = <IonSpinner />;
 
   useEffect(() => {
     getActivities();
@@ -48,23 +48,22 @@ const Today = props => {
     if (todaysActivities.length === 0) {
       return (
         <IonCard>
-        <IonCardHeader>
-          <IonCardTitle>No activity today</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          <p>
-            No activity for today. Synchronize your devices or add an entry
-            manually using the plus button below.
-          </p>
-        </IonCardContent>
-      </IonCard>
-      )
+          <IonCardHeader>
+            <IonCardTitle>No activity today</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>
+              No activity for today. Synchronize your devices or add an entry
+              manually using the plus button below.
+            </p>
+          </IonCardContent>
+        </IonCard>
+      );
     } else if (todaysActivities.length > 0) {
       return (
         <IonItem>
-        <IonList>
-          {
-            todaysActivities.map(activity => {
+          <IonList>
+            {todaysActivities.map(activity => {
               return (
                 <RecordCard
                   key={activity.id}
@@ -72,11 +71,10 @@ const Today = props => {
                   data={activity}
                 />
               );
-            })
-          }
-        </IonList>
-      </IonItem>
-      )
+            })}
+          </IonList>
+        </IonItem>
+      );
     } else {
       return activitiesComponent;
     }
@@ -94,7 +92,11 @@ const Today = props => {
       formatedDate
     ).then(async res => {
       if (res.length > 0) {
-        const sortArray = arr => arr.sort((a, b) => (new Date(b.endTime)).getTime() - (new Date(a.endTime)).getTime());
+        const sortArray = arr =>
+          arr.sort(
+            (a, b) =>
+              new Date(b.endTime).getTime() - new Date(a.endTime).getTime()
+          );
         const sortedArray = await sortArray(res);
         setTodaysActivities(sortedArray);
       }
