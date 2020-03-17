@@ -11,8 +11,11 @@ class IBluetoothEnabledDevice {
     this.name = name;
     this.batteryLevel = batteryLevel;
     this.connectionStatus = connectionStatus;
-    this.activityStatus = activityStatus;
     this.connected = connected;
+
+    this.someFunc = sth => {
+      console.log(sth);
+    };
   }
 
   connect = deviceConnectionStatus => {
