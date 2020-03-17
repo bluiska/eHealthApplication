@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
-import { IonHeader, IonPage, IonAlert, IonContent, IonButton, IonCard, IonCardContent, IonCardHeader, IonToast, IonInput, IonCardTitle, IonToolbar, IonItem, IonTitle, IonItemGroup, IonModal } from '@ionic/react';
+import React, { useState } from "react";
+import {
+  IonHeader,
+  IonPage,
+  IonAlert,
+  IonContent,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonToast,
+  IonInput,
+  IonCardTitle,
+  IonToolbar,
+  IonItem,
+  IonTitle,
+  IonItemGroup,
+  IonModal
+} from "@ionic/react";
 
-import RegistrationModal from '../components/RegistrationModal';
-import CredentialQueries from '../queries/CredentialQueries';
-import './Entry.css';
+import RegistrationModal from "../components/RegistrationModal";
+import CredentialQueries from "../queries/CredentialQueries";
+import CredentialManager from "../utilities/CredentialManager";
+import "./Entry.css";
 
 const Entry = props => {
   const [username, setUsername] = useState("");
@@ -16,7 +34,7 @@ const Entry = props => {
 
   async function closeModal(state) {
     await setShowModal(false);
-    if(state) {
+    if (state) {
       await setToastMsg("Registration");
       await setIsToastDisplayed(true);
     }
@@ -25,29 +43,29 @@ const Entry = props => {
   function verifyUser() {
     CredentialQueries.verifyUserCredential({
       username: username,
-      password: password
+      password: CredentialManager.EncryptAccesscode(username, password)
     })
-    .then(res => {
-      setToastMsg("Login");
-      setIsToastDisplayed(true);
-      redirectToUser(res.user.id);
-    })
-    .catch(async err => {
-      let error = await err.json();
-      produceInvalidMessage(error.value);
-    })
+      .then(res => {
+        setToastMsg("Login");
+        setIsToastDisplayed(true);
+        redirectToUser(res.user.id);
+      })
+      .catch(async err => {
+        let error = await err.json();
+        produceInvalidMessage(error.value);
+      });
   }
 
   function redirectToUser(userId) {
     let patientPredicate = "Patient",
-        doctorPredicate = "Doctor",
-        userRole = "unknown",
-        rolebasedView = "unknown";
+      doctorPredicate = "Doctor",
+      userRole = "unknown",
+      rolebasedView = "unknown";
 
-    if(userId.includes(patientPredicate)) {
+    if (userId.includes(patientPredicate)) {
       userRole = patientPredicate;
       rolebasedView = "activities";
-    } else if(userId.includes(doctorPredicate)) {
+    } else if (userId.includes(doctorPredicate)) {
       userRole = doctorPredicate;
       rolebasedView = "mypatients";
     } else {
@@ -56,7 +74,7 @@ const Entry = props => {
       return;
     }
 
-    props.history.push( `/${userRole.toLowerCase()}/${userId}/${rolebasedView}`);
+    props.history.push(`/${userRole.toLowerCase()}/${userId}/${rolebasedView}`);
   }
 
   function produceInvalidMessage(error) {
@@ -80,39 +98,41 @@ const Entry = props => {
         isOpen={isToastDisplayed}
         onDidDismiss={() => setIsToastDisplayed(false)}
         message={`${toastMsg} successful!`}
-        duration={2000} />
+        duration={2000}
+      />
       <IonContent>
         <IonHeader>
           <IonToolbar>
-              <IonTitle>eHealth Login</IonTitle>
+            <IonTitle>eHealth Login</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonCard>
           <IonCardHeader>
-            <IonCardTitle>
-                Login
-            </IonCardTitle>
+            <IonCardTitle>Login</IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent>
             <IonItemGroup>
               <IonItem>
-                <IonInput 
+                <IonInput
                   placeholder="Username"
-                  onIonInput={e => setUsername(e.target.value)}/>
+                  onIonInput={e => setUsername(e.target.value)}
+                />
               </IonItem>
               <IonItem>
                 <IonInput
                   placeholder="Password"
                   type="password"
-                  onIonInput={e => setPassword(e.target.value)}/>
+                  onIonInput={e => setPassword(e.target.value)}
+                />
               </IonItem>
               <section>
                 <IonButton
-                    expand="block"
-                    shape="round"
-                    onClick={() => verifyUser()}>
-                    Login
+                  expand="block"
+                  shape="round"
+                  onClick={() => verifyUser()}
+                >
+                  Login
                 </IonButton>
               </section>
             </IonItemGroup>
@@ -129,8 +149,9 @@ const Entry = props => {
                 <IonButton
                   expand="block"
                   shape="round"
-                  onClick={() => setShowModal(true)}>
-                    Create new account
+                  onClick={() => setShowModal(true)}
+                >
+                  Create new account
                 </IonButton>
               </section>
             </IonItemGroup>
@@ -145,11 +166,12 @@ const Entry = props => {
             <IonItemGroup>
               <section>
                 <IonButton
-                    expand="block"
-                    shape="round"
-                    routerDirection="forward"
-                    routerLink={"/demo"}>
-                    Try Demo
+                  expand="block"
+                  shape="round"
+                  routerDirection="forward"
+                  routerLink={"/demo"}
+                >
+                  Try Demo
                 </IonButton>
               </section>
             </IonItemGroup>
@@ -157,7 +179,7 @@ const Entry = props => {
         </IonCard>
       </IonContent>
     </IonPage>
-
-)};
+  );
+};
 
 export default Entry;

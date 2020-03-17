@@ -47,25 +47,6 @@ namespace eHealth_DataBus
 
             services.AddOData();
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("eHealth Key for Authentication")),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
-            services.AddSingleton<AuthenticationManager>(new AuthenticationManager("eHealth Key for Authentication"));
-
             DbContextTrinity trinity = new DbContextTrinity();
             trinity.Initialise();
         }
@@ -80,7 +61,7 @@ namespace eHealth_DataBus
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsConfig");
-            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

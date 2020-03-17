@@ -20,7 +20,7 @@ UserQueries.getAllTestPatients = () => {
     requestType: "GET",
     entityType: "Patients",
     query: {
-      $filter: 'contains(id, \'Test\')'
+      $filter: "contains(id, 'Test')"
     }
   });
 };
@@ -30,7 +30,7 @@ UserQueries.getAllUnassignedPatients = () => {
     requestType: "GET",
     entityType: "Patients",
     query: {
-      $filter: 'doctor eq null'
+      $filter: "doctor eq null"
     }
   });
 };
@@ -40,7 +40,7 @@ UserQueries.getAllTestDoctors = () => {
     requestType: "GET",
     entityType: "Doctors",
     query: {
-      $filter: 'contains(id, \'Test\')'
+      $filter: "contains(id, 'Test')"
     }
   });
 };
@@ -71,7 +71,7 @@ UserQueries.assignPatientToDoctor = (doctorId, patientId) => {
     entityType: "Doctors",
     entityID: doctorId,
     entityBody: {
-      patients: [{"ID": patientId}]
+      patients: [{ ID: patientId }]
     }
   });
 };
@@ -82,7 +82,7 @@ UserQueries.assignDoctorToPatient = (patientId, doctorId) => {
     entityType: "Patients",
     entityID: patientId,
     entityBody: {
-      doctor: {"ID": doctorId}
+      doctor: { ID: doctorId }
     }
   });
 };

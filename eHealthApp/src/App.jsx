@@ -33,35 +33,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./theme/variables.css";
 
 /*Page Components */
-import Home from './pages/Home';
-import PatientActivities from './pages/PatientActivities';
-import PatientDevices from './pages/PatientDevices';
-import PatientManualEntry from './pages/PatientManualEntry';
-import DoctorPatients from './pages/DoctorPatients';
-import Exercise from './pages/activity_submission/Exercise';
-import BloodPressure from './pages/activity_submission/BloodPressure';
-import Weight from './pages/activity_submission/Weight';
-import DoctorPatientDetails from './pages/DoctorPatientDetails';
-import DoctorPatientPool from './pages/DoctorPatientPool';
-import Entry from './pages/Entry';
+import Home from "./pages/Home";
+import PatientActivities from "./pages/PatientActivities";
+import PatientDevices from "./pages/PatientDevices";
+import PatientManualEntry from "./pages/PatientManualEntry";
+import DoctorPatients from "./pages/DoctorPatients";
+import Exercise from "./pages/activity_submission/Exercise";
+import BloodPressure from "./pages/activity_submission/BloodPressure";
+import Weight from "./pages/activity_submission/Weight";
+import DoctorPatientDetails from "./pages/DoctorPatientDetails";
+import DoctorPatientPool from "./pages/DoctorPatientPool";
+import Entry from "./pages/Entry";
 
 const App = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-				<Route path="/entry" component={Entry} exact={true}/>
-				<Route path="/demo" component={Home} exact={true} />
-				<Route exact path="/" render={() => <Redirect to="/entry" />} />
+        <Route path="/entry" component={Entry} exact={true} />
+        <Route path="/demo" component={Home} exact={true} />
+        <Route exact path="/" render={() => <Redirect to="/entry" />} />
 
         <Route
           path="/patient/:patientid/activities"
           component={PatientActivities}
           exact={true}
         />
-        <Route 
+        <Route
           path="/patient/:patientid/activities/devicesync"
           component={PatientDevices}
-          exact={true} />
+          exact={true}
+        />
         <Route
           path="/patient/:patientid/activities/manualentry"
           component={PatientManualEntry}

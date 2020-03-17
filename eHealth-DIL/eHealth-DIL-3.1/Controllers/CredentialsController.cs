@@ -17,7 +17,6 @@ namespace eHealth_DataBus.Controllers
         private readonly IRepository<Credential> repo;
         private readonly ModelFormatter<Credential> shaper;
         private readonly ModelValidator<Credential> checker;
-        private readonly AuthenticationManager authenticator;
         private readonly CredentialHasher crypto;
 
         public CredentialsController(DbContextTrinity trinity)
@@ -25,7 +24,6 @@ namespace eHealth_DataBus.Controllers
             repo = new ModelRepository<Credential>(trinity.DefaultModel);
             shaper = new ModelFormatter<Credential>(trinity.DefaultModel.Uri.AbsoluteUri);
             checker = new ModelValidator<Credential>(trinity.DefaultModel);
-            authenticator = new AuthenticationManager("eHealth Key for Authentication");
             crypto = new CredentialHasher();
         }
 
@@ -82,13 +80,7 @@ namespace eHealth_DataBus.Controllers
                     repo.Update(dbCred);
 
                     // Return user
-                    var token = authenticator.Authenticate(resource.Username, resource.Password);
-                    
-                    return Ok(new
-                    {
-                        user = dbCred.User,
-                        token = token
-                    });
+                    return Ok(new { user = dbCred.User });
                 }
             }
 

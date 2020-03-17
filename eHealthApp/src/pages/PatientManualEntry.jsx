@@ -6,6 +6,7 @@ Author: Gergo Kekesi
 */
 
 import React, { useState } from "react";
+
 import { IonPage, IonContent, IonList, IonCardContent } from "@ionic/react";
 import BackButtonToolbar from "./../components/BackButtonToolbar";
 import exercise_img from "../resources/exercise.jpg";

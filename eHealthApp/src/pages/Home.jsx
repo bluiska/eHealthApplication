@@ -86,7 +86,8 @@ const Home = props => {
                   size="large"
                   expand="block"
                   style={{ marginBottom: "30px" }}
-                  onClick={() => setShowPatientActionSheet(true)}>
+                  onClick={() => setShowPatientActionSheet(true)}
+                >
                   Patient: My Activities
                 </IonButton>
               </Col>
@@ -96,7 +97,8 @@ const Home = props => {
                 <IonButton
                   size="large"
                   expand="block"
-                  onClick={() => setShowDoctorActionSheet(true)}>
+                  onClick={() => setShowDoctorActionSheet(true)}
+                >
                   Doctor: My Patients
                 </IonButton>
               </Col>

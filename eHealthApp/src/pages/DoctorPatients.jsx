@@ -15,7 +15,8 @@ import {
   IonLabel,
   IonFab,
   IonFabButton,
-  IonIcon
+  IonIcon,
+  useIonViewWillEnter
 } from "@ionic/react";
 import { add } from "ionicons/icons";
 import BackButtonToolbar from "../components/BackButtonToolbar";
@@ -30,11 +31,12 @@ const DoctorPatients = props => {
   const [patients, setPatients] = useState([]);
   const [isDemo] = useState(doctor.includes("Test"));
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
+    console.log("Entered");
     UserQueries.getPatientsByDoctorId(doctor).then(res => {
       setPatients(res);
     });
-  }, []);
+  });
 
   const DoctorPatients = data => {
     return (
@@ -85,7 +87,8 @@ const DoctorPatients = props => {
             disabled={isDemo}
             color="secondary"
             routerDirection="forward"
-            routerLink={`/doctor/${doctor}/mypatients-add`}>
+            routerLink={`/doctor/${doctor}/mypatients-add`}
+          >
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>

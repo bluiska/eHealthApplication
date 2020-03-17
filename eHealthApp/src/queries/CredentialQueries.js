@@ -10,7 +10,7 @@ CredentialQueries.createUserProfile = (userType, userDetails) => {
   });
 };
 
-CredentialQueries.createUserCredential = (credentialDetails) => {
+CredentialQueries.createUserCredential = credentialDetails => {
   return BackendAccess.IssueODataRequest({
     requestType: "POST",
     entityType: "Credentials/Register",
@@ -18,12 +18,20 @@ CredentialQueries.createUserCredential = (credentialDetails) => {
   });
 };
 
-CredentialQueries.verifyUserCredential = (credentialDetails) => {
+CredentialQueries.verifyUserCredential = credentialDetails => {
   return BackendAccess.IssueODataRequest({
     requestType: "POST",
     entityType: "Credentials/Login",
     entityBody: credentialDetails
   });
-}
+};
+
+CredentialQueries.verifyUsername = username => {
+  return BackendAccess.IssueODataRequest({
+    requestType: "POST",
+    entityType: `Credentials/ValidateUsername(username='${username}')`,
+    entityBody: {}
+  });
+};
 
 export default CredentialQueries;

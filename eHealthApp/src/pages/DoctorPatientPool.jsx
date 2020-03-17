@@ -1,7 +1,7 @@
 /*
 Add description
 
-Author: Daniel Madu
+Author: Andy Le
 */
 
 import React, { Fragment, useEffect, useState } from "react";
@@ -19,6 +19,7 @@ import {
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import UserQueries from "../queries/UserQueries";
 import { Row, Container } from "react-bootstrap";
+import { withRouter } from "react-router";
 
 /*props:
  */
@@ -33,37 +34,37 @@ const DoctorPatientPool = props => {
 
   useEffect(() => {
     UserQueries.getAllUnassignedPatients(doctor).then(res => {
-      if(res.length < 1)
-        setIsExitPromptOpen(true)
-      else
-        setPatients(res);
+      if (res.length < 1) setIsExitPromptOpen(true);
+      else setPatients(res);
     });
   }, []);
 
-  const onPatientClick = (patient) => {
+  console.log(props);
+
+  const onPatientClick = patient => {
     setSelectedPatient(patient);
     setIsSelectPromptOpen(true);
-  }
+  };
 
   const onAssignmentComplete = () => {
     setIsToastDisplayed(true);
+    //
     setTimeout(() => props.history.goBack(), 500);
-  }
+  };
 
   const assignPatientToDoctor = () => {
     UserQueries.assignPatientToDoctor(doctor, selectedPatient.id)
-               .then(() => UserQueries.assignDoctorToPatient(selectedPatient.id, doctor)
-                                      .then(() => onAssignmentComplete())
-                                      .catch(() => console.log("Association failed.")))
-               .catch(() => console.log("Association failed."));
-  }
+      .then(() =>
+        UserQueries.assignDoctorToPatient(selectedPatient.id, doctor)
+          .then(() => onAssignmentComplete())
+          .catch(() => console.log("Association failed."))
+      )
+      .catch(() => console.log("Association failed."));
+  };
 
   const DoctorPatientPool = data => {
     return (
-        <IonCard
-          button={true}
-          onClick={() => onPatientClick(data.patient)}
-        >
+      <IonCard button={true} onClick={() => onPatientClick(data.patient)}>
         <IonCardHeader>
           <IonCardTitle>{data.patient.name}</IonCardTitle>
         </IonCardHeader>
@@ -97,13 +98,15 @@ const DoctorPatientPool = props => {
         onDidDismiss={() => setIsSelectPromptOpen(false)}
         header="Assign this Patient?"
         message={`Do you wish to take charge of ${selectedPatient.name}?`}
-        buttons={[{
-          text: "Yes",
-          handler: () => assignPatientToDoctor()
-        },
-        {
-          text: "No"
-        }]}
+        buttons={[
+          {
+            text: "Yes",
+            handler: () => assignPatientToDoctor()
+          },
+          {
+            text: "No"
+          }
+        ]}
       />
       <IonAlert
         isOpen={isExitPromptOpen}
@@ -116,7 +119,8 @@ const DoctorPatientPool = props => {
         isOpen={isToastDisplayed}
         onDidDismiss={() => setIsToastDisplayed(false)}
         message={`You are now in charge of ${selectedPatient.name}.`}
-        duration={2000} />
+        duration={2000}
+      />
       <IonContent className="ion-padding">
         {doctor && (
           <Fragment>
@@ -131,4 +135,4 @@ const DoctorPatientPool = props => {
   );
 };
 
-export default DoctorPatientPool;
+export default withRouter(DoctorPatientPool);
