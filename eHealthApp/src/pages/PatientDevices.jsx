@@ -47,7 +47,7 @@ const styles = {
   }
 };
 
-const Devices = () => {
+const PatientDevices = () => {
   // Creating a state to keep a log of paired devices
   const [pairedDevices, setPairedDevices] = useState(
     BluetoothSynchronisationManager.getPairedDevices()
@@ -189,4 +189,4 @@ const Devices = () => {
   );
 };
 
-export default Devices;
+export default PatientDevices;

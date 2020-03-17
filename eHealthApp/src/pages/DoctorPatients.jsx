@@ -12,30 +12,35 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonLabel
+  IonLabel,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from "@ionic/react";
+import { add } from "ionicons/icons";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import UserQueries from "../queries/UserQueries";
 import { Row, Container } from "react-bootstrap";
 
 /*props:
  */
-const Patients = props => {
+const DoctorPatients = props => {
   const doctor = props.match.params.docid;
 
   const [patients, setPatients] = useState([]);
+  const [isDemo] = useState(doctor.includes("Test"));
 
   useEffect(() => {
-    UserQueries.getDoctorById(doctor).then(res => {
+    UserQueries.getPatientsByDoctorId(doctor).then(res => {
       setPatients(res);
     });
   }, []);
 
-  const Patient = data => {
+  const DoctorPatients = data => {
     return (
       <IonCard
         routerDirection="forward"
-        routerLink={`/patientoverview/doctor/${doctor}/patient/${data.patient.id}/${data.patient.name}`}
+        routerLink={`/doctor/${doctor}/mypatients-manage/${data.patient.id}/${data.patient.name}`}
       >
         <IonCardHeader>
           <IonCardTitle>{data.patient.name}</IonCardTitle>
@@ -43,14 +48,14 @@ const Patients = props => {
         <IonCardContent>
           <Container>
             <Row>
-              <IonLabel>Patient id: {data.patient.id}</IonLabel>
+              <IonLabel>Patient ID: {data.patient.id}</IonLabel>
             </Row>
             <Row>
               <IonLabel>Gender: {data.patient.gender}</IonLabel>
             </Row>
             <Row>
               <IonLabel>
-                Date of birth: {new Date(data.patient.dob).toDateString()}
+                Date of Birth: {new Date(data.patient.dob).toDateString()}
               </IonLabel>
             </Row>
             <Row>
@@ -70,13 +75,23 @@ const Patients = props => {
           <Fragment>
             {patients.length !== 0 &&
               patients.map((patient, index) => (
-                <Patient key={index} patient={patient} />
+                <DoctorPatients key={index} patient={patient} />
               ))}
           </Fragment>
         )}
+        {/*Floating action button*/}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton
+            disabled={isDemo}
+            color="secondary"
+            routerDirection="forward"
+            routerLink={`/doctor/${doctor}/mypatients-add`}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Patients;
+export default DoctorPatients;

@@ -14,15 +14,15 @@ class RegistrationModal extends React.Component {
         super(props);
 
         this.state = {
-            // Progress-defined state
+            // Progress-defined states
             progress: 0,
             nextLabel: "Next",
-            indicativeLabel: "Role Selection",
+            indicativeLabel: "Account Type",
             isPrevDisabled: true,
             isNextEnabled: false,
             passwordStrength: "dark",
 
-            // User-related state
+            // User-related states
             role: "",
             name: "",
             dob: "",
@@ -110,7 +110,7 @@ class RegistrationModal extends React.Component {
 
         switch (level) {
             case 0:
-                label = "Role Selection";
+                label = "Account Type";
                 this.checkStepOne();
                 break;
             case 1:
@@ -284,7 +284,7 @@ class RegistrationModal extends React.Component {
                                     role: e.target.value
                                 })}>
                                 <IonItem>
-                                    <IonLabel>Patient or Doctor?</IonLabel>
+                                    <IonLabel>Choose your Account Type</IonLabel>
                                 </IonItem>
 
                                 <IonItem lines="none">

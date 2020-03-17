@@ -40,7 +40,7 @@ import { act } from "react-dom/test-utils";
 /*props:
  */
 
-const PatientOverview = props => {
+const DoctorPatientDetails = props => {
   //State
   const [selectedFilter, setSelectedFilter] = useState([]);
   const [selectedDateFilter, setSelectedDateFilterHandler] = useState(
@@ -326,7 +326,7 @@ const PatientOverview = props => {
     </IonPage>
   );
 };
-export default withRouter(PatientOverview);
+export default withRouter(DoctorPatientDetails);
 
 /*
 

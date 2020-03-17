@@ -33,11 +33,11 @@ const Home = props => {
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-    UserQueries.getAllDoctors().then(res => {
+    UserQueries.getAllTestDoctors().then(res => {
       setDoctors(res);
     });
 
-    UserQueries.getAllPatients().then(res => {
+    UserQueries.getAllTestPatients().then(res => {
       setPatients(res);
     });
   }, []);
@@ -55,7 +55,7 @@ const Home = props => {
     return {
       text: doc.name,
       handler: () => {
-        props.history.push(`/patients/doctor/${doc.id}`);
+        props.history.push(`/doctor/${doc.id}/mypatients`);
       }
     };
   };
@@ -64,7 +64,7 @@ const Home = props => {
     return {
       text: patient.name,
       handler: () => {
-        props.history.push(`/today/patient/${patient.id}`);
+        props.history.push(`/patient/${patient.id}/activities`);
         BluetoothSynchronisationManager.setPatient(patient.id);
       }
     };
@@ -74,7 +74,7 @@ const Home = props => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>eHealth Application</IonTitle>
+          <IonTitle>eHealth Application Demo</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -86,9 +86,8 @@ const Home = props => {
                   size="large"
                   expand="block"
                   style={{ marginBottom: "30px" }}
-                  onClick={() => setShowPatientActionSheet(true)}
-                >
-                  Today's Activity
+                  onClick={() => setShowPatientActionSheet(true)}>
+                  Patient: My Activities
                 </IonButton>
               </Col>
             </Row>
@@ -97,9 +96,8 @@ const Home = props => {
                 <IonButton
                   size="large"
                   expand="block"
-                  onClick={() => setShowDoctorActionSheet(true)}
-                >
-                  View Patients
+                  onClick={() => setShowDoctorActionSheet(true)}>
+                  Doctor: My Patients
                 </IonButton>
               </Col>
             </Row>

@@ -24,7 +24,7 @@ import { withRouter } from "react-router-dom";
 /*
 props:
  */
-const ManualEntry = props => {
+const PatientManualEntry = props => {
   const [exerciseOptionsOpen, setExerciseOptionsOpen] = useState(false);
 
   const patientId = props.match.params.patientid || "unknown";
@@ -48,7 +48,7 @@ const ManualEntry = props => {
                     image={walk_img}
                     onClick={() =>
                       props.history.push(
-                        `/activity_submission/patient/${patientId}/type/walk`
+                        `/patient/${patientId}/activities/manualentry-add/exercise/walking`
                       )
                     }
                     ripple
@@ -57,7 +57,7 @@ const ManualEntry = props => {
                     image={run_img}
                     onClick={() =>
                       props.history.push(
-                        `/activity_submission/patient/${patientId}/type/run`
+                        `/patient/${patientId}/activities/manualentry-add/exercise/running`
                       )
                     }
                     ripple
@@ -66,7 +66,7 @@ const ManualEntry = props => {
                     image={cycle_img}
                     onClick={() =>
                       props.history.push(
-                        `/activity_submission/patient/${patientId}/type/cycle`
+                        `/patient/${patientId}/activities/manualentry-add/exercise/cycling`
                       )
                     }
                     ripple
@@ -80,7 +80,7 @@ const ManualEntry = props => {
             image={blood_pressure_img}
             onClick={() =>
               props.history.push(
-                `/blood_pressure_activity_submission/patient/${patientId}`
+                `/patient/${patientId}/activities/manualentry-add/bloodpressure`
               )
             }
           />
@@ -89,7 +89,7 @@ const ManualEntry = props => {
             image={weight_img}
             onClick={() =>
               props.history.push(
-                `/weight_activity_submission/patient/${patientId}`
+                `/patient/${patientId}/activities/manualentry-add/weight`
               )
             }
           />
@@ -99,4 +99,4 @@ const ManualEntry = props => {
   );
 };
 
-export default withRouter(ManualEntry);
+export default withRouter(PatientManualEntry);

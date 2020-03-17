@@ -34,14 +34,15 @@ import "./theme/variables.css";
 
 /*Page Components */
 import Home from './pages/Home';
-import Today from './pages/Today';
-import Devices from './pages/Devices';
-import ManualEntry from './pages/ManualEntry';
-import Patients from './pages/Patients';
+import PatientActivities from './pages/PatientActivities';
+import PatientDevices from './pages/PatientDevices';
+import PatientManualEntry from './pages/PatientManualEntry';
+import DoctorPatients from './pages/DoctorPatients';
 import Exercise from './pages/activity_submission/Exercise';
 import BloodPressure from './pages/activity_submission/BloodPressure';
 import Weight from './pages/activity_submission/Weight';
-import PatientOverview from './pages/PatientOverview';
+import DoctorPatientDetails from './pages/DoctorPatientDetails';
+import DoctorPatientPool from './pages/DoctorPatientPool';
 import Entry from './pages/Entry';
 
 const App = () => (
@@ -49,42 +50,49 @@ const App = () => (
     <IonReactRouter>
       <IonRouterOutlet>
 				<Route path="/entry" component={Entry} exact={true}/>
-				<Route path="/home" component={Home} exact={true} />
+				<Route path="/demo" component={Home} exact={true} />
 				<Route exact path="/" render={() => <Redirect to="/entry" />} />
 
         <Route
-          path="/today/patient/:patientid"
-          component={Today}
+          path="/patient/:patientid/activities"
+          component={PatientActivities}
           exact={true}
         />
-        <Route path="/devices" component={Devices} exact={true} />
+        <Route 
+          path="/patient/:patientid/activities/devicesync"
+          component={PatientDevices}
+          exact={true} />
         <Route
-          path="/manualentry/patient/:patientid"
-          component={ManualEntry}
+          path="/patient/:patientid/activities/manualentry"
+          component={PatientManualEntry}
           exact={true}
         />
         <Route
-          path="/patients/doctor/:docid"
-          component={Patients}
-          exact={true}
-        />
-        <Route
-          path="/patientoverview/doctor/:doc/patient/:patientid/:patientname"
-          component={PatientOverview}
-        />
-        <Route
-          path="/activity_submission/patient/:patientid/type/:type"
+          path="/patient/:patientid/activities/manualentry-add/exercise/:type"
           component={Exercise}
         />
         <Route
-          path="/blood_pressure_activity_submission/patient/:patientid"
+          path="/patient/:patientid/activities/manualentry-add/bloodpressure"
           component={BloodPressure}
           exact={true}
         />
         <Route
-          path="/weight_activity_submission/patient/:patientid"
+          path="/patient/:patientid/activities/manualentry-add/weight"
           component={Weight}
           exact={true}
+        />
+        <Route
+          path="/doctor/:docid/mypatients"
+          component={DoctorPatients}
+          exact={true}
+        />
+        <Route
+          path="/doctor/:docid/mypatients-manage/:patientid/:patientname"
+          component={DoctorPatientDetails}
+        />
+        <Route
+          path="/doctor/:docid/mypatients-add"
+          component={DoctorPatientPool}
         />
       </IonRouterOutlet>
     </IonReactRouter>

@@ -22,7 +22,7 @@ import {
 
 import { sync, add } from "ionicons/icons";
 import pencil from "../resources/pencil.png";
-import "./Today.css";
+import "./PatientActivities.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { withRouter } from "react-router-dom";
 import ActivityQueries from "../queries/ActivityQueries";
@@ -32,7 +32,7 @@ import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSync
 
 /*props:
  */
-const Today = props => {
+const PatientActivities = props => {
   const [todaysActivities, setTodaysActivities] = useState([]);
   const [newDataAvailable, setNewDataAvailable] = useState(true);
   const patientId = props.match.params.patientid || "unknown";
@@ -112,7 +112,7 @@ const Today = props => {
             <IonFabButton
               color="tertiary"
               routerDirection="forward"
-              routerLink="/devices"
+              routerLink={`/patient/${patientId}/activities/devicesync`}
               data-desc="Synchronize"
             >
               <IonIcon icon={sync} />
@@ -120,7 +120,7 @@ const Today = props => {
             <IonFabButton
               color="tertiary"
               routerDirection="forward"
-              routerLink={"/manualentry/patient/" + patientId}
+              routerLink={`/patient/${patientId}/activities/manualentry`}
               data-desc="Manual entry"
             >
               <IonImg src={pencil} style={{ width: "20px", height: "20px" }} />
@@ -132,4 +132,4 @@ const Today = props => {
   );
 };
 
-export default withRouter(Today);
+export default withRouter(PatientActivities);

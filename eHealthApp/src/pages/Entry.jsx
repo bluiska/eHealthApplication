@@ -9,13 +9,17 @@ const Entry = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrMsg] = useState("");
-  const [isCredentialInvalid, setIsCredentialInvalid] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [isToastActivated, setIsToastActivated] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [toastIsShown, setToastIsShown] = useState(false);
+  const [isToastDisplayed, setIsToastDisplayed] = useState(false);
 
   async function closeModal(state) {
     await setShowModal(false);
-    if(state) await setToastIsShown(true);
+    if(state) {
+      await setToastMsg("Registration");
+      await setIsToastDisplayed(true);
+    }
   }
 
   function verifyUser() {
@@ -24,6 +28,8 @@ const Entry = props => {
       password: password
     })
     .then(res => {
+      setToastMsg("Login");
+      setIsToastDisplayed(true);
       redirectToUser(res.user.id);
     })
     .catch(async err => {
@@ -32,37 +38,50 @@ const Entry = props => {
     })
   }
 
-  function redirectToUser(userId) {    
+  function redirectToUser(userId) {
     let patientPredicate = "Patient",
         doctorPredicate = "Doctor",
-        userRole = userId.includes(patientPredicate) ? patientPredicate : userId.includes(doctorPredicate) ? doctorPredicate : "unknown";
-    
-    props.history.push( `/today/${userRole}/${userId}`);
+        userRole = "unknown",
+        rolebasedView = "unknown";
+
+    if(userId.includes(patientPredicate)) {
+      userRole = patientPredicate;
+      rolebasedView = "activities";
+    } else if(userId.includes(doctorPredicate)) {
+      userRole = doctorPredicate;
+      rolebasedView = "mypatients";
+    } else {
+      setErrMsg("");
+      setIsToastActivated(true);
+      return;
+    }
+
+    props.history.push( `/${userRole.toLowerCase()}/${userId}/${rolebasedView}`);
   }
 
   function produceInvalidMessage(error) {
     setErrMsg(error);
-    setIsCredentialInvalid(true);
+    setIsToastActivated(true);
   }
 
   return (
     <IonPage>
       <IonAlert
-        isOpen={isCredentialInvalid}
-        onDidDismiss={() => setIsCredentialInvalid(false)}
+        isOpen={isToastActivated}
+        onDidDismiss={() => setIsToastActivated(false)}
         header="Login failed."
         message={errorMsg}
         buttons={["OK"]}
       />
+      <IonModal isOpen={showModal}>
+        <RegistrationModal closeAction={closeModal}></RegistrationModal>
+      </IonModal>
+      <IonToast
+        isOpen={isToastDisplayed}
+        onDidDismiss={() => setIsToastDisplayed(false)}
+        message={`${toastMsg} successful!`}
+        duration={2000} />
       <IonContent>
-        <IonModal isOpen={showModal}>
-          <RegistrationModal closeAction={closeModal}></RegistrationModal>
-        </IonModal>
-        <IonToast
-          isOpen={toastIsShown}
-          onDidDismiss={() => setToastIsShown(false)}
-          message="Registration successful!"
-          duration={3000} />
         <IonHeader>
           <IonToolbar>
               <IonTitle>eHealth Login</IonTitle>
@@ -129,7 +148,7 @@ const Entry = props => {
                     expand="block"
                     shape="round"
                     routerDirection="forward"
-                    routerLink={"/home"}>
+                    routerLink={"/demo"}>
                     Try Demo
                 </IonButton>
               </section>

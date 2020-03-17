@@ -54,7 +54,6 @@ export default new (class BackendAccess {
           break;
         case "POST":
           context.res = await Create(req.entityType, req.entityBody);
-          console.log("test: ", context.res);
           break;
         case "PUT":
           context.res = await Update(
