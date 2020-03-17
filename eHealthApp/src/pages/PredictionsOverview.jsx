@@ -10,28 +10,14 @@ import {
   IonLabel,
   IonCardTitle,
   IonCardContent,
-  IonRow,
-  IonList,
-  IonItem
+  IonRow
 } from "@ionic/react";
-import UserQueries from "../queries/UserQueries";
 import { Container } from "react-bootstrap";
 import { Pie, Line } from "react-chartjs-2";
 
 const PredictionsOverview = props => {
   const [predictions, setPredictions] = useState([]);
   const activities = props.activities[1] ? props.activities[1] : [];
-  // const userData = props.activities[1] ? props.activities[1][0].patient : [];
-
-  useEffect(() => {
-    // UserQueries.getPatientById(props.patientId).then(res => setUserData(res));
-    // fetch("/predict")
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setPredictions(data.result);
-    //     console.log(data.result);
-    //   });
-  }, []);
 
   const calculateAge = dob => {
     var diff_ms = Date.now() - dob.getTime();
@@ -123,23 +109,13 @@ const PredictionsOverview = props => {
       datasets: [
         {
           label: "Diastolic Pressure",
-          data: diastolicPressure.reverse()
-          // backgroundColor: [
-          //   "rgba(255, 99, 132, 0.6)",
-          //   "rgba(54, 162, 235, 0.6)",
-          //   "rgba(255, 206, 86, 0.6)",
-          //   "rgba(75, 192, 192, 0.6)"
-          // ]
+          data: diastolicPressure.reverse(),
+          backgroundColor: "rgba(255, 99, 132, 0.6)"
         },
         {
           label: "Systolic Pressure",
-          data: systolicPressure.reverse()
-          // backgroundColor: [
-          //   "rgba(255, 99, 132, 0.6)",
-          //   "rgba(54, 162, 235, 0.6)",
-          //   "rgba(255, 206, 86, 0.6)",
-          //   "rgba(75, 192, 192, 0.6)"
-          // ]
+          data: systolicPressure.reverse(),
+          backgroundColor: "rgba(54, 162, 235, 0.6)"
         }
       ]
     };
