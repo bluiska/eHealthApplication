@@ -70,7 +70,6 @@ const PredictionsOverview = props => {
         ? diastolicPressure.reduce((a, b) => a + b, 0) /
           diastolicPressure.length
         : 0;
-
     const avgSystolicPressure =
       systolicPressure.length !== 0
         ? systolicPressure.reduce((a, b) => a + b, 0) / systolicPressure.length
@@ -91,6 +90,14 @@ const PredictionsOverview = props => {
       walking.length !== 0 ? walking.reduce((a, b) => a + b, 0) : 0;
     const age = calculateAge(new Date(activities[0].patient.dob));
 
+    const totalBloodPressure = bloodpressure.map(val =>
+      val.reduce((a, b) => a + b)
+    );
+
+    const highestBloodPressureIndex = totalBloodPressure.indexOf(
+      Math.max(...totalBloodPressure)
+    );
+
     fetch(
       `/predict/${age}/${activities[0].gender}/${avgWeight}/${avgDiastolicPressure}/${avgSystolicPressure}/${totalDistance}`
     )
@@ -109,17 +116,17 @@ const PredictionsOverview = props => {
         <IonCard>
           <IonCardHeader>
             {predictions.length !== 0 ? (
-              <IonCardTitle>
+              <IonLabel>
                 This patient is predicted to have {predictions} hypertension
-              </IonCardTitle>
+              </IonLabel>
             ) : (
-              <IonCardTitle>Predicting data...</IonCardTitle>
+              <IonLabel>Predicting data...</IonLabel>
             )}
           </IonCardHeader>
         </IonCard>
         <IonCard>
           <IonCardHeader>
-            <IonCardTitle>Average bloodpressure</IonCardTitle>
+            <IonCardTitle>Average bloodpressure reading</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
             <Container>
@@ -131,6 +138,31 @@ const PredictionsOverview = props => {
               <IonRow>
                 <IonLabel>
                   Average Systolic Pressure: {avgSystolicPressure}mmhg
+                </IonLabel>
+              </IonRow>
+            </Container>
+          </IonCardContent>
+        </IonCard>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Highest bloodpressure reading</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <Container>
+              <IonRow>
+                <IonLabel>
+                  Diastolic Pressure:{" "}
+                  {highestBloodPressureIndex === -1
+                    ? "0mmhg"
+                    : bloodpressure[highestBloodPressureIndex][0] + "mmgh"}
+                </IonLabel>
+              </IonRow>
+              <IonRow>
+                <IonLabel>
+                  Systolic Pressure:{" "}
+                  {highestBloodPressureIndex === -1
+                    ? "0mmhg"
+                    : bloodpressure[highestBloodPressureIndex][1] + "mmgh"}
                 </IonLabel>
               </IonRow>
             </Container>
