@@ -10,10 +10,13 @@ import {
   IonLabel,
   IonCardTitle,
   IonCardContent,
-  IonRow
+  IonRow,
+  IonList,
+  IonItem
 } from "@ionic/react";
 import UserQueries from "../queries/UserQueries";
 import { Container } from "react-bootstrap";
+import { Pie, Line } from "react-chartjs-2";
 
 const PredictionsOverview = props => {
   const [predictions, setPredictions] = useState([]);
@@ -58,6 +61,10 @@ const PredictionsOverview = props => {
     const bloodpressure = bloodpressureArray.map(reading => {
       return [reading.diastolicPressure, reading.systolicPressure];
     });
+    const bloodpressureTimes = bloodpressureArray.map(reading =>
+      new Date(reading.timestamp).toLocaleTimeString()
+    );
+    console.log("TIMESTAMPS: ", bloodpressureTimes);
     const weight = weightArray.map(reading => reading.weight);
     const running = runningArray.map(reading => reading.distance);
     const cycling = cyclingArray.map(reading => reading.distance);
@@ -98,6 +105,10 @@ const PredictionsOverview = props => {
       Math.max(...totalBloodPressure)
     );
 
+    const lowestBloodPressureIndex = totalBloodPressure.indexOf(
+      Math.min(...totalBloodPressure)
+    );
+
     fetch(
       `/predict/${age}/${activities[0].gender}/${avgWeight}/${avgDiastolicPressure}/${avgSystolicPressure}/${totalDistance}`
     )
@@ -106,24 +117,53 @@ const PredictionsOverview = props => {
         setPredictions(data.result);
         console.log(data.result);
       });
+
+    let data = {
+      labels: bloodpressureTimes.reverse(),
+      datasets: [
+        {
+          label: "Diastolic Pressure",
+          data: diastolicPressure.reverse()
+          // backgroundColor: [
+          //   "rgba(255, 99, 132, 0.6)",
+          //   "rgba(54, 162, 235, 0.6)",
+          //   "rgba(255, 206, 86, 0.6)",
+          //   "rgba(75, 192, 192, 0.6)"
+          // ]
+        },
+        {
+          label: "Systolic Pressure",
+          data: systolicPressure.reverse()
+          // backgroundColor: [
+          //   "rgba(255, 99, 132, 0.6)",
+          //   "rgba(54, 162, 235, 0.6)",
+          //   "rgba(255, 206, 86, 0.6)",
+          //   "rgba(75, 192, 192, 0.6)"
+          // ]
+        }
+      ]
+    };
     return (
       <div>
         <IonCard>
           <IonCardContent>
-            <IonTitle>PLACE GRAPH HERE</IonTitle>
+            <Line data={data} />
           </IonCardContent>
         </IonCard>
+
         <IonCard>
           <IonCardHeader>
             {predictions.length !== 0 ? (
               <IonLabel>
-                This patient is predicted to have {predictions} hypertension
+                This patient is predicted to have a {predictions} chance of
+                developing coronary heart disease
               </IonLabel>
             ) : (
               <IonLabel>Predicting data...</IonLabel>
             )}
           </IonCardHeader>
         </IonCard>
+
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>Average bloodpressure reading</IonCardTitle>
@@ -143,6 +183,7 @@ const PredictionsOverview = props => {
             </Container>
           </IonCardContent>
         </IonCard>
+
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>Highest bloodpressure reading</IonCardTitle>
@@ -163,6 +204,32 @@ const PredictionsOverview = props => {
                   {highestBloodPressureIndex === -1
                     ? "0mmhg"
                     : bloodpressure[highestBloodPressureIndex][1] + "mmgh"}
+                </IonLabel>
+              </IonRow>
+            </Container>
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Lowest bloodpressure reading</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <Container>
+              <IonRow>
+                <IonLabel>
+                  Diastolic Pressure:{" "}
+                  {highestBloodPressureIndex === -1
+                    ? "0mmhg"
+                    : bloodpressure[lowestBloodPressureIndex][0] + "mmgh"}
+                </IonLabel>
+              </IonRow>
+              <IonRow>
+                <IonLabel>
+                  Systolic Pressure:{" "}
+                  {highestBloodPressureIndex === -1
+                    ? "0mmhg"
+                    : bloodpressure[lowestBloodPressureIndex][1] + "mmgh"}
                 </IonLabel>
               </IonRow>
             </Container>

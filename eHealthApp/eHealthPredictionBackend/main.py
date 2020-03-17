@@ -48,8 +48,8 @@ def predict_hypertension():
     test = test.drop('User_ID', axis=1)
     
     #Create target variable
-    data=train.drop('Hypertension',1)
-    target=train.Hypertension
+    data=train.drop('Coronary',1)
+    target=train.Coronary
 
     #Build dummy variables for categorical variables
     data=pd.get_dummies(data)
