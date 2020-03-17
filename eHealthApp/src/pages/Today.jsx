@@ -17,44 +17,66 @@ import {
   IonItem,
   IonImg,
   IonList,
-  IonSpinner
+  IonSpinner,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent
 } from "@ionic/react";
 
-import { sync, add } from "ionicons/icons";
+import { sync, add, today } from "ionicons/icons";
 import pencil from "../resources/pencil.png";
 import "./Today.css";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import { withRouter } from "react-router-dom";
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
-import { Container, Row, Col } from "react-bootstrap";
-import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
  */
 const Today = props => {
   const [todaysActivities, setTodaysActivities] = useState([]);
-  const [newDataAvailable, setNewDataAvailable] = useState(true);
   const patientId = props.match.params.patientid || "unknown";
 
-  useEffect(() => {
-    setInterval(() => {
-      if (newDataAvailable) {
-        getActivities();
-      }
-    }, 1000);
-  }, [newDataAvailable]);
+  let activitiesComponent = <IonSpinner />;
 
   useEffect(() => {
-    setInterval(() => {
-      checkForNewData();
-    }, 1000);
+    getActivities();
   }, []);
 
-  const checkForNewData = () => {
-    const dataAvailable = BluetoothSynchronisationManager.isNewDataAvailable();
-    if (newDataAvailable !== dataAvailable) {
-      setNewDataAvailable(dataAvailable);
+  const handleActivitiesComponentChange = () => {
+    if (todaysActivities.length === 0) {
+      return (
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>No activity today</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>
+              No activity for today. Synchronize your devices or add an entry
+              manually using the plus button below.
+            </p>
+          </IonCardContent>
+        </IonCard>
+      );
+    } else if (todaysActivities.length > 0) {
+      return (
+        <IonItem>
+          <IonList>
+            {todaysActivities.map(activity => {
+              return (
+                <RecordCard
+                  key={activity.id}
+                  index={activity.id}
+                  data={activity}
+                />
+              );
+            })}
+          </IonList>
+        </IonItem>
+      );
+    } else {
+      return activitiesComponent;
     }
   };
 
@@ -70,7 +92,11 @@ const Today = props => {
       formatedDate
     ).then(async res => {
       if (res.length > 0) {
-        const sortArray = arr => arr.sort((a, b) => b.endTime - a.endTime);
+        const sortArray = arr =>
+          arr.sort(
+            (a, b) =>
+              new Date(b.endTime).getTime() - new Date(a.endTime).getTime()
+          );
         const sortedArray = await sortArray(res);
         setTodaysActivities(sortedArray);
       }
@@ -82,26 +108,7 @@ const Today = props => {
       <BackButtonToolbar title="Today: Activities" />
       <IonContent className="ion-padding">
         {/*Activity*/}
-        <IonItem>
-          <IonList>
-            {todaysActivities.length === 0 ? (
-              <div style={{ alignContent: "center", justifyContent: "center" }}>
-                <IonSpinner />
-              </div>
-            ) : (
-              todaysActivities.map(activity => {
-                return (
-                  <RecordCard
-                    key={activity.id}
-                    index={activity.id}
-                    data={activity}
-                  />
-                );
-              })
-            )}
-          </IonList>
-        </IonItem>
-
+        {handleActivitiesComponentChange()}
         {/*Floating action button*/}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="secondary">
