@@ -18,6 +18,9 @@ This application is currently in development but a pre-release evaluation versio
 ## System Architecture
 ![Architecture](./MD-Images/SolutionArchitecture.png)
 
+## Business Ontology
+![DataModel](./MD-Images/DataModel.png)
+
 ## Data Protection Declaration
 The pre-release evaluation version of this application is only meant evaluation purposes. Therefore any data that has been collected through the mobile application will be stored on a locally-hosted Virtuoso instance outside the internet. Should the Data Integration Layer be disconnected, any data stored in Virtuoso will be subject to immediate deletion.
 
