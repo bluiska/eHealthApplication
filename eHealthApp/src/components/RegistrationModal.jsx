@@ -274,7 +274,7 @@ class RegistrationModal extends React.Component {
   };
 
   /**
-   * Event function for checking whether or not the first step is validated. 
+   * Event function for checking whether or not the first step is validated.
    */
   isStepOneComplete = newState => {
     this.setState(newState, () => {
@@ -283,7 +283,7 @@ class RegistrationModal extends React.Component {
   };
 
   /**
-   * Event function for checking whether or not the second step is validated. 
+   * Event function for checking whether or not the second step is validated.
    */
   isStepTwoComplete = newState => {
     this.setState(newState, () => {
@@ -292,7 +292,7 @@ class RegistrationModal extends React.Component {
   };
 
   /**
-   * Event function for checking whether or not the third step is validated. 
+   * Event function for checking whether or not the third step is validated.
    */
   isStepThreeComplete = newState => {
     this.setState(newState, () => {
@@ -307,7 +307,9 @@ class RegistrationModal extends React.Component {
   validateEmail = () => {
     // Source: https://www.w3resource.com/javascript/form/email-validation.php
 
-    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email));
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+      this.state.email
+    );
   };
 
   /**
@@ -371,7 +373,7 @@ class RegistrationModal extends React.Component {
       pword
     );
   };
-  
+
   /**
    * Provides the format of today's date in order to constrain
    * the datetime picker to today and backwards.
@@ -387,7 +389,6 @@ class RegistrationModal extends React.Component {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  
   /**
    * Renders the registration view on top of the login view.
    * @returns {Component} The rendered component.
