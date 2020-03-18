@@ -25,12 +25,21 @@ const Patients = props => {
 
   const [patients, setPatients] = useState([]);
 
+  /**
+   * When the patients screen loads, all the available patients for that doctor
+   * are retrieved and stored in the state.
+   */
   useEffect(() => {
     UserQueries.getDoctorById(doctor).then(res => {
       setPatients(res);
     });
   }, []);
 
+  /**
+   * Returns a component that renders the patients data
+   *
+   * @param {Object} data - The patient data object
+   */
   const Patient = data => {
     return (
       <IonCard
