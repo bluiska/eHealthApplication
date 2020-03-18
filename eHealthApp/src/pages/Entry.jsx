@@ -23,15 +23,31 @@ import CredentialQueries from "../queries/CredentialQueries";
 import CredentialManager from "../utilities/CredentialManager";
 import "./Entry.css";
 
+/**
+ * A React component function representing the login view of this
+ * application.
+ * @param {Object} props Contains several routing functions for
+ * providing the means of view navigation.
+ * @returns {Component} The rendered component for visualisation.
+ */
 const Entry = props => {
+  // Property state initialisation
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrMsg] = useState("");
   const [toastMsg, setToastMsg] = useState("");
-  const [isToastActivated, setIsToastActivated] = useState(false);
+  const [isAlertTriggered, setIsAlertTriggered] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isToastDisplayed, setIsToastDisplayed] = useState(false);
 
+  /**
+   * A function callback after closing the registration modal in order
+   * to trigger the display of a message strip in order to provide
+   * feedback to the user on the success of a registration.
+   * @param {Object} state Represents the success status emitted from
+   * the registration modal in order to highlight whether the process
+   * has been fully completed or not.
+   */
   async function closeModal(state) {
     await setShowModal(false);
     if (state) {
@@ -40,28 +56,43 @@ const Entry = props => {
     }
   }
 
+  /**
+   * A function for verifying the existence of a user upon a login click.
+   */
   function verifyUser() {
     CredentialQueries.verifyUserCredential({
       username: username,
       password: CredentialManager.EncryptAccesscode(username, password)
     })
       .then(res => {
+        // Display a message strip to signify a successful login.
         setToastMsg("Login");
         setIsToastDisplayed(true);
         redirectToUser(res.user.id);
       })
       .catch(async err => {
+        // Show a pop up displaying the error message.
         let error = await err.json();
-        produceInvalidMessage(error.value);
+        produceInvalidLoginMessage(error.value);
       });
   }
 
+  /**
+   * A function for redirecting the user to their role-based view after
+   * a successful login.
+   * @param {string} userId Represents the user's ID that consists of the
+   * concatenation of the role name and timestamp.
+   */
   function redirectToUser(userId) {
+    // Locally initialise the predicates for pattern matching.
     let patientPredicate = "Patient",
-      doctorPredicate = "Doctor",
-      userRole = "unknown",
+      doctorPredicate = "Doctor";
+
+    // Locally initialise the initial values of the roles.
+    let userRole = "unknown",
       rolebasedView = "unknown";
 
+    // Pattern match against the user ID.
     if (userId.includes(patientPredicate)) {
       userRole = patientPredicate;
       rolebasedView = "activities";
@@ -70,23 +101,31 @@ const Entry = props => {
       rolebasedView = "mypatients";
     } else {
       setErrMsg("");
-      setIsToastActivated(true);
+      setIsAlertTriggered(true);
       return;
     }
 
+    // Redirect to role-based view.
     props.history.push(`/${userRole.toLowerCase()}/${userId}/${rolebasedView}`);
   }
 
-  function produceInvalidMessage(error) {
+  /**
+   * A function for displaying a popup in order to inform the user that
+   * invalid credentials have been used.
+   * @param {string} error Represents the error message that should be
+   * displayed to the user.
+   */
+  function produceInvalidLoginMessage(error) {
     setErrMsg(error);
-    setIsToastActivated(true);
+    setIsAlertTriggered(true);
   }
 
+  // Render the view
   return (
     <IonPage>
       <IonAlert
-        isOpen={isToastActivated}
-        onDidDismiss={() => setIsToastActivated(false)}
+        isOpen={isAlertTriggered}
+        onDidDismiss={() => setIsAlertTriggered(false)}
         header="Login failed."
         message={errorMsg}
         buttons={["OK"]}

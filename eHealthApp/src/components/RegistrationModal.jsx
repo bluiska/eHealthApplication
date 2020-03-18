@@ -40,7 +40,17 @@ const styles = {
   }
 };
 
+/**
+ * A class component representing the registration wizard as
+ * a modal on top of the login component.
+ */
 class RegistrationModal extends React.Component {
+  /**
+   * The class constructor for setting up the registration wizard.
+   * @param {Object} props Represents an object containing a function
+   * callback received from the login view in order to signify whether
+   * or not the registration process has been completed.
+   */
   constructor(props) {
     super(props);
 
@@ -71,6 +81,7 @@ class RegistrationModal extends React.Component {
       passwordHasSpecial: "danger",
       passwordHasNumber: "danger",
 
+      // Backend-dependent state
       doesUserExist: false
     };
 
@@ -99,6 +110,11 @@ class RegistrationModal extends React.Component {
     this.getDateToday = this.getDateToday.bind(this);
   }
 
+  /**
+   * An event function representing a button click for navigating to
+   * the previous slide of the registration process by changing the
+   * configuration properties statewise.
+   */
   onPrev = () => {
     let newState = {
       progress: this.state.progress - 0.25
@@ -109,6 +125,7 @@ class RegistrationModal extends React.Component {
 
     if (swiper.activeIndex < 1) newState.isPrevDisabled = true;
 
+    // Revert the button text in the penultimate slide
     if (swiper.activeIndex < 3) newState.nextLabel = "Next";
 
     this.setState(newState, () => {
@@ -116,6 +133,11 @@ class RegistrationModal extends React.Component {
     });
   };
 
+  /**
+   * An event function representing a button click for navigating to
+   * the next slide of the registration process by changing the
+   * configuration properties statewise.
+   */
   onNext = () => {
     let newState = {
       progress: this.state.progress + 0.25
@@ -130,8 +152,10 @@ class RegistrationModal extends React.Component {
 
     if (swiper.activeIndex > 0) newState.isPrevDisabled = false;
 
+    // Change the button text after pressing in the penultimate slide
     if (swiper.activeIndex === 3) newState.nextLabel = "Submit";
 
+    // Complete the registration in the last slide
     if (this.state.nextLabel === "Submit") {
       newState.isNextEnabled = false;
       callback = () => {
@@ -142,6 +166,11 @@ class RegistrationModal extends React.Component {
     this.setState(newState, callback);
   };
 
+  /**
+   * An event function representing the means of changing the progress
+   * label of the current step.
+   * @param {Number} level Represents the step of the transitioned slide.
+   */
   onStepChange = level => {
     let label;
 
@@ -171,6 +200,10 @@ class RegistrationModal extends React.Component {
     });
   };
 
+  /**
+   * Initiates the registration submission by storing the data
+   * in the database.
+   */
   onSubmission = () => {
     // Call Database
     let details = this.state;
@@ -199,12 +232,18 @@ class RegistrationModal extends React.Component {
       .catch(err => alert(err));
   };
 
+  /**
+   * Monitors the value changes related to the first step.
+   */
   checkStepOne = () => {
     this.setState({
       isNextEnabled: this.state.role !== ""
     });
   };
 
+  /**
+   * Monitors the value changes related to the second step.
+   */
   checkStepTwo = () => {
     let isNameValid = this.state.name !== "",
       isAddressValid = this.validateEmail(),
@@ -218,6 +257,9 @@ class RegistrationModal extends React.Component {
     });
   };
 
+  /**
+   * Monitors the value changes related to the third step.
+   */
   checkStepThree = () => {
     this.checkUsernameByAvailability().then(() => {
       let isUsernameValid = this.validateUsername(),
@@ -231,40 +273,58 @@ class RegistrationModal extends React.Component {
     });
   };
 
+  /**
+   * Event function for checking whether or not the first step is validated. 
+   */
   isStepOneComplete = newState => {
     this.setState(newState, () => {
       this.checkStepOne();
     });
   };
 
+  /**
+   * Event function for checking whether or not the second step is validated. 
+   */
   isStepTwoComplete = newState => {
     this.setState(newState, () => {
       this.checkStepTwo();
     });
   };
 
+  /**
+   * Event function for checking whether or not the third step is validated. 
+   */
   isStepThreeComplete = newState => {
     this.setState(newState, () => {
       this.checkStepThree();
     });
   };
 
+  /**
+   * Validates the format of the email address input.
+   * @returns {boolean} Validity of email address.
+   */
   validateEmail = () => {
     // Source: https://www.w3resource.com/javascript/form/email-validation.php
-    if (
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)
-    ) {
-      return true;
-    }
-    return false;
+
+    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email));
   };
 
+  /**
+   * Validates whether or not a username has already been taken.
+   * @returns {Promise} Returns a promise in order to allow the chaining of
+   * subsequent operations.
+   */
   checkUsernameByAvailability = () => {
     return CredentialQueries.verifyUsername(this.state.username)
       .then(() => this.setState({ doesUserExist: true }))
       .catch(() => this.setState({ doesUserExist: false }));
   };
 
+  /**
+   * Validates the format of the username input.
+   * @returns {boolean} Validity of username.
+   */
   validateUsername = () => {
     let uname = this.state.username;
 
@@ -285,6 +345,10 @@ class RegistrationModal extends React.Component {
     return isLengthValid && isNoWhitespace && isAvailable;
   };
 
+  /**
+   * Validates the format of the password input.
+   * @returns {boolean} Validity of password.
+   */
   validatePassword = () => {
     // Source: https://www.w3resource.com/javascript/form/password-validation.php
     let pword = this.state.password;
@@ -307,7 +371,12 @@ class RegistrationModal extends React.Component {
       pword
     );
   };
-
+  
+  /**
+   * Provides the format of today's date in order to constrain
+   * the datetime picker to today and backwards.
+   * @returns {string} Maximum boundary of the datetime picker.
+   */
   getDateToday = () => {
     // Source: https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
     let today = new Date(),
@@ -318,6 +387,11 @@ class RegistrationModal extends React.Component {
     return `${yyyy}-${mm}-${dd}`;
   };
 
+  
+  /**
+   * Renders the registration view on top of the login view.
+   * @returns {Component} The rendered component.
+   */
   render = () => {
     return (
       <>

@@ -32,7 +32,6 @@ const DoctorPatients = props => {
   const [isDemo] = useState(doctor.includes("Test"));
 
   useIonViewWillEnter(() => {
-    console.log("Entered");
     UserQueries.getPatientsByDoctorId(doctor).then(res => {
       setPatients(res);
     });
