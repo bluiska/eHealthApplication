@@ -5,7 +5,6 @@ add health data manually.
 
 Author: Gergo Kekesi
 */
-
 import React, { useState, useEffect } from "react";
 import {
   IonPage,
@@ -23,17 +22,16 @@ import {
   IonCardTitle,
   IonCardContent
 } from "@ionic/react";
-
-import { sync, add, today } from "ionicons/icons";
-import pencil from "../resources/pencil.png";
-import "./Today.css";
-import BackButtonToolbar from "../components/BackButtonToolbar";
+import { sync, add } from "ionicons/icons";
 import { withRouter } from "react-router-dom";
+
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
+import BackButtonToolbar from "../components/BackButtonToolbar";
+import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
+import pencil from "../resources/pencil.png";
+import "./Today.css";
 
-/*props:
- */
 const Today = props => {
   const [todaysActivities, setTodaysActivities] = useState([]);
   const patientId = props.match.params.patientid || "unknown";
@@ -41,9 +39,27 @@ const Today = props => {
   let activitiesComponent = <IonSpinner />;
 
   useEffect(() => {
+    // Attaching the Today page as an Observer to BluetoothSynchronisationManager
+    BluetoothSynchronisationManager.attachObserver(onNewDataAvailable);
+
     getActivities();
   }, []);
 
+  /**
+   * Callback used in Observer pattern by BluetoothSynchronisationManager
+   * When the data changes in BSM, this function is called
+   * And as a result, it fetches the data from the database
+   */
+  const onNewDataAvailable = () => {
+    getActivities();
+  }
+
+  /**
+   * Returns the correct component for Today's activities based on the content of
+   * todaysActivities array
+   * For no activities, displays 'No Activity' card
+   * For one or more activities, displays them as RecordCard component
+   */
   const handleActivitiesComponentChange = () => {
     if (todaysActivities.length === 0) {
       return (
@@ -80,6 +96,11 @@ const Today = props => {
     }
   };
 
+  /**
+   * Fetches the today's activities from the database
+   * Activities are fetched for the chosen patient
+   * 
+   */
   const getActivities = () => {
     const todayDate = new Date();
     const formatedDate = new Date(todayDate.setDate(todayDate.getDate()))

@@ -1,5 +1,4 @@
 import PAIRED_DEVICES from "../../data/paired_devices";
-import Exercise from "../../models/Exercise";
 import ActivityQueries from "../../queries/ActivityQueries";
 
 const PORT = 3000;
@@ -13,16 +12,59 @@ var patient = null;
 
 class BluetoothSynchronisationManager {
   constructor() {
-    this.newDataAvailable = false;
+    // A container for all observers that needs to be notifed about new data
+    this.observers = [];
+    this.devicesObservers = [];
+    this.noOfFailedSyncs = 0;
     setInterval(() => {
       this.synchroniseData();
     }, 3000);
   }
+
+  /**
+   * Attaches a new observer to a list of Observers
+   * @param {Function} observer -> Function that is called, when Observers need to be notified about data change
+   */
+  attachObserver = (observer) => {
+    this.observers.push(observer);
+  };
+
+  attachDevicesObserver = (observer) => {
+    this.devicesObservers.push(observer);
+  }
+
+  /**
+   * Removes the observer fromt he list of observers
+   * @param {Function} observer -> Observer to be removed
+   */
+  detachObserver = (observer) => {
+    this.observers = this.observers.filter(ob => ob !== observer);
+  }
+
+  /**
+   * Informs all Observers about the data change
+   */
+  notifyObservers = () => {
+    this.observers.forEach(observer => observer());
+  }
+
+  notifyDevicesObservers = () => {
+    this.devicesObservers.forEach(observer => observer());
+  }
+
+  /**
+   * Returns the list of paired devices
+   * For the simplicity, paired devices are stored as a constant array
+   */
   getPairedDevices = () => {
     foundDevices = PAIRED_DEVICES;
     return foundDevices;
   };
 
+  /**
+   * Allows other components to set the patient for BluetoothSynchronisationManager
+   * So that this patient can be then used to query the database
+   */
   setPatient = p => {
     patient = p;
   };
@@ -34,18 +76,11 @@ class BluetoothSynchronisationManager {
     return {};
   };
 
-  isNewDataAvailable = () => {
-    if (this.newDataAvailable) {
-      this.newDataAvailable = false;
-      return true;
-    }
-    return false;
-  };
-
+  /**
+   * Connects to the device clicked by the user on the page
+   * @param {String} id -> ID of a device the user wants to connect to
+   */
   connectToDevice = id => {
-    /**
-     * Connect to one device
-     */
     return new Promise(async (resolve, reject) => {
       const connectingDevice = foundDevices.find(device => device.id === id);
       if (connectingDevice) {
@@ -81,6 +116,10 @@ class BluetoothSynchronisationManager {
     });
   };
 
+  /**
+   * Disconnects from the specific device
+   * @param {String} id -> ID of the device we want to disconnect from
+   */
   disconnect = id => {
     fetch(disconnectDevice, {
       method: "POST",
@@ -93,10 +132,22 @@ class BluetoothSynchronisationManager {
     });
   };
 
+  /**
+   * Disconnects from all connected sensors
+   */
+  disconnectAll = () => {
+    foundDevices.forEach((device) => {
+      if (device.connected) {
+        this.disconnect(device.id);
+        device.disconnectPaired();
+      }
+    })
+  }
+
+  /**
+   * Synchronises the data from all devices (paired and connected)
+   */
   synchroniseData = () => {
-    /**
-     * Asks for data
-     */
     foundDevices.forEach(async device => {
       if (device.connected) {
         try {
@@ -124,10 +175,15 @@ class BluetoothSynchronisationManager {
                 distance: parseFloat(log.distance)
               };
               ActivityQueries.uploadNewExercise(patient, log);
-              this.newDataAvailable = !this.newDataAvailable;
+              this.notifyObservers();
             });
           }
         } catch (err) {
+          if (this.noOfFailedSyncs++ > 4) {
+            this.noOfFailedSyncs = 0;
+            device.disconnect();
+            this.notifyDevicesObservers();
+          }
           console.log(err.message);
         }
       }
@@ -135,4 +191,5 @@ class BluetoothSynchronisationManager {
   };
 }
 
+// BluetoothSynchronisationManager is exported as a Singleton
 export default new BluetoothSynchronisationManager();

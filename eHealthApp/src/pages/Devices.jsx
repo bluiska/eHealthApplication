@@ -7,7 +7,7 @@ Author: Ireneusz Janusz
 */
 
 // External dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IonContent, IonPage, IonLabel, IonItem, IonAlert } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import DeviceCard from "../components/DeviceCard";
@@ -55,6 +55,14 @@ const Devices = () => {
   const [showFailModal, setShowFailModal] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
+
+  useEffect(() => {
+    BluetoothSynchronisationManager.attachDevicesObserver(rerenderPairedDevices);
+  }, []);
+
+  const rerenderPairedDevices = () => {
+    setPairedDevices(BluetoothSynchronisationManager.getPairedDevices());
+  }
 
   const deviceClickHandler = id => {
     const clickedDevice = pairedDevices.find(x => x.id === id);
