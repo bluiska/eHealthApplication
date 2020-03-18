@@ -30,8 +30,9 @@ const FilterOverview = props => {
     }
   };
 
-  /*
-    The below variables are used to store the date from 7 days ago, 14 days ago, and 30 dayas ago. This is used when the user selects which date they want to
+  /**
+    The below variables are used to store the date from 7 days ago, 14 days ago, 
+    and 30 dayas ago. This is used when the user selects which date they want to
     the activities by and is updated on the selectedDateFilter state.
   */
   const todaysDate = new Date();

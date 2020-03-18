@@ -33,7 +33,9 @@ import UserQueries from "../queries/UserQueries";
 import { get } from "http";
 import { act } from "react-dom/test-utils";
 
-/*props:
+/**props:
+  @param {String} props.match.params.patientid - passes the patient's id to the component
+  @param {String} props.match.params.patientname - passes the patient's name to the component
  */
 
 const PatientOverview = props => {
@@ -159,6 +161,15 @@ const PatientOverview = props => {
     }
   };
 
+  /**
+   * Handles adding the filter value to the filter array
+   * If the value is already in the array, it is removed from the array.
+   * This is done when the filter value is unselected
+   * If the value is not in the array, it is appended to the array.
+   * This is done when the filter value is selected
+   * @param {String} value - filter value selected by the user
+   */
+
   const setSelectedFilterHandler = value => {
     if (!selectedFilter.includes(value)) {
       // adds value to the array (select)
@@ -170,6 +181,10 @@ const PatientOverview = props => {
     }
   };
 
+  /**
+   * Handles fetching more data from the db backend.
+   */
+
   const loadMoreData = () => {
     setLoading(true);
     // the api call to the backend show be made here
@@ -180,6 +195,10 @@ const PatientOverview = props => {
     setLoading(false);
   };
 
+  /**
+   * Handles the format tha the date should be returned
+   * @param {String} date - stringified date
+   */
   const dateTitle = date => {
     let displayDate = new Date(date);
     if (displayDate.toDateString() === today.toDateString()) {
@@ -190,6 +209,10 @@ const PatientOverview = props => {
     return date;
   };
 
+  /**
+   * Handles the assertion for filtering by activity type
+   * @param {Object} act - activity object
+   */
   const filterByActivityType = act => {
     return (
       selectedFilter.includes(act.id.split("_")[0]) ||
@@ -197,10 +220,20 @@ const PatientOverview = props => {
     );
   };
 
+  /**
+   * Handles the assertion for filtering by date
+   * @param {Object} act - activity object
+   */
   const filterByDate = act => {
     return new Date(act) > new Date(selectedDateFilter);
   };
 
+  /**
+   * Handles the sorting of the activities array
+   * Sorts the array by the time they were saved
+   * @param {Object} a - activity object
+   * @param {Object} b - activity object
+   */
   const sortActivities = (a, b) => {
     const aDate = new Date(a.timestamp);
     const bDate = new Date(b.timestamp);

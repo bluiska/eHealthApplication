@@ -46,6 +46,18 @@ const Patients = props => {
               patients.map((patient, index) => (
                 <Patient key={index} patient={patient} doctor={doctor} />
               ))}
+            {patients.length === 0 && (
+              <IonCard>
+                <IonCardHeader>
+                  <IonCardTitle>No patients assigned</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <IonLabel>
+                    You currently do not have any assigned patients
+                  </IonLabel>
+                </IonCardContent>
+              </IonCard>
+            )}
           </Fragment>
         )}
         {/* {console.log("PROPS:", props)} */}
