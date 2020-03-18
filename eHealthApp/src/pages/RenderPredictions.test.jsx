@@ -7,7 +7,6 @@ import { createSerializer } from "enzyme-to-json";
 
 expect.addSnapshotSerializer(createSerializer({ mode: "deep" }));
 import toJson from "enzyme-to-json";
-import nightmare from "nightmare";
 
 Enzyme.configure({ adapter: new Adapter() });
 
