@@ -1,18 +1,8 @@
-/*
-The page that displays the devices connected to the app.
-If no devices are available, it allows the connection of a new device.
-To be completed by Irek....
-
-Author: Ireneusz Janusz
-*/
-
-// External dependencies
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IonContent, IonPage, IonLabel, IonItem, IonAlert } from "@ionic/react";
-import BackButtonToolbar from "../components/BackButtonToolbar";
-import DeviceCard from "../components/DeviceCard";
 
-// Internal dependencies
+import DeviceCard from "../components/DeviceCard";
+import BackButtonToolbar from "../components/BackButtonToolbar";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 // Styling
@@ -35,7 +25,6 @@ const styles = {
     justifyContent: "center"
   },
   disconnectModalLabel: {
-    // fontSize: '20px',
     textAlign: "center"
   },
   disconnectModalButtonsContainer: {
@@ -48,7 +37,13 @@ const styles = {
 };
 
 const Devices = () => {
-  // Creating a state to keep a log of paired devices
+  /**
+   * State holders for:
+   * - Paired devices
+   * - Displaying the connection failure modal
+   * - Displaying the disconnection modal
+   * - Clicked device
+   */
   const [pairedDevices, setPairedDevices] = useState(
     BluetoothSynchronisationManager.getPairedDevices()
   );
@@ -56,6 +51,28 @@ const Devices = () => {
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
 
+  /**
+   * When the component renders, it attaches an Observer function
+   */
+  useEffect(() => {
+    BluetoothSynchronisationManager.attachDevicesObserver(
+      rerenderPairedDevices
+    );
+  }, []);
+
+  /**
+   * Observer function used to rerender paired devices
+   */
+  const rerenderPairedDevices = () => {
+    setPairedDevices(BluetoothSynchronisationManager.getPairedDevices());
+  };
+
+  /**
+   * Handles the clicking event on the device, on the page
+   * When the device is paired and disconnected, tries to connect
+   * When the device is connected, disconnects
+   * @param {String} id - Device clicked by the user on the page
+   */
   const deviceClickHandler = id => {
     const clickedDevice = pairedDevices.find(x => x.id === id);
     setClickedDeviceHolder(clickedDevice);
@@ -98,6 +115,7 @@ const Devices = () => {
    * Handles click of a button on 'Disconnect Device' modal
    * When 'Yes' is selected - disconnects the device
    * When 'No' is selected - closes the modal
+   * @param {} disconnect - Flag used to disconnect a connected device
    */
   const disconnectModalHandler = disconnect => {
     setShowDisconnectModal(false);
@@ -117,6 +135,7 @@ const Devices = () => {
    * added back again and then array has to be sorted alphabetically
    * @param {String} id - ID of device
    * @param {String} status - Connection status of the device
+   * @return ... TO DO
    */
   const changeDeviceStatus = (id, status) => {
     setPairedDevices(() => {

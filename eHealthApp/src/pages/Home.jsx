@@ -32,6 +32,11 @@ const Home = props => {
   const [doctors, setDoctors] = useState([]);
   const [patients, setPatients] = useState([]);
 
+  /**
+   * Runs once, when the component first renders
+   * On render it will retrieve the doctors from the database
+   * as well as the patients.
+   */
   useEffect(() => {
     UserQueries.getAllDoctors().then(res => {
       setDoctors(res);
@@ -42,6 +47,9 @@ const Home = props => {
     });
   }, []);
 
+  /**
+   * Styling parameters
+   */
   const styles = {
     home: {
       width: "100%",
@@ -51,6 +59,14 @@ const Home = props => {
     }
   };
 
+  /**
+   * Returns an abject that contains the text and click handler
+   * for a button. It is used to display each doctor in the list
+   * and allow the user the click it
+   *
+   * @param {String} doc - The ID of the doctor
+   * @returns {Object} - An object containing the text for the button and the click handler
+   */
   const docButton = doc => {
     return {
       text: doc.name,
@@ -60,11 +76,20 @@ const Home = props => {
     };
   };
 
+  /**
+   * Returns an abject that contains the text and click handler
+   * for a button. It is used to display each patient in the list
+   * and allow the user the click it
+   *
+   * @param {String} patient - The ID of the doctor
+   * @returns {Object} - An object containing the text for the button and the click handler
+   */
   const patientButton = patient => {
     return {
       text: patient.name,
       handler: () => {
         props.history.push(`/today/patient/${patient.id}`);
+        BluetoothSynchronisationManager.disconnectAll();
         BluetoothSynchronisationManager.setPatient(patient.id);
       }
     };
