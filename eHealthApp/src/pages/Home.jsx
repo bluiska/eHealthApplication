@@ -5,12 +5,7 @@ This page allows navigation to the pages that complete the Assignment's tasks.
 Author: Gergo Kekesi
 */
 
-import {
-  IonContent,
-  IonPage,
-  IonButton,
-  IonActionSheet
-} from "@ionic/react";
+import { IonContent, IonPage, IonButton, IonActionSheet } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import background_image from "../resources/home_background_blur.jpg";
