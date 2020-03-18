@@ -9,7 +9,7 @@ This application is currently in development but a pre-release evaluation versio
 |   eHealth Component    | Technology            | Purpose                               |
 |:----------------------:|:---------------------:|:-------------------------------------:|
 | Mobile App             | React (JavaScript)    | Application for Mobile Devices        |
-| Data Integration Layer | ASP.NET Core 2.2 (C#) | Server for                            |
+| Data Integration Layer | ASP.NET Core 2.2 (C#) | Server for Data Model Management      |
 | Bluetooth Simulation   | Express (JavaScript)  | Simulation for Bluetooth Connectivity |
 | Semiodesk Trinity      | C#                    | ORM Library for Semantic Databases    |
 | OData                  | C#                    | API Library for Open Data Access      |
