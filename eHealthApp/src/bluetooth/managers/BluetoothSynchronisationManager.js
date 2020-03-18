@@ -1,11 +1,13 @@
 import PAIRED_DEVICES from "../../data/paired_devices";
 import ActivityQueries from "../../queries/ActivityQueries";
+import SensorFactory, { createSensor } from "../../composition/SensorFactory";
 
 const PORT = 3000;
 const URL = `localhost`;
 const connectDevice = `http://${URL}:${PORT}/connectDevice/`;
 const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
+const getOtherDevicesUrl = `http://${URL}:${PORT}/getOtherDevices/`;
 let foundDevices = [];
 
 var patient = null;
@@ -15,6 +17,7 @@ class BluetoothSynchronisationManager {
     // A container for all observers that needs to be notifed about new data
     this.observers = [];
     this.devicesObservers = [];
+    this.otherDevices = [];
     this.noOfFailedSyncs = 0;
     setInterval(() => {
       this.synchroniseData();
@@ -29,6 +32,10 @@ class BluetoothSynchronisationManager {
     this.observers.push(observer);
   };
 
+  /**
+   * Attaches a new observer to a list of Devices Observers
+   * @param {Function} observer -> Function that is called, when Device Observer needs to be notified about data change
+   */
   attachDevicesObserver = observer => {
     this.devicesObservers.push(observer);
   };
@@ -48,6 +55,9 @@ class BluetoothSynchronisationManager {
     this.observers.forEach(observer => observer());
   };
 
+  /**
+   * Informs all Observers about the data change
+   */
   notifyDevicesObservers = () => {
     this.devicesObservers.forEach(observer => observer());
   };
@@ -59,6 +69,26 @@ class BluetoothSynchronisationManager {
   getPairedDevices = () => {
     foundDevices = PAIRED_DEVICES;
     return foundDevices;
+  };
+
+  /**
+   * Retrieves the list of devices that are in range, but are not paired/connected
+   */
+  getOtherDevices = async () => {
+    try {
+      const response = await fetch(getOtherDevicesUrl);
+      const data = await response.json();
+      if (data) {
+        data.forEach(device => {
+          const sensor = createSensor(device);
+          this.otherDevices.push(sensor);
+        });
+      }
+      return this.otherDevices;
+    } catch (err) {
+      console.error(err);
+      throw new Error(err);
+    }
   };
 
   /**

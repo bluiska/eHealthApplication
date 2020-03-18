@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { IonContent, IonPage, IonLabel, IonItem, IonAlert } from "@ionic/react";
+import {
+  IonContent,
+  IonPage,
+  IonLabel,
+  IonItem,
+  IonAlert,
+  IonItemDivider,
+  IonButton
+} from "@ionic/react";
 
 import DeviceCard from "../components/DeviceCard";
 import BackButtonToolbar from "../components/BackButtonToolbar";
@@ -33,6 +41,10 @@ const styles = {
   },
   button: {
     width: "75px"
+  },
+  devicesTitleLabel: {
+    padding: "20px",
+    color: "gray"
   }
 };
 
@@ -47,6 +59,7 @@ const Devices = () => {
   const [pairedDevices, setPairedDevices] = useState(
     BluetoothSynchronisationManager.getPairedDevices()
   );
+  const [otherDevices, setOtherDevices] = useState([]);
   const [showFailModal, setShowFailModal] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const [clickedDeviceHolder, setClickedDeviceHolder] = useState();
@@ -59,6 +72,19 @@ const Devices = () => {
       rerenderPairedDevices
     );
   }, []);
+
+  useEffect(() => {
+    const getOtherDevices = async () => {
+      const other = await BluetoothSynchronisationManager.getOtherDevices();
+      return other;
+    };
+
+    getOtherDevices().then(data => {
+      setOtherDevices(data);
+    });
+  }, []);
+
+  console.log("other: ", otherDevices);
 
   /**
    * Observer function used to rerender paired devices
@@ -150,6 +176,31 @@ const Devices = () => {
     });
   };
 
+  const renderOtherDevices = () => {
+    return (
+      <div>
+        <div style={{ marginTop: "20px" }}>
+          <IonLabel style={styles.devicesTitleLabel}>Other Devices</IonLabel>
+        </div>
+        {otherDevices.length > 0 ? (
+          otherDevices.map(x => {
+            return (
+              <DeviceCard
+                key={x.id || "unknown"}
+                title={x.name || "unknown"}
+                connected={x.connected || false}
+                connectionStatus={x.connectionStatus || "DISCONNECTED"}
+                onClick={deviceClickHandler.bind(this, x.id)}
+              />
+            );
+          })
+        ) : (
+          <IonLabel>Nada</IonLabel>
+        )}
+      </div>
+    );
+  };
+
   return (
     <IonPage>
       <BackButtonToolbar title="Devices" />
@@ -185,7 +236,11 @@ const Devices = () => {
           }
         ]}
       />
+
       <IonContent className="ion-padding">
+        <div style={{ marginTop: "20px" }}>
+          <IonLabel style={styles.devicesTitleLabel}>My Devices</IonLabel>
+        </div>
         {pairedDevices.length > 0 ? (
           pairedDevices.map(x => {
             return (
@@ -203,6 +258,7 @@ const Devices = () => {
             <IonLabel style={styles.noDevicesLabel}>No devices found</IonLabel>
           </IonItem>
         )}
+        {renderOtherDevices()}
       </IonContent>
     </IonPage>
   );

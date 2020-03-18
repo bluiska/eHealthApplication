@@ -2,11 +2,20 @@ const events = require('events');
 const eventEmitter = new events.EventEmitter();
 const Sensor = require('./models/Sensor');
 const Logger = require('./singletons/Logger');
+const SensorFactory = require('./models/composition/SensorFactory');
 
 const fitbit = new Sensor("sensor1", "Fitbit");
 // const fitbit2 = new Sensor("sensor2", "Fitbit2");
 // const fitbit3 = new Sensor("sensor3", "Fitbit3");
 const devices = [fitbit];
+
+const fit = SensorFactory.createSensor('sensor1', 'Fitbit', 'fitbit');
+const fit_hr = SensorFactory.createSensor('sensor2', 'Fitbit_HR', 'fitbit_hr');
+const garmin = SensorFactory.createSensor('sensor3', 'Garmin', 'garmin');
+const samsung = SensorFactory.createSensor('sensor4', 'Samsung', 'samsung');
+const apple_watch = SensorFactory.createSensor('sensor5', 'Apple Watch', 'apple');
+
+const otherDevices = [fit, fit_hr, garmin, samsung, apple_watch]
 
 eventEmitter
     .on('serverRunning', () => {
@@ -17,6 +26,9 @@ eventEmitter
             devices: devices
         }
         response.send(devicesList);
+    })
+    .on('onOtherDevicesRequest', res => {
+        res.status(200).send(otherDevices)
     })
     .on('connectToSensor', async params => {
         Logger.log(`Connecting to a sensor`);

@@ -53,14 +53,7 @@ class Sensor {
     connectToSensor() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                // const deviceConnectionData = {
-                //     connected: this.connected,
-                //     connectionStatus: this.connectionStatus
-                // }
-                // Logger.log(`Connecting to ${this.name}`);
                 if (this.connected) {
-                    // Logger.log(`Fitness tracker already connected to another device.`);
-                    // this.connectionStatus = DEVICE_CONNECTION_STATUS.DISCONNECTED;
                     this.connected = !this.connected;
                     const deviceConnectionData = {
                         connected: this.connected,
@@ -71,9 +64,7 @@ class Sensor {
                 } else if (this.connected === false && this.batteryLevel > 0) {
                     this.connectionStatus = DEVICE_CONNECTION_STATUS.CONNECTING;
                     this.connected = !this.connected;
-                    // Logger.log(`Status: ${this.connected}`);
                     this.connectionStatus = this.connected ? DEVICE_CONNECTION_STATUS.CONNECTED : DEVICE_CONNECTION_STATUS.PAIRED;
-                    // Logger.log(`Successfully connected to ${this.name}`);
                     const deviceConnectionData = {
                         connected: this.connected,
                         connectionStatus: this.connectionStatus

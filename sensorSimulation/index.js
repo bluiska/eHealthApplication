@@ -19,6 +19,10 @@ app
         Logger.log(`Someone requested devices`);
         eventEmitter.emit('onBluetoothDevicesRequest', res);
     })
+    .get('/getOtherDevices', (req, res) => {
+        Logger.log("Other devices requested");
+        eventEmitter.emit('onOtherDevicesRequest', res);
+    })
     .post(`/synchroniseData`, (req, res) => {
         if (req && req.body) {
             eventEmitter.emit('syncData', {id: req.body.id, res:res});
@@ -38,7 +42,6 @@ app
     })
     .post('/startActivity', (req, res) => {
         if (req && req.body) {
-            console.log(req.body)
             Logger.log('[INFO] Activity started')
             eventEmitter.emit('startActivity', {res: res, type: req.body.type})
         }
