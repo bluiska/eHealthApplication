@@ -1,3 +1,12 @@
+/*
+The purpose of the filter overview page is to display the different options for the user to select that then allows them to 
+filter the list of activities. It works by passing the selected filter variable and state function to this component. When the user
+selects an activity type that they wish to filter by, it uses the setSelectedFilterHandler function to update the state. The selectedFilter
+variable is used to remember which of the filter options was selected, so whenever the page is rerendered, The pre-selected options are always checked.
+
+Author: Daniel Madu
+*/
+
 import React from "react";
 import {
   IonPage,
@@ -20,6 +29,11 @@ const FilterOverview = props => {
       marginLeft: "20px"
     }
   };
+
+  /*
+    The below variables are used to store the date from 7 days ago, 14 days ago, and 30 dayas ago. This is used when the user selects which date they want to
+    the activities by and is updated on the selectedDateFilter state.
+  */
   const todaysDate = new Date();
   const date = new Date(todaysDate.toDateString());
 

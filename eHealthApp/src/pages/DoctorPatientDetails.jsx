@@ -9,19 +9,15 @@ import {
   IonPage,
   IonContent,
   IonCard,
-  IonCardContent,
   IonList,
   IonItem,
-  IonGrid,
   IonLabel,
   IonIcon,
   IonTitle,
   IonButton,
   IonToolbar,
   IonCardHeader,
-  IonSpinner,
-  IonCardTitle,
-  IonListHeader
+  IonSpinner
 } from "@ionic/react";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import FilterOverview from "./FilterOverview";
