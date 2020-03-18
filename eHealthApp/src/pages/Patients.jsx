@@ -17,6 +17,7 @@ import {
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import UserQueries from "../queries/UserQueries";
 import { Row, Container } from "react-bootstrap";
+import Patient from "../components/Patient";
 
 /*props:
  */
@@ -31,37 +32,6 @@ const Patients = props => {
     });
   }, []);
 
-  const Patient = data => {
-    return (
-      <IonCard
-        routerDirection="forward"
-        routerLink={`/patientoverview/doctor/${doctor}/patient/${data.patient.id}/${data.patient.name}`}
-      >
-        <IonCardHeader>
-          <IonCardTitle>{data.patient.name}</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          <Container>
-            <Row>
-              <IonLabel>Patient id: {data.patient.id}</IonLabel>
-            </Row>
-            <Row>
-              <IonLabel>Gender: {data.patient.gender}</IonLabel>
-            </Row>
-            <Row>
-              <IonLabel>
-                Date of birth: {new Date(data.patient.dob).toDateString()}
-              </IonLabel>
-            </Row>
-            <Row>
-              <IonLabel>Email: {data.patient.email}</IonLabel>
-            </Row>
-          </Container>
-        </IonCardContent>
-      </IonCard>
-    );
-  };
-
   return (
     <IonPage>
       <BackButtonToolbar title={"Assigned Patients"} />
@@ -70,10 +40,11 @@ const Patients = props => {
           <Fragment>
             {patients.length !== 0 &&
               patients.map((patient, index) => (
-                <Patient key={index} patient={patient} />
+                <Patient key={index} patient={patient} doctor={doctor} />
               ))}
           </Fragment>
         )}
+        {/* {console.log("PROPS:", props)} */}
       </IonContent>
     </IonPage>
   );

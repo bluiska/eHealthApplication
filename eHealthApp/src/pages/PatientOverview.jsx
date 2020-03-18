@@ -323,39 +323,3 @@ const PatientOverview = props => {
   );
 };
 export default withRouter(PatientOverview);
-
-/*
-
-todaysANdYesterdaysData = Query.data()
-
-<IonList>
-
-[[today] [yesterday] yesterday - 1] [yesterday - n]]
-
-todaysANdyYesterdaysData.map(day => {
-
-  if(day.length === 0){
-    render no activity card
-  } else {
-    day.map(activity => {
-      render the activity card
-    })
-  }
-})
-
-</IonList>
-
-*/
-
-/*
-
-					<IonCard>
-						<IonCardHeader>
-							<IonCardTitle>No activity for this day</IonCardTitle>
-						</IonCardHeader>
-				  	</IonCard>
-
-
-<RecordCard index={data.id} key={data.id} data={data} />
-
-*/
