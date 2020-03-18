@@ -195,7 +195,7 @@ const RecordCard = props => {
     switch (activityType) {
       case ACTIVITY_TYPES.BLOOD_PRESSURE_READING:
       case ACTIVITY_TYPES.WEIGHT_READING:
-        date = data.timestamp
+        date = data.timestamp;
         break;
       case ACTIVITY_TYPES.CYCLING:
       case ACTIVITY_TYPES.RUNNING:
@@ -203,7 +203,7 @@ const RecordCard = props => {
         date = data.endTime;
         break;
     }
-    return <div>{date ? moment(date).format("HH:mm") : ''}</div>
+    return <div>{date ? moment(date).format("HH:mm") : ""}</div>;
   };
 
   return (
