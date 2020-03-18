@@ -55,10 +55,6 @@ const RecordCard = props => {
     }
   };
 
-  // const cleanUpDistance = distance => {
-
-  // }
-
   const renderActivityValues = (activityType, data) => {
     // let date = new Date(data.timestamp).toLocaleTimeString().slice(0, 5);
     const date = moment(data.timestamp).format("HH:mm");
@@ -197,28 +193,19 @@ const RecordCard = props => {
   };
 
   const renderActivityValue = (activityType, data) => {
-    var endDate;
-    const format = "HH:mm";
+    var date;
     switch (activityType) {
       case ACTIVITY_TYPES.BLOOD_PRESSURE_READING:
-        endDate = moment(data.timestamp).format(format);
-        break;
       case ACTIVITY_TYPES.WEIGHT_READING:
-        endDate = moment(data.timestamp).format(format);
+        date = data.timestamp;
         break;
       case ACTIVITY_TYPES.CYCLING:
-        endDate = moment(data.endTime).format(format);
-        break;
       case ACTIVITY_TYPES.RUNNING:
-        endDate = moment(data.endTime).format(format);
-        break;
       case ACTIVITY_TYPES.WALKING:
-        endDate = moment(data.endTime).format(format);
+        date = data.endTime;
         break;
-      default:
-        return <div></div>;
     }
-    return <div>{endDate}</div>;
+    return <div>{date ? moment(date).format("HH:mm") : ""}</div>;
   };
 
   return (
