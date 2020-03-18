@@ -7,10 +7,7 @@ Author: Gergo Kekesi
 
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonButton,
   IonActionSheet
 } from "@ionic/react";
@@ -21,6 +18,7 @@ import background_image from "../resources/home_background_blur.jpg";
 import "./Home.css";
 import { withRouter } from "react-router-dom";
 import UserQueries from "./../queries/UserQueries";
+import BackButtonToolbar from "../components/BackButtonToolbar";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
@@ -72,11 +70,7 @@ const Home = props => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>eHealth Application Demo</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <BackButtonToolbar title={"eHealth Application Demo"} />
       <IonContent>
         <div className="ion-padding" style={styles.home}>
           <Container>

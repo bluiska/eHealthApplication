@@ -19,7 +19,7 @@ import {
   useIonViewWillEnter
 } from "@ionic/react";
 import { add } from "ionicons/icons";
-import BackButtonToolbar from "../components/BackButtonToolbar";
+import LogoutButtonToolbar from "../components/LogoutButtonToolbar";
 import UserQueries from "../queries/UserQueries";
 import { Row, Container } from "react-bootstrap";
 
@@ -71,7 +71,7 @@ const DoctorPatients = props => {
 
   return (
     <IonPage>
-      <BackButtonToolbar title={"Assigned Patients"} />
+      <LogoutButtonToolbar title={"My Patients"} />
       <IonContent className="ion-padding">
         {doctor && (
           <Fragment>

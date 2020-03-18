@@ -507,7 +507,7 @@ class RegistrationModal extends React.Component {
                         color={this.state.usernameIsAvailable}
                         style={styles.label}
                       >
-                        - Available.
+                        - Be available.
                       </IonNote>
                       <br />
                     </IonRow>

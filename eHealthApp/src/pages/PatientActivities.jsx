@@ -23,7 +23,7 @@ import {
 import { sync, add } from "ionicons/icons";
 import pencil from "../resources/pencil.png";
 import "./PatientActivities.css";
-import BackButtonToolbar from "../components/BackButtonToolbar";
+import LogoutButtonToolbar from "../components/LogoutButtonToolbar";
 import { withRouter } from "react-router-dom";
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
@@ -79,7 +79,7 @@ const PatientActivities = props => {
 
   return (
     <IonPage>
-      <BackButtonToolbar title="Today: Activities" />
+      <LogoutButtonToolbar title="Today: My Activities" />
       <IonContent className="ion-padding">
         {/*Activity*/}
         <IonItem>
