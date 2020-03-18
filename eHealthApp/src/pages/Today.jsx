@@ -1,10 +1,3 @@
-/*
-The page displaying the activities of a user for today.
-This page allows the user to trigger synchronization as well as
-add health data manually.
-
-Author: Gergo Kekesi
-*/
 import React, { useState, useEffect } from "react";
 import {
   IonPage,
@@ -28,19 +21,37 @@ import { withRouter } from "react-router-dom";
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
 import BackButtonToolbar from "../components/BackButtonToolbar";
+import { attachObserver } from "../pages/activity_submission/ActivitySubmissionPage";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 import pencil from "../resources/pencil.png";
 import "./Today.css";
 
 const Today = props => {
+  // Holders for the component's state
   const [todaysActivities, setTodaysActivities] = useState([]);
-  const patientId = props.match.params.patientid || "unknown";
 
+  // Styles for all components
+  const styles = {
+    list: {
+      width: '100%'
+    }
+  }
+
+  // Setting the selected patient using default values
+  const patientId = props.match.params.patientid || "unknown";
+  // Instantiating the component to IonSpinner
+  // This will be shown if the data cannot be fetched from the database
   let activitiesComponent = <IonSpinner />;
 
+  /**
+   * When component renders:
+   * - Attach an observer to BluetoothSynchronisationManager to be notified when new data is available from bluetooth devices
+   * - Attach an observer to ActivitySubmissionPage to be notified when new data is available from manual entry
+   * - Fetches activities from the database
+   */
   useEffect(() => {
-    // Attaching the Today page as an Observer to BluetoothSynchronisationManager
     BluetoothSynchronisationManager.attachObserver(onNewDataAvailable);
+    attachObserver(onNewDataAvailable);
 
     getActivities();
   }, []);
@@ -52,7 +63,7 @@ const Today = props => {
    */
   const onNewDataAvailable = () => {
     getActivities();
-  }
+  };
 
   /**
    * Returns the correct component for Today's activities based on the content of
@@ -78,16 +89,16 @@ const Today = props => {
     } else if (todaysActivities.length > 0) {
       return (
         <IonItem>
-          <IonList>
-            {todaysActivities.map(activity => {
-              return (
-                <RecordCard
-                  key={activity.id}
-                  index={activity.id}
-                  data={activity}
-                />
-              );
-            })}
+          <IonList style={styles.list}>
+                  {todaysActivities.map(activity => {
+                    return (
+                      <RecordCard
+                        key={activity.id}
+                        index={activity.id}
+                        data={activity}
+                      />
+                    );
+                  })}
           </IonList>
         </IonItem>
       );
@@ -99,7 +110,7 @@ const Today = props => {
   /**
    * Fetches the today's activities from the database
    * Activities are fetched for the chosen patient
-   * 
+   * The activities are sorted descendingly, based on the submission time
    */
   const getActivities = () => {
     const todayDate = new Date();
@@ -114,10 +125,12 @@ const Today = props => {
     ).then(async res => {
       if (res.length > 0) {
         const sortArray = arr =>
-          arr.sort(
-            (a, b) =>
-              new Date(b.endTime).getTime() - new Date(a.endTime).getTime()
-          );
+          arr.sort((a, b) => {
+            return (
+              new Date(b.timestamp).getTime() -
+              new Date(a.timestamp).getTime()
+            );
+          });
         const sortedArray = await sortArray(res);
         setTodaysActivities(sortedArray);
       }
