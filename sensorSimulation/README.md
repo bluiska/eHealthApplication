@@ -1,0 +1,16 @@
+# Bluetooth Sensor Simulation
+Lorem ipsum...
+
+## Prerequisites
+Lorem ipsum...
+
+## 1. Preamble
+Lorem ipsum...
+
+## 2. Deploying the simulator
+Lorem ipsum...
+
+## 3. API
+Lorem ipsum...
+
+## 4. Testing

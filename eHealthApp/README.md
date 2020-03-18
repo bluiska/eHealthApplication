@@ -1,0 +1,16 @@
+# eHealth Client Application
+Lorem ipsum...
+
+## Prerequisites
+Lorem ipsum...
+
+## 1. Preamble
+Lorem ipsum...
+
+## 2. Deploying the client
+Lorem ipsum...
+
+## 3. Component structure
+Lorem ipsum...
+
+## 4. Testing

@@ -20,6 +20,8 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
+    "fiery": "^0.5.0",
+    "firebase": "^7.11.0",
     "ionicons": "^4.6.3",
     "odata": "^1.0.4",
     "prettier": "^1.19.1",
@@ -57,7 +59,6 @@
   "description": "An Ionic project",
   "devDependencies": {
     "eslint": "^6.8.0",
-    "husky": "^4.2.3",
     "pre-commit": "^1.2.2",
     "react-scripts": "^3.4.0"
   }
