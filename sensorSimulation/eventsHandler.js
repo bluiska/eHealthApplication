@@ -19,6 +19,7 @@ eventEmitter
         response.send(devicesList);
     })
     .on('connectToSensor', async params => {
+        Logger.log(`Connecting to a sensor`);
         const deviceId = params.id;
         const sensor = devices.find(x => x.id === deviceId);
         try {
@@ -31,6 +32,7 @@ eventEmitter
         }
     })
     .on('disconnectSensor', params => {
+        Logger.log(`Disconnecting from a sensor`);
         const deviceId = params.id;
         const sensor = devices.find(x => x.id === deviceId);
         sensor.disconnect();

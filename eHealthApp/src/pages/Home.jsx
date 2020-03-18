@@ -65,6 +65,7 @@ const Home = props => {
       text: patient.name,
       handler: () => {
         props.history.push(`/today/patient/${patient.id}`);
+        BluetoothSynchronisationManager.disconnectAll();
         BluetoothSynchronisationManager.setPatient(patient.id);
       }
     };

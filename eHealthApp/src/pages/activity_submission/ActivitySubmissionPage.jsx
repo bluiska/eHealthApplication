@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import { IonPage, IonContent, IonAlert } from "@ionic/react";
+import { withRouter } from "react-router-dom";
+
+import ActivityQueries from "./../../queries/ActivityQueries";
 import BackButtonToolbar from "../../components/BackButtonToolbar";
 import FooterSubmitButton from "./../../components/FooterSubmitButton";
-import ActivityQueries from "./../../queries/ActivityQueries";
-import { withRouter } from "react-router-dom";
+
+// Container to store Observers
+const observers = [];
+
+/**
+ * Attaches a new Observer to the list of Observers
+ * To use this function in other components, it need to be exported first
+ * @param {Function} observer
+ */
+
+export const attachObserver = observer => {
+  observers.push(observer);
+};
 
 const ActivitySubmissionPage = props => {
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
@@ -12,6 +26,14 @@ const ActivitySubmissionPage = props => {
     SUCCESS: "Submission successful.",
     FAIL: "Submission failed!"
   };
+
+  /**
+   * Notifies all observers about new data
+   */
+  const notifyObservers = () => {
+    observers.forEach(observer => observer());
+  };
+
   return (
     <IonPage>
       <IonAlert
@@ -83,6 +105,7 @@ const ActivitySubmissionPage = props => {
             });
             setShowSubmitAlert(true);
           }
+          notifyObservers();
         }}
       />
     </IonPage>

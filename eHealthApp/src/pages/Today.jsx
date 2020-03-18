@@ -1,11 +1,3 @@
-/*
-The page displaying the activities of a user for today.
-This page allows the user to trigger synchronization as well as
-add health data manually.
-
-Author: Gergo Kekesi
-*/
-
 import React, { useState, useEffect } from "react";
 import {
   IonPage,
@@ -17,47 +9,109 @@ import {
   IonItem,
   IonImg,
   IonList,
-  IonSpinner
+  IonSpinner,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent
 } from "@ionic/react";
-
 import { sync, add } from "ionicons/icons";
-import pencil from "../resources/pencil.png";
-import "./Today.css";
-import BackButtonToolbar from "../components/BackButtonToolbar";
 import { withRouter } from "react-router-dom";
+
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
-import { Container, Row, Col } from "react-bootstrap";
+import BackButtonToolbar from "../components/BackButtonToolbar";
+import { attachObserver } from "../pages/activity_submission/ActivitySubmissionPage";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
+import pencil from "../resources/pencil.png";
+import "./Today.css";
 
-/*props:
- */
 const Today = props => {
+  // Holders for the component's state
   const [todaysActivities, setTodaysActivities] = useState([]);
-  const [newDataAvailable, setNewDataAvailable] = useState(true);
-  const patientId = props.match.params.patientid || "unknown";
 
-  useEffect(() => {
-    setInterval(() => {
-      if (newDataAvailable) {
-        getActivities();
-      }
-    }, 1000);
-  }, [newDataAvailable]);
-
-  useEffect(() => {
-    setInterval(() => {
-      checkForNewData();
-    }, 1000);
-  }, []);
-
-  const checkForNewData = () => {
-    const dataAvailable = BluetoothSynchronisationManager.isNewDataAvailable();
-    if (newDataAvailable !== dataAvailable) {
-      setNewDataAvailable(dataAvailable);
+  // Styles for all components
+  const styles = {
+    list: {
+      width: "100%"
     }
   };
 
+  // Setting the selected patient using default values
+  const patientId = props.match.params.patientid || "unknown";
+  // Instantiating the component to IonSpinner
+  // This will be shown if the data cannot be fetched from the database
+  let activitiesComponent = <IonSpinner />;
+
+  /**
+   * When component renders:
+   * - Attach an observer to BluetoothSynchronisationManager to be notified when new data is available from bluetooth devices
+   * - Attach an observer to ActivitySubmissionPage to be notified when new data is available from manual entry
+   * - Fetches activities from the database
+   */
+  useEffect(() => {
+    BluetoothSynchronisationManager.attachObserver(onNewDataAvailable);
+    attachObserver(onNewDataAvailable);
+
+    getActivities();
+  }, []);
+
+  /**
+   * Callback used in Observer pattern by BluetoothSynchronisationManager
+   * When the data changes in BSM, this function is called
+   * And as a result, it fetches the data from the database
+   */
+  const onNewDataAvailable = () => {
+    getActivities();
+  };
+
+  /**
+   * Returns the correct component for Today's activities based on the content of
+   * todaysActivities array
+   * For no activities, displays 'No Activity' card
+   * For one or more activities, displays them as RecordCard component
+   */
+  const handleActivitiesComponentChange = () => {
+    if (todaysActivities.length === 0) {
+      return (
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>No activity today</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>
+              No activity for today. Synchronize your devices or add an entry
+              manually using the plus button below.
+            </p>
+          </IonCardContent>
+        </IonCard>
+      );
+    } else if (todaysActivities.length > 0) {
+      return (
+        <IonItem>
+          <IonList style={styles.list}>
+            {todaysActivities.map(activity => {
+              return (
+                <RecordCard
+                  key={activity.id}
+                  index={activity.id}
+                  data={activity}
+                />
+              );
+            })}
+          </IonList>
+        </IonItem>
+      );
+    } else {
+      return activitiesComponent;
+    }
+  };
+
+  /**
+   * Fetches the today's activities from the database
+   * Activities are fetched for the chosen patient
+   * The activities are sorted descendingly, based on the submission time
+   */
   const getActivities = () => {
     const todayDate = new Date();
     const formatedDate = new Date(todayDate.setDate(todayDate.getDate()))
@@ -70,7 +124,12 @@ const Today = props => {
       formatedDate
     ).then(async res => {
       if (res.length > 0) {
-        const sortArray = arr => arr.sort((a, b) => b.endTime - a.endTime);
+        const sortArray = arr =>
+          arr.sort((a, b) => {
+            return (
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+            );
+          });
         const sortedArray = await sortArray(res);
         setTodaysActivities(sortedArray);
       }
@@ -82,26 +141,7 @@ const Today = props => {
       <BackButtonToolbar title="Today: Activities" />
       <IonContent className="ion-padding">
         {/*Activity*/}
-        <IonItem>
-          <IonList>
-            {todaysActivities.length === 0 ? (
-              <div style={{ alignContent: "center", justifyContent: "center" }}>
-                <IonSpinner />
-              </div>
-            ) : (
-              todaysActivities.map(activity => {
-                return (
-                  <RecordCard
-                    key={activity.id}
-                    index={activity.id}
-                    data={activity}
-                  />
-                );
-              })
-            )}
-          </IonList>
-        </IonItem>
-
+        {handleActivitiesComponentChange()}
         {/*Floating action button*/}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="secondary">
