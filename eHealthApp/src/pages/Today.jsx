@@ -33,9 +33,9 @@ const Today = props => {
   // Styles for all components
   const styles = {
     list: {
-      width: '100%'
+      width: "100%"
     }
-  }
+  };
 
   // Setting the selected patient using default values
   const patientId = props.match.params.patientid || "unknown";
@@ -90,15 +90,15 @@ const Today = props => {
       return (
         <IonItem>
           <IonList style={styles.list}>
-                  {todaysActivities.map(activity => {
-                    return (
-                      <RecordCard
-                        key={activity.id}
-                        index={activity.id}
-                        data={activity}
-                      />
-                    );
-                  })}
+            {todaysActivities.map(activity => {
+              return (
+                <RecordCard
+                  key={activity.id}
+                  index={activity.id}
+                  data={activity}
+                />
+              );
+            })}
           </IonList>
         </IonItem>
       );
@@ -127,8 +127,7 @@ const Today = props => {
         const sortArray = arr =>
           arr.sort((a, b) => {
             return (
-              new Date(b.timestamp).getTime() -
-              new Date(a.timestamp).getTime()
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
             );
           });
         const sortedArray = await sortArray(res);

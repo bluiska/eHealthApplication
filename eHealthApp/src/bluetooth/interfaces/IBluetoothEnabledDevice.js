@@ -1,4 +1,4 @@
-import CONNECTION_STATUS from '../../enums/ConnectionStatus';
+import CONNECTION_STATUS from "../../enums/ConnectionStatus";
 
 class IBluetoothEnabledDevice {
   constructor(

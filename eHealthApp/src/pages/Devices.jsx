@@ -55,7 +55,9 @@ const Devices = () => {
    * When the component renders, it attaches an Observer function
    */
   useEffect(() => {
-    BluetoothSynchronisationManager.attachDevicesObserver(rerenderPairedDevices);
+    BluetoothSynchronisationManager.attachDevicesObserver(
+      rerenderPairedDevices
+    );
   }, []);
 
   /**
@@ -63,7 +65,7 @@ const Devices = () => {
    */
   const rerenderPairedDevices = () => {
     setPairedDevices(BluetoothSynchronisationManager.getPairedDevices());
-  }
+  };
 
   /**
    * Handles the clicking event on the device, on the page

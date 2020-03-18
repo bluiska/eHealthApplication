@@ -25,32 +25,32 @@ class BluetoothSynchronisationManager {
    * Attaches a new observer to a list of Observers
    * @param {Function} observer -> Function that is called, when Observers need to be notified about data change
    */
-  attachObserver = (observer) => {
+  attachObserver = observer => {
     this.observers.push(observer);
   };
 
-  attachDevicesObserver = (observer) => {
+  attachDevicesObserver = observer => {
     this.devicesObservers.push(observer);
-  }
+  };
 
   /**
    * Removes the observer fromt he list of observers
    * @param {Function} observer -> Observer to be removed
    */
-  detachObserver = (observer) => {
+  detachObserver = observer => {
     this.observers = this.observers.filter(ob => ob !== observer);
-  }
+  };
 
   /**
    * Informs all Observers about the data change
    */
   notifyObservers = () => {
     this.observers.forEach(observer => observer());
-  }
+  };
 
   notifyDevicesObservers = () => {
     this.devicesObservers.forEach(observer => observer());
-  }
+  };
 
   /**
    * Returns the list of paired devices
@@ -136,13 +136,13 @@ class BluetoothSynchronisationManager {
    * Disconnects from all connected sensors
    */
   disconnectAll = () => {
-    foundDevices.forEach((device) => {
+    foundDevices.forEach(device => {
       if (device.connected) {
         this.disconnect(device.id);
         device.disconnectPaired();
       }
-    })
-  }
+    });
+  };
 
   /**
    * Synchronises the data from all devices (paired and connected)

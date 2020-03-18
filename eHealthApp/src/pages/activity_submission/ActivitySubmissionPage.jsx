@@ -12,9 +12,10 @@ const observers = [];
 /**
  * Attaches a new Observer to the list of Observers
  * To use this function in other components, it need to be exported first
- * @param {Function} observer 
- */  
-export const attachObserver = (observer) => {
+ * @param {Function} observer
+ */
+
+export const attachObserver = observer => {
   observers.push(observer);
 };
 
