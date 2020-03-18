@@ -99,7 +99,7 @@ const Home = props => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>eHealth Application: Demo</IonTitle>
+          <IonTitle>eHealth Application</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
