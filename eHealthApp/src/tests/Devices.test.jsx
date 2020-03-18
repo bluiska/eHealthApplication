@@ -1,10 +1,10 @@
 // MyComponent.test.js
 import React from "react";
 import { shallow } from "enzyme";
-import PatientDevices from "../pages/PatientDevices";
+import Devices from "../pages/Devices";
 
 describe("Devices", () => {
   it("should render my component", () => {
-    const wrapper = shallow(<PatientDevices />);
+    const wrapper = shallow(<Devices />);
   });
 });

@@ -1,7 +1,8 @@
 import { o } from "odata";
 
-const endpoint = "https://localhost:5001/odata/";
-//const endpoint = "https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/";
+//const endpoint = 'https://localhost:5001/odata/'
+const endpoint =
+  "https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export default new (class BackendAccess {
@@ -52,6 +53,7 @@ export default new (class BackendAccess {
           break;
         case "POST":
           context.res = await Create(req.entityType, req.entityBody);
+          console.log("test: ", context.res);
           break;
         case "PUT":
           context.res = await Update(

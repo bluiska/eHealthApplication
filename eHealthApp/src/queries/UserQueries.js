@@ -15,37 +15,7 @@ UserQueries.getAllDoctors = () => {
   });
 };
 
-UserQueries.getAllTestPatients = () => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "GET",
-    entityType: "Patients",
-    query: {
-      $filter: "contains(id, 'Test')"
-    }
-  });
-};
-
-UserQueries.getAllUnassignedPatients = () => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "GET",
-    entityType: "Patients",
-    query: {
-      $filter: "doctor eq null"
-    }
-  });
-};
-
-UserQueries.getAllTestDoctors = () => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "GET",
-    entityType: "Doctors",
-    query: {
-      $filter: "contains(id, 'Test')"
-    }
-  });
-};
-
-UserQueries.getPatientsByDoctorId = doctorId => {
+UserQueries.getDoctorById = doctorId => {
   return BackendAccess.IssueODataRequest({
     requestType: "GET",
     entityType: "Patients",
@@ -61,28 +31,6 @@ UserQueries.getPatientById = pateintId => {
     entityType: "Patients",
     query: {
       $filter: `patient/ID eq '${pateintId}'`
-    }
-  });
-};
-
-UserQueries.assignPatientToDoctor = (doctorId, patientId) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "PUT",
-    entityType: "Doctors",
-    entityID: doctorId,
-    entityBody: {
-      patients: [{ ID: patientId }]
-    }
-  });
-};
-
-UserQueries.assignDoctorToPatient = (patientId, doctorId) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "PUT",
-    entityType: "Patients",
-    entityID: patientId,
-    entityBody: {
-      doctor: { ID: doctorId }
     }
   });
 };
