@@ -58,3 +58,5 @@ The misuse of this platform is not tolerated as any recorded data contains sensi
 - Design changes
   - [SAP Fiori](https://experience.sap.com/fiori-design-web/wizard/) adopted for registration wizard
   - [SAP Semantic Object notation](https://help.sap.com/saphelp_uiaddon10/helpdata/en/bd/8ae3d327ab4541bcce8e7353c046fc/content.htm?no_cache=true) added on URI level
+- New Postman integration test sample added in the DIL directory
+  - Replicates the scenario where users can conduct tasks based on their role.
