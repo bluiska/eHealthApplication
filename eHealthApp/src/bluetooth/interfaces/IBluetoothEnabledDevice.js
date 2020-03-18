@@ -1,3 +1,5 @@
+import CONNECTION_STATUS from "../../enums/ConnectionStatus";
+
 class IBluetoothEnabledDevice {
   constructor(
     id,
@@ -29,12 +31,18 @@ class IBluetoothEnabledDevice {
 
   disconnect = () => {
     this.connected = false;
-    this.connectionStatus = "DISCONNECTED";
+    this.connectionStatus = CONNECTION_STATUS.DISCONNECTED;
+  };
+
+  disconnectPaired = () => {
+    console.log("disconnecting here");
+    this.connected = false;
+    this.connectionStatus = CONNECTION_STATUS.PAIRED;
   };
 
   failedToConnect = () => {
     this.connected = false;
-    this.connectionStatus = "FAILED";
+    this.connectionStatus = CONNECTION_STATUS.FAILED;
   };
 
   pair = () => {};

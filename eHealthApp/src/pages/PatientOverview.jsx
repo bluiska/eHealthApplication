@@ -9,10 +9,8 @@ import {
   IonPage,
   IonContent,
   IonCard,
-  IonCardContent,
   IonList,
   IonItem,
-  IonGrid,
   IonLabel,
   IonIcon,
   IonTitle,
@@ -79,7 +77,6 @@ const PatientOverview = props => {
         let date = new Date(activity.timestamp).toDateString();
         activities[date].push(activity);
       });
-
       let sortedActivities = Object.entries(activities).sort((a, b) => {
         let aDate = new Date(a[0]);
         let bDate = new Date(b[0]);
@@ -284,6 +281,7 @@ const PatientOverview = props => {
                                 .map(activity => {
                                   return (
                                     <RecordCard
+                                      className={activity.id}
                                       key={activity.id}
                                       index={activity.id}
                                       data={activity}
@@ -341,39 +339,3 @@ const PatientOverview = props => {
   );
 };
 export default withRouter(PatientOverview);
-
-/*
-
-todaysANdYesterdaysData = Query.data()
-
-<IonList>
-
-[[today] [yesterday] yesterday - 1] [yesterday - n]]
-
-todaysANdyYesterdaysData.map(day => {
-
-  if(day.length === 0){
-    render no activity card
-  } else {
-    day.map(activity => {
-      render the activity card
-    })
-  }
-})
-
-</IonList>
-
-*/
-
-/*
-
-					<IonCard>
-						<IonCardHeader>
-							<IonCardTitle>No activity for this day</IonCardTitle>
-						</IonCardHeader>
-				  	</IonCard>
-
-
-<RecordCard index={data.id} key={data.id} data={data} />
-
-*/

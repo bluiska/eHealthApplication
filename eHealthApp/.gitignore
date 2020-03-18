@@ -19,6 +19,7 @@
 .env.test.local
 .env.production.local
 __pycache__
+__snapshots__
 .vscode
 
 npm-debug.log*
