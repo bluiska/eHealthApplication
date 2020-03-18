@@ -118,19 +118,32 @@ const Weight = props => {
             <Col style={{ padding: "0px" }}>
               <IonItem style={{ borderRadius: "15px" }}>
                 <IonLabel>Kg</IonLabel>
-                <IonRadio value="kg" color="tertiary" checked="true" />
+                <IonRadio
+                  value="kg"
+                  color="tertiary"
+                  checked="true"
+                  disabled={weight === 0 ? true : false}
+                />
               </IonItem>
             </Col>
             <Col style={{ padding: "0px" }}>
               <IonItem style={{ borderRadius: "15px" }}>
                 <IonLabel>Stones</IonLabel>
-                <IonRadio value="stones" color="tertiary" />
+                <IonRadio
+                  value="stones"
+                  color="tertiary"
+                  disabled={weight === 0 ? true : false}
+                />
               </IonItem>
             </Col>
             <Col style={{ padding: "0px" }}>
               <IonItem style={{ borderRadius: "15px" }}>
                 <IonLabel>Pounds</IonLabel>
-                <IonRadio value="pounds" color="tertiary" />
+                <IonRadio
+                  value="pounds"
+                  color="tertiary"
+                  disabled={weight === 0 ? true : false}
+                />
               </IonItem>
             </Col>
           </Row>

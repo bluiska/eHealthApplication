@@ -131,7 +131,7 @@ const Today = props => {
             );
           });
         const sortedArray = await sortArray(res);
-        setTodaysActivities(sortedArray);
+        setTodaysActivities(res);
       }
     });
   };
