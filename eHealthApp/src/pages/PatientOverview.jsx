@@ -233,6 +233,9 @@ const PatientOverview = props => {
             setDisplayFilter={setDisplayFilter}
           />
         )}
+        {console.log("USE FOR TESTS")}
+        {console.log(patientId)}
+        {console.log(activityList)}
         {!displayFilter && displayPredictions && (
           <PredictionsOverview
             setDisplayPredictions={setDisplayPredictions}

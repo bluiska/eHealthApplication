@@ -32,6 +32,11 @@
     "react-router-dom": "^5.1.2",
     "typescript": "^3.7.5"
   },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "start-backend": "cd eHealthPredictionBackend && flask run --no-debugger",

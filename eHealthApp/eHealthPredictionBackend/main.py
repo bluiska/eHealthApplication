@@ -1,3 +1,5 @@
+# Author: Daniel Madu
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -19,6 +21,7 @@ def my_index(age, gender, weight, dp, sp, distancetravelled):
     if (gender == 'Female'):
         g = 0
 
+    # The data that the web application receives from the frontend is written to csv test file.
     with open('Dataset/userTestData.csv', 'w', newline='') as f:
         thewriter = csv.writer(f)
         thewriter.writerow(['User_ID','Age','Gender','DP','SP','Distance'])
@@ -60,16 +63,17 @@ def predict_hypertension():
     x_train,x_cv,y_train,y_cv = train_test_split(data,target,test_size=0.2)
     #(e)NAIVE BAYES ALGORITHM
 
+    #Training the prediction algorithm
     nb=GaussianNB()
     nb.fit(x_train, y_train)
 
     # print(x_train)
     #Predict values for cv data
-    print(x_cv)
+    # print(x_cv)
     pred_cv4=nb.predict(x_cv)
     pred_cv5 = nb.predict(test)
-    print(pred_cv5)
     # print(pred_cv5)
+    print(pred_cv5)
     return {'result': pred_cv5[0]}
 
 # app.run(debug=True)
