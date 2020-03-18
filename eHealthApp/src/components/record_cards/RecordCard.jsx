@@ -17,7 +17,9 @@ import { Accordion, Row, Col, Image } from "react-bootstrap";
 import ACTIVITY_TYPES from "../../enums/ActivityTypes";
 
 const RecordCard = props => {
-  const activityType = props.data.id.split("_")[0];
+  const activityType = Object.keys(props.data).length
+    ? props.data.id.split("_")[0]
+    : "";
 
   const styles = {
     iconimg: {
@@ -221,7 +223,7 @@ const RecordCard = props => {
 
   return (
     <Accordion>
-      <IonCard key={props.index}>
+      <IonCard key={props.index} className={props.index}>
         <Accordion.Toggle as={IonCardHeader} eventKey={props.index}>
           <Row>
             <Col xs="2">
@@ -258,7 +260,6 @@ const RecordCard = props => {
             </Col>
           </Row>
         </Accordion.Toggle>
-
         <Accordion.Collapse eventKey={props.index}>
           <IonCardContent>
             {renderActivityValues(activityType, props.data)}

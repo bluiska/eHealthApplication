@@ -190,6 +190,7 @@ const Devices = () => {
           pairedDevices.map(x => {
             return (
               <DeviceCard
+                className={x.id}
                 key={x.id}
                 title={x.name}
                 connected={x.connected}

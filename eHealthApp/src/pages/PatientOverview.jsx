@@ -88,7 +88,6 @@ const PatientOverview = props => {
         let date = new Date(activity.timestamp).toDateString();
         activities[date].push(activity);
       });
-
       let sortedActivities = Object.entries(activities).sort((a, b) => {
         let aDate = new Date(a[0]);
         let bDate = new Date(b[0]);
@@ -279,6 +278,7 @@ const PatientOverview = props => {
                                 .map(activity => {
                                   return (
                                     <RecordCard
+                                      className={activity.id}
                                       key={activity.id}
                                       index={activity.id}
                                       data={activity}

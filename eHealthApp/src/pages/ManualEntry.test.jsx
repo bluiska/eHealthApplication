@@ -10,7 +10,7 @@ expect.addSnapshotSerializer(createSerializer({ mode: "deep" }));
 import toJson from "enzyme-to-json";
 import ManualEntry from "./ManualEntry";
 
-describe("", () => {
+describe("<ManualEntry />", () => {
   it("test", () => {
     expect(true).toEqual(true);
   });

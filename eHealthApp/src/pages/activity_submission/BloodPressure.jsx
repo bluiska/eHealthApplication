@@ -109,6 +109,7 @@ const BloodPressure = props => {
           )}
         </IonLabel>
         <IonInput
+          className="enterSystolicPressure"
           type="number"
           placeholder="Enter the systolic pressure reading"
           clearInput
@@ -134,6 +135,8 @@ const BloodPressure = props => {
           )}
         </IonLabel>
         <IonInput
+          className="enterDiatolicPressure"
+          submit="submit"
           type="number"
           placeholder="Enter the diastolic pressure reading"
           clearInput
