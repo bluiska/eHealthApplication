@@ -1,3 +1,7 @@
+/**
+ *  Author: Daniel Madu
+ */
+
 import React from "react";
 import walk_img from "../../resources/walk.png";
 import run_img from "../../resources/run.png";
@@ -38,6 +42,10 @@ const RecordCard = props => {
     return (Math.round(value * 100) / 100).toFixed(2);
   };
 
+  /**
+   * Handles what title should be rendered based on the activity type
+   * @param {String} activityType - the activity type
+   */
   const renderActivityTitle = activityType => {
     switch (activityType) {
       case ACTIVITY_TYPES.BLOOD_PRESSURE_READING:
@@ -54,6 +62,12 @@ const RecordCard = props => {
         return <h2>Exercise</h2>;
     }
   };
+
+  /**
+   * Handles what data should be accessed and rendered based on the activity type
+   * @param {String} activityType - passes the activity type to the function
+   * @param {Object} data - passes the activity data to the function
+   */
 
   const renderActivityValues = (activityType, data) => {
     // let date = new Date(data.timestamp).toLocaleTimeString().slice(0, 5);
@@ -192,6 +206,11 @@ const RecordCard = props => {
     }
   };
 
+  /**
+   * Handles what date value should be rendered based on the activity type
+   * @param {String} activityType - passes the activity type to the function
+   * @param {Object} data - passes the activity data to the function
+   */
   const renderActivityValue = (activityType, data) => {
     var date;
     switch (activityType) {
