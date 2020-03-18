@@ -43,6 +43,7 @@ const PatientOverview = props => {
   const [selectedDateFilter, setSelectedDateFilterHandler] = useState(
     new Date("1970-01-01Z00:00:00:000")
   );
+  console.log(selectedDateFilter);
   const [displayFilter, setDisplayFilter] = useState(false);
   const [displayPredictions, setDisplayPredictions] = useState(false);
 
@@ -184,6 +185,31 @@ const PatientOverview = props => {
     setLoading(false);
   };
 
+  const getNumberOfDays = () => {
+    let ndays;
+    let tv1 = new Date(selectedDateFilter).getTime();
+    let tv2 = new Date(from).getTime();
+
+    ndays = (tv2 - tv1) / 1000 / 86400;
+    ndays = Math.round(ndays - 0.5);
+    return ndays + 1;
+  };
+
+  const loadByDate = () => {
+    setLoading(true);
+
+    if (typeof selectedDateFilter === "string") {
+      const daysDiff = getNumberOfDays();
+      // the api call to the backend show be made here
+      let dayBeforeFrom = new Date(from);
+      dayBeforeFrom.setDate(dayBeforeFrom.getDate() - daysDiff);
+      getActivities(dayBeforeFrom.toDateString(), today.toDateString());
+      setFrom(dayBeforeFrom);
+    }
+
+    setLoading(false);
+  };
+
   /**
    * Handles the format tha the date should be returned
    * @param {String} date - stringified date
@@ -261,6 +287,7 @@ const PatientOverview = props => {
             setSelectedDateFilterHandler={setSelectedDateFilterHandler}
             setSelectedFilterHandler={setSelectedFilterHandler}
             setDisplayFilter={setDisplayFilter}
+            loadByDate={loadByDate}
           />
         )}
         {console.log("USE FOR TESTS")}

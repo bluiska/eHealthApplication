@@ -47,6 +47,8 @@ const FilterOverview = props => {
   let thirtyDaysDate = new Date(date);
   thirtyDaysDate.setDate(date.getDate() - 30);
 
+  let resetDate = new Date("1970-01-01Z00:00:00:000");
+
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
@@ -122,6 +124,10 @@ const FilterOverview = props => {
               <IonRadio slot="start" value={thirtyDaysDate.toDateString()} />
               <IonLabel>Last 30 days</IonLabel>
             </IonItem>
+            <IonItem>
+              <IonRadio slot="start" value={resetDate} />
+              <IonLabel>Reset date filter</IonLabel>
+            </IonItem>
           </IonRadioGroup>
         </IonList>
       </IonContent>
@@ -129,7 +135,10 @@ const FilterOverview = props => {
         <IonButton
           size="large"
           expand="block"
-          onClick={() => props.setDisplayFilter(false)}
+          onClick={() => {
+            props.loadByDate();
+            props.setDisplayFilter(false);
+          }}
         >
           <IonTitle>Apply</IonTitle>
         </IonButton>
