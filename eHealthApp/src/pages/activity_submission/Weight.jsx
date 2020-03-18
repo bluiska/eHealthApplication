@@ -23,6 +23,9 @@ const Weight = props => {
     weightError: ""
   });
 
+  /**
+   * Styling parameters
+   */
   const styles = {
     label: {
       fontSize: "1.3em"
@@ -33,6 +36,14 @@ const Weight = props => {
     warningIcon: { width: "30px", height: "30px", marginBottom: "-7px" }
   };
 
+  /**
+   * Converts the weight value to the given units
+   * This is used to allow the user to select a different unit to submit measurements in
+   *
+   * @param {Number} weight - The weight value
+   * @param {String} unit - Either kg, pounds or stones
+   * @returns {Number} - The converted weight value
+   */
   const convertWeight = (weight, unit) => {
     switch (unit) {
       case "kg":
@@ -43,6 +54,31 @@ const Weight = props => {
         return weight * 6.35;
       default:
         return weight;
+    }
+  };
+
+  /**
+   * Handles the entry of the weight value
+   * and validates the value. If the value is out of bounds
+   * it sets the error to display.
+   *
+   * @param {String} value
+   */
+  const enterWeightValue = value => {
+    if (value <= 999 && value >= 0) {
+      setWeight(convertWeight(value, measurementUnit));
+      let val = { ...validation, weightError: false };
+      setValidation(val);
+    } else {
+      setWeight(-1);
+      let val = { ...validation, weightError: true };
+      setValidation(val);
+      let valMsg = {
+        ...validationMessage,
+        weightError:
+          value > 999 ? "The value is too high" : "The value is too low."
+      };
+      setValidationMessage(valMsg);
     }
   };
 
@@ -76,23 +112,7 @@ const Weight = props => {
           placeholder="Enter your weight"
           clearInput
           onIonChange={e => {
-            if (e.detail.value <= 999 && e.detail.value >= 0) {
-              setWeight(convertWeight(e.detail.value, measurementUnit));
-              let val = { ...validation, weightError: false };
-              setValidation(val);
-            } else {
-              setWeight(-1);
-              let val = { ...validation, weightError: true };
-              setValidation(val);
-              let valMsg = {
-                ...validationMessage,
-                weightError:
-                  e.detail.value > 999
-                    ? "The value is too high"
-                    : "The value is too low."
-              };
-              setValidationMessage(valMsg);
-            }
+            enterWeightValue(e.detail.value);
           }}
         />
         <Collapse in={validation.weightError}>

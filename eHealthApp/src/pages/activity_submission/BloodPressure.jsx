@@ -17,6 +17,9 @@ const BloodPressure = props => {
     diaError: ""
   });
 
+  /**
+   * Styling parameters
+   */
   const styles = {
     label: {
       fontSize: "1.3em"
@@ -25,6 +28,56 @@ const BloodPressure = props => {
       fontSize: "1.4em"
     },
     warningIcon: { width: "30px", height: "30px", marginBottom: "-7px" }
+  };
+
+  /**
+   * Handles the entry of the systolic pressure value
+   * and validates the value. If the value is out of bounds
+   * it sets the error to display.
+   *
+   * @param {String} value - The input fields value
+   */
+  const enterSystolicPressure = value => {
+    if (value <= 300 && value >= 0) {
+      setSystolicPressure(value);
+      let val = { ...validation, sysError: false };
+      setValidation(val);
+    } else {
+      setSystolicPressure(-1);
+      let val = { ...validation, sysError: true };
+      setValidation(val);
+      let valMsg = {
+        ...validationMessage,
+        sysError:
+          value > 300 ? "The value is too high" : "The value is too low."
+      };
+      setValidationMessage(valMsg);
+    }
+  };
+
+  /**
+   * Handles the entry of the diastolic pressure value
+   * and validates the value. If the value is out of bounds
+   * it sets the error to display.
+   *
+   * @param {String} value - The input fields value
+   */
+  const enterDiastolicPressure = value => {
+    if (value <= 300 && value >= 0) {
+      setDiastolicPressure(value);
+      let val = { ...validation, diaError: false };
+      setValidation(val);
+    } else {
+      setDiastolicPressure(-1);
+      let val = { ...validation, diaError: true };
+      setValidation(val);
+      let valMsg = {
+        ...validationMessage,
+        diaError:
+          value > 300 ? "The value is too high" : "The value is too low."
+      };
+      setValidationMessage(valMsg);
+    }
   };
 
   return (
@@ -60,23 +113,7 @@ const BloodPressure = props => {
           placeholder="Enter the systolic pressure reading"
           clearInput
           onIonChange={e => {
-            if (e.detail.value <= 300 && e.detail.value >= 0) {
-              setSystolicPressure(e.detail.value);
-              let val = { ...validation, sysError: false };
-              setValidation(val);
-            } else {
-              setSystolicPressure(-1);
-              let val = { ...validation, sysError: true };
-              setValidation(val);
-              let valMsg = {
-                ...validationMessage,
-                sysError:
-                  e.detail.value > 300
-                    ? "The value is too high"
-                    : "The value is too low."
-              };
-              setValidationMessage(valMsg);
-            }
+            enterSystolicPressure(e.detail.value);
           }}
         />
         <Collapse in={validation.sysError}>
@@ -101,23 +138,7 @@ const BloodPressure = props => {
           placeholder="Enter the diastolic pressure reading"
           clearInput
           onIonChange={e => {
-            if (e.detail.value <= 300 && e.detail.value >= 0) {
-              setDiastolicPressure(e.detail.value);
-              let val = { ...validation, diaError: false };
-              setValidation(val);
-            } else {
-              setDiastolicPressure(-1);
-              let val = { ...validation, diaError: true };
-              setValidation(val);
-              let valMsg = {
-                ...validationMessage,
-                diaError:
-                  e.detail.value > 300
-                    ? "The value is too high"
-                    : "The value is too low."
-              };
-              setValidationMessage(valMsg);
-            }
+            enterDiastolicPressure(e.detail.value);
           }}
         />
         <Collapse in={validation.diaError}>

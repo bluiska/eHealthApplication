@@ -28,7 +28,65 @@ const ActivitySubmissionPage = props => {
   };
 
   /**
-   * Notifies all observers about new data
+   * Submit the measurement data.
+   * Uses the submitData prop to submit the data added by components that use this component
+   * It also sets the alert message based on a successful upload
+   */
+  const submitMeasurement = () => {
+    ActivityQueries.uploadNewMeasurement(props.patientId, {
+      type: props.measurementType,
+      data: { ...props.submitData }
+    })
+      .then(res => {
+        if (res && res.ID && res.ID.length > 0) {
+          setSubmitAlertContent({
+            header: HEADER.SUCCESS,
+            message: props.successMessage
+          });
+        } else {
+          setSubmitAlertContent({
+            header: HEADER.FAIL,
+            message: props.failMessage
+          });
+        }
+        setShowSubmitAlert(true);
+      })
+      .catch(() => {
+        setSubmitAlertContent({
+          header: HEADER.FAIL,
+          message: props.failMessage
+        });
+        setShowSubmitAlert(true);
+      });
+  };
+
+  /**
+   * Submit the exercise data.
+   * Uses the submitData prop to submit the data added by components that use this component
+   * It also sets the alert message based on a successful upload
+   */
+  const submitExercise = () => {
+    ActivityQueries.uploadNewExercise(props.patientId, {
+      type: props.measurementType,
+      data: { ...props.submitData }
+    }).then(res => {
+      if (res && res.ID && res.ID.length > 0) {
+        setSubmitAlertContent({
+          header: "Submission successful.",
+          message: props.successMessage
+        });
+      } else {
+        setSubmitAlertContent({
+          header: "Submission failed!",
+          message: props.failMessage
+        });
+      }
+      setShowSubmitAlert(true);
+    });
+  };
+
+  /**
+   * Notifies the observers
    */
   const notifyObservers = () => {
     observers.forEach(observer => observer());
@@ -54,49 +112,9 @@ const ActivitySubmissionPage = props => {
           console.log(props.submitData);
           if (props.validated) {
             if (props.submissionType === "measurement") {
-              ActivityQueries.uploadNewMeasurement(props.patientId, {
-                type: props.measurementType,
-                data: { ...props.submitData }
-              })
-                .then(res => {
-                  if (res && res.ID && res.ID.length > 0) {
-                    setSubmitAlertContent({
-                      header: HEADER.SUCCESS,
-                      message: props.successMessage
-                    });
-                  } else {
-                    setSubmitAlertContent({
-                      header: HEADER.FAIL,
-                      message: props.failMessage
-                    });
-                  }
-                  setShowSubmitAlert(true);
-                })
-                .catch(() => {
-                  setSubmitAlertContent({
-                    header: HEADER.FAIL,
-                    message: props.failMessage
-                  });
-                  setShowSubmitAlert(true);
-                });
+              submitMeasurement();
             } else {
-              ActivityQueries.uploadNewExercise(props.patientId, {
-                type: props.measurementType,
-                data: { ...props.submitData }
-              }).then(res => {
-                if (res && res.ID && res.ID.length > 0) {
-                  setSubmitAlertContent({
-                    header: "Submission successful.",
-                    message: props.successMessage
-                  });
-                } else {
-                  setSubmitAlertContent({
-                    header: "Submission failed!",
-                    message: props.failMessage
-                  });
-                }
-                setShowSubmitAlert(true);
-              });
+              submitExercise();
             }
           } else {
             setSubmitAlertContent({
