@@ -45,11 +45,11 @@ const Exercise = props => {
 
   const getType = type => {
     switch (type) {
-      case "walk":
+      case "walking":
         return { title: "Walk", activity: "walked", entityType: "Walkings" };
-      case "run":
+      case "running":
         return { title: "Run", activity: "ran", entityType: "Runnings" };
-      case "cycle":
+      case "cycling":
         return { title: "Cycle", activity: "cycled", entityType: "Cyclings" };
       default:
         return "";

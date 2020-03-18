@@ -7,10 +7,7 @@ Author: Gergo Kekesi
 
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonButton,
   IonActionSheet
 } from "@ionic/react";
@@ -21,6 +18,7 @@ import background_image from "../resources/home_background_blur.jpg";
 import "./Home.css";
 import { withRouter } from "react-router-dom";
 import UserQueries from "./../queries/UserQueries";
+import BackButtonToolbar from "../components/BackButtonToolbar";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 
 /*props:
@@ -33,11 +31,11 @@ const Home = props => {
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-    UserQueries.getAllDoctors().then(res => {
+    UserQueries.getAllTestDoctors().then(res => {
       setDoctors(res);
     });
 
-    UserQueries.getAllPatients().then(res => {
+    UserQueries.getAllTestPatients().then(res => {
       setPatients(res);
     });
   }, []);
@@ -55,7 +53,7 @@ const Home = props => {
     return {
       text: doc.name,
       handler: () => {
-        props.history.push(`/patients/doctor/${doc.id}`);
+        props.history.push(`/doctor/${doc.id}/mypatients`);
       }
     };
   };
@@ -64,7 +62,7 @@ const Home = props => {
     return {
       text: patient.name,
       handler: () => {
-        props.history.push(`/today/patient/${patient.id}`);
+        props.history.push(`/patient/${patient.id}/activities`);
         BluetoothSynchronisationManager.setPatient(patient.id);
       }
     };
@@ -72,11 +70,7 @@ const Home = props => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>eHealth Application</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <BackButtonToolbar title={"eHealth Application Demo"} />
       <IonContent>
         <div className="ion-padding" style={styles.home}>
           <Container>
@@ -88,7 +82,7 @@ const Home = props => {
                   style={{ marginBottom: "30px" }}
                   onClick={() => setShowPatientActionSheet(true)}
                 >
-                  Today's Activity
+                  Patient: My Activities
                 </IonButton>
               </Col>
             </Row>
@@ -99,7 +93,7 @@ const Home = props => {
                   expand="block"
                   onClick={() => setShowDoctorActionSheet(true)}
                 >
-                  View Patients
+                  Doctor: My Patients
                 </IonButton>
               </Col>
             </Row>
