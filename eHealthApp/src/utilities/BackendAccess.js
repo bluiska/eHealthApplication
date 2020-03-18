@@ -1,11 +1,34 @@
+/*
+This worker class serves for the purpose of accessing the DIL via
+the OData protocol as an OData client.
+
+Author: Andy Le
+*/
+
 import { o } from "odata";
 
-const endpoint = "https://localhost:5001/odata/";
-//const endpoint = "https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/";
+//const endpoint = 'https://localhost:5001/odata/'
+const endpoint =
+  "https://ehealth-db-host.uksouth.cloudapp.azure.com:5001/odata/";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+/**
+ * Exports a singleton instance of the OData Client as a means of
+ * accessing the DIL via the OData protocol.
+ */
 export default new (class BackendAccess {
+  /**
+   * The default constructor of the OData Client which encapsulates
+   * let-based functions by making them private. Only exposes one
+   * public function for performing CRUD operations.
+   * @returns {BackendAccess} Returns the singleton instance of this
+   * client.
+   */
   constructor() {
+    /**
+     * Returns the response as a transformed JSON object.
+     * @returns {Promise} Response as JSON object.
+     */
     let ProduceResponseBody = response => {
       return {
         body: response,
@@ -15,6 +38,14 @@ export default new (class BackendAccess {
       };
     };
 
+    /**
+     * Reads and eventually queries the instances of an entity by type.
+     * @param {string} entityType The type of an entity that is part
+     * of the business data model.
+     * @param {Object} query The query parameter for filtering the
+     * OData result.
+     * @returns {Promise} Response as JSON object.
+     */
     let Read = async (entityType, query = {}) => {
       var res = await o(endpoint)
         .get(entityType)
@@ -22,6 +53,15 @@ export default new (class BackendAccess {
 
       return ProduceResponseBody(res);
     };
+
+    /**
+     * Instantiates a new entity by type.
+     * @param {string} entityType The type of an entity that is part
+     * of the business data model.
+     * @param {Object} entityBody The details of the entity regarding
+     * its properties as per business data model.
+     * @returns {Promise} Response as JSON object.
+     */
     let Create = async (entityType, entityBody) => {
       var res = await o(endpoint)
         .post(entityType, entityBody)
@@ -29,6 +69,17 @@ export default new (class BackendAccess {
 
       return ProduceResponseBody(res);
     };
+
+    /**
+     * Changes the properties of an existing instance by entity type.
+     * @param {string} entityID The ID related to an existing instance
+     * of the entity model.
+     * @param {string} entityType The type of an entity that is part
+     * of the business data model.
+     * @param {Object} entityBody The details of the entity regarding
+     * its properties as per business data model.
+     * @returns {Promise} Response as JSON object.
+     */
     let Update = async (entityType, entityID, entityBody) => {
       var res = await o(endpoint)
         .patch(`${entityType}('${entityID}')`, entityBody)
@@ -36,6 +87,13 @@ export default new (class BackendAccess {
 
       return ProduceResponseBody(res);
     };
+
+    /**
+     * Deletes an instance by its entity type and ID.
+     * @param {string} entityID The ID related to an existing instance
+     * of the entity model.
+     * @returns {Promise} Response as JSON object.
+     */
     let Delete = async (entityType, entityID) => {
       var res = await o(endpoint)
         .delete(`${entityType}('${entityID}')`)
@@ -44,6 +102,13 @@ export default new (class BackendAccess {
       return ProduceResponseBody(res);
     };
 
+    /**
+     * Routes the received request to its proprietary CRUD operation by
+     * request type.
+     * @param {Object} req The request payload received for initiating
+     * an OData request against the DIL.
+     * @returns {Promise} Response as JSON object.
+     */
     this.IssueODataRequest = async req => {
       var context = {};
       switch (req.requestType) {
@@ -78,7 +143,6 @@ export default new (class BackendAccess {
           };
           break;
       }
-      //console.log(context.res.body);
       return context.res.body;
     };
   }

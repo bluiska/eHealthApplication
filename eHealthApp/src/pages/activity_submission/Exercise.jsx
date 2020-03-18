@@ -30,6 +30,9 @@ const Exercise = props => {
     distanceError: ""
   });
 
+  /**
+   * Styling parameters
+   */
   const styles = {
     label: {
       fontSize: "1.3em",
@@ -43,25 +46,44 @@ const Exercise = props => {
 
   const exerciseType = props.match.params.type;
 
+  /**
+   * This function is used to retrieve various necessary information for displaying
+   * as well as to be used in the queries for each exercise type
+   *
+   * @param {String} type - The type of the activity
+   * @returns {object} - The object containing various display properties for that activity type
+   */
   const getType = type => {
     switch (type) {
-      case "walking":
+      case "walk":
         return { title: "Walk", activity: "walked", entityType: "Walkings" };
-      case "running":
+      case "run":
         return { title: "Run", activity: "ran", entityType: "Runnings" };
-      case "cycling":
+      case "cycle":
         return { title: "Cycle", activity: "cycled", entityType: "Cyclings" };
       default:
         return "";
     }
   };
 
+  /**
+   * Updates the to be submitted data in the state variable
+   *
+   * @param {String} key - The key of in the object
+   * @param {*} value - The data to be submitted
+   */
   const updateData = (key, value) => {
     let newData = JSON.parse(JSON.stringify(submitData));
     newData[key] = value;
     setSubmitData(newData);
   };
 
+  /**
+   * Returns the distance converted to the appropriate units
+   *
+   * @param {Integer} distance - The distance in km
+   * @param {String} unit
+   */
   const getDistance = (distance, unit) => {
     switch (unit) {
       case "km":
@@ -70,6 +92,43 @@ const Exercise = props => {
         return distance * 1.609;
       default:
         return distance;
+    }
+  };
+
+  /**
+   * Handles the entry of the distance value
+   * and validates the value. If the value is out of bounds
+   * it sets the error to display.
+   *
+   * @param {String} value
+   */
+  const enterDistanceValue = value => {
+    if (value <= 10000 && value > 0) {
+      setDistance(parseFloat(value));
+      updateData("distance", getDistance(parseFloat(value), distanceUnit));
+      let val = { ...validation, distanceError: false };
+      setValidation(val);
+    } else {
+      setDistance(null);
+      updateData("distance", null, distanceUnit);
+      if (value) {
+        let val = { ...validation, distanceError: true };
+        setValidation(val);
+        let valMsg = {
+          ...validationMessage,
+          distanceError:
+            value > 10000 ? "The value is too high" : "The value is too low."
+        };
+        setValidationMessage(valMsg);
+      } else {
+        let val = { ...validation, distanceError: false };
+        setValidation(val);
+        let valMsg = {
+          ...validationMessage,
+          distanceError: ""
+        };
+        setValidationMessage(valMsg);
+      }
     }
   };
 
@@ -199,38 +258,7 @@ const Exercise = props => {
                 }`}
                 clearInput
                 onIonChange={e => {
-                  if (e.detail.value <= 10000 && e.detail.value > 0) {
-                    setDistance(parseFloat(e.detail.value));
-                    updateData(
-                      "distance",
-                      getDistance(parseFloat(e.detail.value), distanceUnit)
-                    );
-                    let val = { ...validation, distanceError: false };
-                    setValidation(val);
-                  } else {
-                    setDistance(null);
-                    updateData("distance", null, distanceUnit);
-                    if (e.detail.value) {
-                      let val = { ...validation, distanceError: true };
-                      setValidation(val);
-                      let valMsg = {
-                        ...validationMessage,
-                        distanceError:
-                          e.detail.value > 10000
-                            ? "The value is too high"
-                            : "The value is too low."
-                      };
-                      setValidationMessage(valMsg);
-                    } else {
-                      let val = { ...validation, distanceError: false };
-                      setValidation(val);
-                      let valMsg = {
-                        ...validationMessage,
-                        distanceError: ""
-                      };
-                      setValidationMessage(valMsg);
-                    }
-                  }
+                  enterDistanceValue(e.detail.value);
                 }}
               />
               <Collapse in={validation.distanceError}>
