@@ -6,14 +6,14 @@ Healthcare professionals can use it in order to track the health conditions of t
 This application is currently in development but a pre-release evaluation version can be cloned from this repository for deployment purposes. In order to deploy the eHealth application, please refer to the deployment steps detailed in the "eHealth-Mobile", "eHealth-DIL", and the "eHealth-BluetoothSimulation" directories.
 
 ## Technology Stack
-|   eHealth Component    | Technology            | Purpose                               |
-|:----------------------:|:---------------------:|:-------------------------------------:|
-| Mobile App             | React (JavaScript)    | Application for Mobile Devices        |
-| Data Integration Layer | ASP.NET Core 2.2 (C#) | Server for Data Model Management      |
-| Bluetooth Simulation   | Express (JavaScript)  | Simulation for Bluetooth Connectivity |
-| Semiodesk Trinity      | C#                    | ORM Library for Semantic Databases    |
-| OData                  | C#                    | API Library for Open Data Access      |
-| OpenLink Virtuoso      |                       | Semantic Database                     |
+|   eHealth Component    | Technology               | Purpose                               |
+|:----------------------:|:------------------------:|:-------------------------------------:|
+| Mobile App             | React Ionic (JavaScript) | Application for Mobile Devices        |
+| Data Integration Layer | ASP.NET Core 2.2 (C#)    | Server for Data Model Management      |
+| Bluetooth Simulation   | Express (JavaScript)     | Simulation for Bluetooth Connectivity |
+| Semiodesk Trinity      | C#                       | ORM Library for Semantic Databases    |
+| OData                  | C#                       | API Library for Open Data Access      |
+| OpenLink Virtuoso      |                          | Semantic Database                     |
 
 ## System Architecture
 ![Architecture](./MD-Images/SolutionArchitecture.png)
