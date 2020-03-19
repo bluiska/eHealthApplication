@@ -11,14 +11,16 @@ import toJson from "enzyme-to-json";
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("<RenderPredictions />", () => {
+  const date = new Date();
+  console.log(date.toISOString());
   const activity = [
     {
       steps: -1,
       caloriesBurnt: -1.0,
-      startTime: "2020-03-17T15:25:48.753Z",
-      endTime: "2020-03-17T17:25:48.753Z",
+      startTime: date.toISOString(),
+      endTime: date.toISOString(),
       distance: 60.0,
-      timestamp: "2020-03-17T17:25:48.752Z",
+      timestamp: date.toISOString(),
       patient: {
         doctor: {
           patients: [
@@ -91,7 +93,7 @@ describe("<RenderPredictions />", () => {
     {
       diastolicPressure: 70.0,
       systolicPressure: 60.0,
-      timestamp: "2020-03-17T13:28:36.558Z",
+      timestamp: date.toISOString(),
       patient: {
         doctor: {
           patients: [
