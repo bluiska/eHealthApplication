@@ -3,7 +3,7 @@ const SensorFunctions = require('./Functions');
 const Logger = require('../../singletons/Logger');
 const ConnectionStatus = require('./ConnectionStatus');
 
-const {hasHR, hasKcal, hasLocation, hasSteps, hasStressLevel, hasTime} = SensorFunctions;
+const {hasHR, hasKcal, hasLocation, hasSteps, hasStressLevel, hasTime, hasConnectivity} = SensorFunctions;
 
 const Sensor = (id, name, type) => {
     const self = {
@@ -17,42 +17,14 @@ const Sensor = (id, name, type) => {
         data: {},
         activities: []
     }
+    return Object.assign({}, self, connectingBehaviors(self));
+}
 
-    const pair = () => {
-        setTimeout(() => {
-            if (!self.paired && !self.connected){
-                self.paired = true;
-                self.connectionStatus = ConnectionStatus.PAIRED;
-            }
-        }, 3000);
-    };
-    const connect = () => {
-        setTimeout(() => {
-            if (!self.connected && self.paired) {
-                self.connected = true;
-                self.connectionStatus = ConnectionStatus.CONNECTED;
-            }
-        }, 3000);
-    };
-    const disconnect = () => {
-        if (self.connected && self.paired) {
-            self.connected = false;
-            self.connectionStatus = ConnectionStatus.PAIRED;
-        }
-    };
-    const unpair = () => {
-        if (self.paired) {
-            self.connected = false;
-            self.paired = false;
-            self.connectionStatus = ConnectionStatus.NOT_PAIRED;
-        }
+const connectingBehaviors = (state) => {
+    const self = {
+        ...state
     }
-    const syncData = () => {
-        if (self.connected && self.paired) {
-            return self.activities;
-        }
-    };
-    return Object.assign({}, self, {connect, pair, disconnect, unpair, syncData})
+    return Object.assign({}, self, hasConnectivity(self));
 }
 
 const timeBehaviors = (state) => {

@@ -1,5 +1,6 @@
 import { ConnectionStatus } from "./SensorEnums";
 import {
+  connectivityBehaviors,
   timeBehaviors,
   stepsBehaviors,
   kcalBehaviors,
@@ -17,51 +18,11 @@ export const Sensor = (id, name, type) => {
     batteryLevel: 0.0,
     connected: false,
     paired: false,
-    data: {},
+    data: [],
     activities: []
   };
 
-  const pair = () => {
-    setTimeout(() => {
-      if (!self.paired && !self.connected) {
-        self.paired = true;
-        self.connectionStatus = ConnectionStatus.PAIRED;
-      }
-    }, 3000);
-  };
-  const connect = () => {
-    setTimeout(() => {
-      if (!self.connected && self.paired) {
-        self.connected = true;
-        self.connectionStatus = ConnectionStatus.CONNECTED;
-      }
-    }, 3000);
-  };
-  const disconnect = () => {
-    if (self.connected && self.paired) {
-      self.connected = false;
-      self.connectionStatus = ConnectionStatus.PAIRED;
-    }
-  };
-  const unpair = () => {
-    if (self.paired) {
-      self.connected = false;
-      self.paired = false;
-      self.connectionStatus = ConnectionStatus.NOT_PAIRED;
-    }
-  };
-  const syncData = () => {
-    if (self.connected && self.paired) {
-      return self.activities;
-    }
-  };
-  return Object.assign({}, self, {
-    connect,
-    pair,
-    disconnect,
-    unpair,
-    syncData
-  });
+  return Object.assign({}, self, connectivityBehaviors(self));
 };
 
 export const Fitbit = (id, name, type) => {

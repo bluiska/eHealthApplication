@@ -1,5 +1,6 @@
 const moment = require('moment');
 const ActivityTypes = require('./ActivityTypes');
+const CONNECTION_STATUS = require('./ConnectionStatus');
 
 const hasTime = (self) => ({
     startActivity(type) {
@@ -44,16 +45,69 @@ const hasTime = (self) => ({
 
 const hasSteps = (self) => ({
 
-    startStepsCounter: () => {
+    startStepsCounter(){
         
     }
 });
+
+const hasConnectivity = (self) => ({
+    pair(self){
+        return new Promise((resolve, reject) => {
+          if (!self.paired) self.paired = true;
+          self.connectionStatus = CONNECTION_STATUS.PAIRED;
+          const status = {
+            paired: self.paired,
+            connectionStatus: self.connectionStatus
+          }
+          resolve(status)
+        })
+      },
+
+      connect(self){
+        return new Promise((resolve, reject) => {
+          if (self.paired && !self.connected) self.connected = true;
+          self.connectionStatus = CONNECTION_STATUS.CONNECTED;
+          const status = {
+            connected: self.connected,
+            connectionStatus: self.connectionStatus
+          }
+          resolve(status);
+        })
+      },
+    
+      disconnect(self){
+        if (self.paired && self.connected) {
+          self.connected = false;
+          self.connectionStatus = CONNECTION_STATUS.PAIRED;
+        }
+      },
+    
+      unpair(self) {
+        if (self.paired) {
+          self.paired = false;
+          self.connectionStatus = CONNECTION_STATUS.DISCONNECTED;
+        }
+      },
+    
+      syncData(newData){
+        return new Promise((resolve, reject) => {
+          if (self.connected && self.paired) {
+            self.data = [
+              ...self.data,
+              newData
+            ]
+            resolve([]);
+          }
+        })
+      },
+})
 const hasKcal = () => ({});
 const hasHR = () => ({});
 const hasLocation = () => ({});
 const hasStressLevel = () => ({});
 
 module.exports = {
+    hasConnectivity,
     hasSteps,
     hasTime,
     hasKcal,

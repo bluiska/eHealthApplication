@@ -22,7 +22,7 @@ const styles = {
   deviceNameStyle: {
     width: "100%",
     height: "100%",
-    fontSize: "16px",
+    fontSize: "13px",
     textAlign: "center"
   },
   deviceConnectionStatus: {
@@ -38,15 +38,15 @@ const DeviceCard = props => {
 
   const getConnectionColor = () => {
     switch (connectionStatus) {
-      case "CONNECTED":
+      case "connected":
         return "var(--ion-color-success)";
-      case "CONNECTING":
+      case "connecting":
         return "var(--ion-color-warning)";
-      case "UNKNOWN":
+      case "unknown":
         return "var(--ion-color-warning)";
-      case "PAIRED":
+      case "paired":
         return "var(--ion-color-success)";
-      case "PAIRING":
+      case "pairing":
         return "var(--ion-color-warning)";
       default:
         return "var(--ion-color-danger)";
@@ -74,7 +74,7 @@ const DeviceCard = props => {
                   color: getConnectionColor()
                 }}
               >
-                {connectionStatus}
+                {connectionStatus.toUpperCase()}
               </p>
             </Col>
           </Row>

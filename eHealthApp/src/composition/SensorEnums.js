@@ -9,7 +9,9 @@ export const ConnectionStatus = Object.freeze({
   PAIRED: "paired",
   NOT_PAIRED: "not_paired",
   DISCONNECTED: "disconnected",
-  FAILED: "failed"
+  FAILED: "failed",
+  CONNECTING: "connecting",
+  PAIRING: "pairing"
 });
 
 export const SensorTypes = Object.freeze({

@@ -28,6 +28,12 @@ app
             eventEmitter.emit('syncData', {id: req.body.id, res:res});
         }
     })
+    .post('/pairDevice', (req, res) => {
+        if (req && req.body){
+            const deviceId = req.body.id;
+            eventEmitter.emit('pairSensor', {id: deviceId, res: res});
+        }
+    })
     .post(`/connectDevice`, (req, res) => {
         if (req && req.body) {
             const deviceId = req.body.id;

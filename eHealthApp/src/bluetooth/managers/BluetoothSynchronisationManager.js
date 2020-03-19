@@ -1,16 +1,16 @@
 import PAIRED_DEVICES from "../../data/paired_devices";
 import ActivityQueries from "../../queries/ActivityQueries";
-import SensorFactory, { createSensor } from "../../composition/SensorFactory";
+import { createSensor } from "../../composition/SensorFactory";
+import { Patient } from "../../models/Patient";
 
 const PORT = 3000;
 const URL = `localhost`;
 const connectDevice = `http://${URL}:${PORT}/connectDevice/`;
+const pairDevice = `http://${URL}:${PORT}/pairDevice/`;
 const disconnectDevice = `http://${URL}:${PORT}/disconnectDevice/`;
 const synchorniseDataUrl = `http://${URL}:${PORT}/synchroniseData/`;
 const getOtherDevicesUrl = `http://${URL}:${PORT}/getOtherDevices/`;
 let foundDevices = [];
-
-var patient = null;
 
 class BluetoothSynchronisationManager {
   constructor() {
@@ -19,6 +19,7 @@ class BluetoothSynchronisationManager {
     this.devicesObservers = [];
     this.otherDevices = [];
     this.noOfFailedSyncs = 0;
+    this.patient = null;
     setInterval(() => {
       this.synchroniseData();
     }, 3000);
@@ -67,7 +68,9 @@ class BluetoothSynchronisationManager {
    * For the simplicity, paired devices are stored as a constant array
    */
   getPairedDevices = () => {
-    foundDevices = PAIRED_DEVICES;
+    if (this.patient) {
+      foundDevices = this.patient.devices;
+    }
     return foundDevices;
   };
 
@@ -75,6 +78,9 @@ class BluetoothSynchronisationManager {
    * Retrieves the list of devices that are in range, but are not paired/connected
    */
   getOtherDevices = async () => {
+    if (this.otherDevices.length > 0) {
+      this.otherDevices = [];
+    }
     try {
       const response = await fetch(getOtherDevicesUrl);
       const data = await response.json();
@@ -86,8 +92,9 @@ class BluetoothSynchronisationManager {
       }
       return this.otherDevices;
     } catch (err) {
-      console.error(err);
-      throw new Error(err);
+      setTimeout(() => {
+        this.getOtherDevices();
+      }, 2000);
     }
   };
 
@@ -96,7 +103,8 @@ class BluetoothSynchronisationManager {
    * So that this patient can be then used to query the database
    */
   setPatient = p => {
-    patient = p;
+    this.patient = Patient(p);
+    console.log(this.patient);
   };
 
   getConnectedDevices = () => {
@@ -104,6 +112,84 @@ class BluetoothSynchronisationManager {
      * Returns the list of connected devices
      */
     return {};
+  };
+
+  /**
+   * Simulates paring with selected device
+   * @param {String} id -> ID of selected device
+   */
+  pair = id => {
+    return new Promise(async (resolve, reject) => {
+      const pairingDevice = this.otherDevices.find(device => device.id === id);
+      if (pairingDevice) {
+        try {
+          const response = await fetch(pairDevice, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: id })
+          });
+          const data = await response.json();
+          if (data) {
+            pairingDevice.pair(pairingDevice);
+            this.patient.addDevice(pairingDevice);
+            this.notifyDevicesObservers();
+            resolve(data);
+          }
+        } catch (err) {
+          console.error(err);
+          reject(err);
+        }
+      }
+    });
+  };
+
+  /**
+   * Simulates connection to a Bluetooth simulator
+   * @param {String} id -> ID of the sensor
+   */
+  connect = id => {
+    return new Promise(async (resolve, reject) => {
+      const connectingDevice = this.patient.devices.find(
+        device => device.id === id
+      );
+      if (connectingDevice) {
+        try {
+          const response = await fetch(connectDevice, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: id })
+          });
+          const data = await response.json();
+          if (data) {
+            connectingDevice.connect(connectingDevice);
+            this.notifyDevicesObservers();
+            resolve(data);
+            return;
+          } else {
+            reject();
+            return;
+          }
+        } catch (err) {
+          // Device is disconnected (Simulation server not running)
+          // const deviceConnectionStatus = {
+          //   connected: false,
+          //   connectionStatus: 'FAILED'
+          // };
+          // reject(deviceConnectionStatus);
+          console.log(err);
+          reject();
+          return;
+        }
+      }
+    });
   };
 
   /**
@@ -160,6 +246,11 @@ class BluetoothSynchronisationManager {
       },
       body: JSON.stringify({ id: id })
     });
+    const disconnectingDevice = this.patient.devices.find(
+      device => device.id === id
+    );
+    disconnectingDevice.disconnect(disconnectingDevice);
+    this.notifyDevicesObservers();
   };
 
   /**
@@ -194,7 +285,7 @@ class BluetoothSynchronisationManager {
             body: JSON.stringify(fetchData)
           });
           const data = await response.json();
-
+          console.log("d: ", data);
           if (data.length !== 0) {
             data.forEach(log => {
               log.data = {
@@ -204,7 +295,7 @@ class BluetoothSynchronisationManager {
                 endTime: log.stopTime,
                 distance: parseFloat(log.distance)
               };
-              ActivityQueries.uploadNewExercise(patient, log);
+              ActivityQueries.uploadNewExercise(this.patient.id, log);
               this.notifyObservers();
             });
           }

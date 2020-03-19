@@ -8,10 +8,10 @@ import {
   IonItemDivider,
   IonButton
 } from "@ionic/react";
-
 import DeviceCard from "../components/DeviceCard";
 import BackButtonToolbar from "../components/BackButtonToolbar";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
+import { ConnectionStatus } from "../composition/SensorEnums";
 
 // Styling
 const styles = {
@@ -74,23 +74,24 @@ const Devices = () => {
   }, []);
 
   useEffect(() => {
-    const getOtherDevices = async () => {
-      const other = await BluetoothSynchronisationManager.getOtherDevices();
-      return other;
-    };
-
     getOtherDevices().then(data => {
       setOtherDevices(data);
     });
   }, []);
-
-  console.log("other: ", otherDevices);
 
   /**
    * Observer function used to rerender paired devices
    */
   const rerenderPairedDevices = () => {
     setPairedDevices(BluetoothSynchronisationManager.getPairedDevices());
+    getOtherDevices().then(data => {
+      setOtherDevices(data);
+    });
+  };
+
+  const getOtherDevices = async () => {
+    const other = await BluetoothSynchronisationManager.getOtherDevices();
+    return other;
   };
 
   /**
@@ -100,30 +101,33 @@ const Devices = () => {
    * @param {String} id - Device clicked by the user on the page
    */
   const deviceClickHandler = id => {
-    const clickedDevice = pairedDevices.find(x => x.id === id);
+    var clickedDevice = pairedDevices.find(x => x.id === id);
+    if (!clickedDevice) {
+      clickedDevice = otherDevices.find(x => x.id === id);
+    }
     setClickedDeviceHolder(clickedDevice);
-    if (
-      (clickedDevice.connectionStatus.toLowerCase() === "paired" ||
-        clickedDevice.connectionStatus.toLowerCase() === "disconnected") &&
-      clickedDevice.connected === false
-    ) {
-      // CONNECT
-      changeDeviceStatus(id, "CONNECTING");
-      BluetoothSynchronisationManager.connectToDevice(id)
-        .then(res => {
-          clickedDevice.connect(res);
-          changeDeviceStatus(id, "CONNECTED");
-        })
-        .catch(err => {
-          changeDeviceStatus(id, "FAILED");
-          setShowFailModal(true);
-        });
-    } else if (
-      clickedDevice.connectionStatus.toLowerCase() === "connected" &&
-      clickedDevice.connected
-    ) {
-      // DISCONNECT
-      setShowDisconnectModal(true);
+
+    switch (clickedDevice.connectionStatus.toLowerCase()) {
+      case ConnectionStatus.NOT_PAIRED:
+        // Not paired - needs pairing
+        BluetoothSynchronisationManager.pair(clickedDevice.id);
+        // clickedDevice.pair(clickedDevice);
+        break;
+      case ConnectionStatus.PAIRED:
+        // Paired - needs connecting
+        BluetoothSynchronisationManager.connect(clickedDevice.id);
+        break;
+      case ConnectionStatus.CONNECTED:
+        // Connected - needs disconnecting
+        BluetoothSynchronisationManager.disconnect(clickedDevice.id);
+        break;
+      case ConnectionStatus.DISCONNECTED:
+      case ConnectionStatus.FAILED:
+        // Check if paired - needs connecting
+        if (clickedDevice.paired) {
+          BluetoothSynchronisationManager.connect(clickedDevice.id);
+        }
+        break;
     }
   };
 
@@ -182,21 +186,19 @@ const Devices = () => {
         <div style={{ marginTop: "20px" }}>
           <IonLabel style={styles.devicesTitleLabel}>Other Devices</IonLabel>
         </div>
-        {otherDevices.length > 0 ? (
-          otherDevices.map(x => {
-            return (
-              <DeviceCard
-                key={x.id || "unknown"}
-                title={x.name || "unknown"}
-                connected={x.connected || false}
-                connectionStatus={x.connectionStatus || "DISCONNECTED"}
-                onClick={deviceClickHandler.bind(this, x.id)}
-              />
-            );
-          })
-        ) : (
-          <IonLabel>Nada</IonLabel>
-        )}
+        {otherDevices && otherDevices.length > 0
+          ? otherDevices.map(x => {
+              return (
+                <DeviceCard
+                  key={x.id || "unknown"}
+                  title={x.name || "unknown"}
+                  connected={x.connected || false}
+                  connectionStatus={x.connectionStatus || "DISCONNECTED"}
+                  onClick={deviceClickHandler.bind(this, x.id)}
+                />
+              );
+            })
+          : ""}
       </div>
     );
   };
@@ -241,23 +243,19 @@ const Devices = () => {
         <div style={{ marginTop: "20px" }}>
           <IonLabel style={styles.devicesTitleLabel}>My Devices</IonLabel>
         </div>
-        {pairedDevices.length > 0 ? (
-          pairedDevices.map(x => {
-            return (
-              <DeviceCard
-                key={x.id}
-                title={x.name}
-                connected={x.connected}
-                connectionStatus={x.connectionStatus}
-                onClick={deviceClickHandler.bind(this, x.id)}
-              />
-            );
-          })
-        ) : (
-          <IonItem lines="none" style={styles.labelContainer}>
-            <IonLabel style={styles.noDevicesLabel}>No devices found</IonLabel>
-          </IonItem>
-        )}
+        {pairedDevices.length > 0
+          ? pairedDevices.map(x => {
+              return (
+                <DeviceCard
+                  key={x.id}
+                  title={x.name}
+                  connected={x.connected}
+                  connectionStatus={x.connectionStatus}
+                  onClick={deviceClickHandler.bind(this, x.id)}
+                />
+              );
+            })
+          : ""}
         {renderOtherDevices()}
       </IonContent>
     </IonPage>
