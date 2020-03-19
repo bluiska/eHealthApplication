@@ -22,7 +22,6 @@ import moment from "moment";
 import ActivityQueries from "../queries/ActivityQueries";
 import RecordCard from "../components/record_cards/RecordCard";
 import BackButtonToolbar from "../components/BackButtonToolbar";
-import { attachObserver } from "../pages/activity_submission/ActivitySubmissionPage";
 import BluetoothSynchronisationManager from "../bluetooth/managers/BluetoothSynchronisationManager";
 import pencil from "../resources/pencil.png";
 import "./Today.css";
@@ -33,10 +32,10 @@ const Today = props => {
 	// Setting the selected patient using default values
 	const patientId = props.match.params.patientid || "unknown";
 
-	// Holders for the component's state
-	//const [todaysActivities, setTodaysActivities] = useState([]);
-
+	//The database reference to the activities of a user
 	const activitiesReference = firebaseInstance.db.ref(`activities/${patientId}/${moment().format("DD-MM-YYYY")}`);
+
+	//The activities of the user for today.
 	const todaysActivities = fiery.useFirebaseDatabase(activitiesReference);
 
 	// Styles for all components
@@ -50,26 +49,11 @@ const Today = props => {
 	// This will be shown if the data cannot be fetched from the database
 	let activitiesComponent = <IonSpinner />;
 
-	/**
-	 * When component renders:
-	 * - Attach an observer to BluetoothSynchronisationManager to be notified when new data is available from bluetooth devices
-	 * - Attach an observer to ActivitySubmissionPage to be notified when new data is available from manual entry
-	 * - Fetches activities from the database
-	 */
-	useEffect(() => {
-		BluetoothSynchronisationManager.attachObserver(onNewDataAvailable);
-		attachObserver(onNewDataAvailable);
-
-		getActivities();
-	}, []);
-
-	/**
-	 * Callback used in Observer pattern by BluetoothSynchronisationManager
-	 * When the data changes in BSM, this function is called
-	 * And as a result, it fetches the data from the database
-	 */
-	const onNewDataAvailable = () => {
-		getActivities();
+	//Sorts the activities by time
+	const sortActivities = (a, b) => {
+		const aDate = new Date(a.timestamp);
+		const bDate = new Date(b.timestamp);
+		return aDate.getTime() > bDate.getTime() ? -1 : 1;
 	};
 
 	/**
@@ -96,36 +80,17 @@ const Today = props => {
 			return (
 				<IonItem>
 					<IonList style={styles.list}>
-						{todaysActivities.data.map(activity => {
-							return <RecordCard key={activity.timestamp} index={activity.timestamp} data={activity} />;
-						})}
+						{todaysActivities.data
+							.sort((a, b) => sortActivities(a, b))
+							.map(activity => {
+								return <RecordCard key={activity.timestamp} index={activity.timestamp} data={activity} />;
+							})}
 					</IonList>
 				</IonItem>
 			);
 		} else {
 			return activitiesComponent;
 		}
-	};
-
-	/**
-	 * Fetches the today's activities from the database
-	 * Activities are fetched for the chosen patient
-	 * The activities are sorted descendingly, based on the submission time
-	 */
-	const getActivities = () => {
-		const todayDate = new Date();
-		const formatedDate = new Date(todayDate.setDate(todayDate.getDate())).toISOString().slice(0, 10);
-
-		ActivityQueries.getActivitiesByDateRange(patientId, formatedDate, formatedDate).then(async res => {
-			if (res.length > 0) {
-				const sortArray = arr =>
-					arr.sort((a, b) => {
-						return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-					});
-				const sortedArray = await sortArray(res);
-				//setTodaysActivities(res);
-			}
-		});
 	};
 
 	return (

@@ -1,94 +1,50 @@
 /**
  *
- * The following module contains queries used to retrieve and upload
- * activity related information to the database. It uses the BackendAccess
- * class to interact with the backend and make the calls.
+ * The following module contains to code to submit
+ * activity related information to the database.
  *
  */
 
-import BackendAccess from "../utilities/BackendAccess";
+import { firebaseInstance } from "./../components/firebase/firebase";
+import fiery from "fiery";
+import moment from "moment";
 
 var ActivityQueries = {};
 
 /**
- * The following query will retrieve the activities for the given patient
- * between the provided from and to times.
- *
- * @param {String} patientID - The id of the patient
- * @param {String} from - ISO string formatted timestamp
- * @param {String} to - ISO string formatted timestamp
- * @returns A list of activities within the specified date range added by the user with patientID
- * */
-ActivityQueries.getActivitiesByDateRange = (patientID, from, to) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "GET",
-    entityType: "Activities",
-    query: {
-      $filter: `patient/ID eq '${patientID}' and date(timestamp) le ${to} and date(timestamp) ge ${from}`
-    }
-  });
-};
-
-/**
- * The following query will retrieve the activities for the given patient
- * for a specific day (ideally today)
- *
- * @param {String} patientID - The id of the patient
- * @param {String} today - ISO string formatted timestamp
- * @returns A list of activities on the specified date added by the user with patientID
- * */
-ActivityQueries.getTodaysActivities = (patientID, today) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "GET",
-    entityType: "Activities",
-    query: {
-      $filter: `patient/ID eq '${patientID}' and date(timestamp) eq ${today}`
-    }
-  });
-};
-
-/**
- * The following query will upload a new exercise activity for the given patient
- * The exercise should be provided as an object containing the necessary metadata
- * to upload to the database. For this see the odata metadata.
+ * The following query will upload a new activity for the given patient
+ * The activity should be provided as an object containing the necessary metadata
+ * to upload to the database. For this see the schema README file.
  *
  * @param {String} patientID - The id of the patient
  * @param {String} exercise - The exercise object
- * @returns The POST return object containing details about the upload
+ * @returns A promise which if fulfilled means success if rejected means error
  * */
-ActivityQueries.uploadNewExercise = (patientID, exercise) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "POST",
-    entityType: exercise.type,
-    entityBody: {
-      patient: { ID: patientID },
-      timestamp: new Date(),
-      ...exercise.data,
-      steps: exercise.data.steps || -1,
-      caloriesburnt: exercise.data.caloriesburnt || -1
-    }
-  });
-};
+ActivityQueries.uploadNewActivity = async (patientId, submitData) => {
+	console.log(patientId);
 
-/**
- * The following query will upload a new measurement activity for the given patient
- * The measurement should be provided as an object containing the necessary metadata
- * to upload to the database. For this see the odata metadata.
- *
- * @param {String} patientID - The id of the patient
- * @param {String} measurement - The measurement object
- * @returns The POST return object containing details about the upload
- * */
-ActivityQueries.uploadNewMeasurement = async (patientID, measurement) => {
-  return BackendAccess.IssueODataRequest({
-    requestType: "POST",
-    entityType: measurement.type,
-    entityBody: {
-      patient: { ID: patientID },
-      timestamp: new Date(),
-      ...measurement.data
-    }
-  });
+	let date = moment().format("DD-MM-YYYY");
+	let propDate = moment(submitData.timestamp).format("DD-MM-YYYY");
+
+	let activitiesRef = firebaseInstance.db.ref(`/activities/${patientId}/${propDate || date}`);
+
+	activitiesRef.once("value").then(s => {
+		console.log("doesn't exists");
+		//The current day doesn't exist yet
+		if (!s.val()) {
+			return activitiesRef.child("0").set({
+				timestamp: new Date().getTime(),
+				...submitData
+			});
+		} else {
+			console.log("exists");
+			//The day exists so just push
+			return activitiesRef.child(s.val().length).set({
+				timestamp: new Date().getTime(),
+				...submitData
+			});
+		}
+	});
 };
 
 export default ActivityQueries;

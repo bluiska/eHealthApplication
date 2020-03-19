@@ -8,19 +8,6 @@ import FooterSubmitButton from "./../../components/FooterSubmitButton";
 import { firebaseInstance } from "./../../components/firebase/firebase";
 import moment from "moment";
 
-// Container to store Observers
-const observers = [];
-
-/**
- * Attaches a new Observer to the list of Observers
- * To use this function in other components, it need to be exported first
- * @param {Function} observer
- */
-
-export const attachObserver = observer => {
-	observers.push(observer);
-};
-
 const ActivitySubmissionPage = props => {
 	const [showSubmitAlert, setShowSubmitAlert] = useState(false);
 	const [submitAlertContent, setSubmitAlertContent] = useState(false);
@@ -35,65 +22,21 @@ const ActivitySubmissionPage = props => {
 	 * It also sets the alert message based on a successful upload
 	 */
 	const submitActivity = () => {
-		let date = moment().format("DD-MM-YYYY");
-		let propDate = moment(props.submitData.timestamp).format("DD-MM-YYYY");
-
-		let activitiesRef = firebaseInstance.db.ref(`/activities/${props.patientId}/${propDate || date}`);
-
-		activitiesRef.once("value").then(s => {
-			//The current day doesn't exist yet
-			if (!s.val()) {
-				activitiesRef
-					.child("0")
-					.set({
-						timestamp: new Date().getTime(),
-						...props.submitData
-					})
-					.then(() => {
-						setSubmitAlertContent({
-							header: HEADER.SUCCESS,
-							message: props.successMessage
-						});
-						setShowSubmitAlert(true);
-					})
-					.catch(() => {
-						setSubmitAlertContent({
-							header: HEADER.FAIL,
-							message: props.failMessage
-						});
-						setShowSubmitAlert(true);
-					});
-			} else {
-				//The day exists so just push
-				activitiesRef
-					.child(s.val().length)
-					.set({
-						timestamp: new Date().getTime(),
-						...props.submitData
-					})
-					.then(() => {
-						setSubmitAlertContent({
-							header: HEADER.SUCCESS,
-							message: props.successMessage
-						});
-						setShowSubmitAlert(true);
-					})
-					.catch(() => {
-						setSubmitAlertContent({
-							header: HEADER.FAIL,
-							message: props.failMessage
-						});
-						setShowSubmitAlert(true);
-					});
-			}
-		});
-	};
-
-	/**
-	 * Notifies the observers
-	 */
-	const notifyObservers = () => {
-		observers.forEach(observer => observer());
+		ActivityQueries.uploadNewActivity(props.patientId, props.submitData)
+			.then(() => {
+				setSubmitAlertContent({
+					header: HEADER.SUCCESS,
+					message: props.successMessage
+				});
+				setShowSubmitAlert(true);
+			})
+			.catch(() => {
+				setSubmitAlertContent({
+					header: HEADER.FAIL,
+					message: props.failMessage
+				});
+				setShowSubmitAlert(true);
+			});
 	};
 
 	return (
@@ -123,7 +66,6 @@ const ActivitySubmissionPage = props => {
 						});
 						setShowSubmitAlert(true);
 					}
-					notifyObservers();
 				}}
 			/>
 		</IonPage>
