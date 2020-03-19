@@ -1,3 +1,9 @@
+/**
+ * Encapsulated Factory Pattern function to create a sensor based on it's type
+ * A Sensor is provided here, it's type, id and name are extracted and then
+ * the relevant Sensor is created
+ */
+
 import { SensorTypes } from "./SensorEnums";
 import { Fitbit, FitbitHR, Garmin, Samsung, AppleWatch } from "./Sensors";
 

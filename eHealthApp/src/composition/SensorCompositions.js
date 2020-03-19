@@ -1,3 +1,8 @@
+/**
+ * Behaviors are written and encapsulated here
+ * They're used by factories to create different sensors
+ */
+
 import { ConnectionStatus } from "./SensorEnums";
 
 const hasTime = self => ({});

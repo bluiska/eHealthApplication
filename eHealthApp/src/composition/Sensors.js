@@ -1,3 +1,10 @@
+/**
+ * SENSORS COMPOSITION
+ * Creationg of Composition classes is included here
+ * Behaviors are imported from the separate class
+ * Each specific type of sensor uses behaviors that are relevant to their function
+ */
+
 import { ConnectionStatus } from "./SensorEnums";
 import {
   connectivityBehaviors,

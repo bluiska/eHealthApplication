@@ -1,3 +1,9 @@
+/**
+ * Enumerators are exported here
+ * These are used in different parts of the code to ensure less error prone
+ * And same strings being used everywhere
+ */
+
 export const ActivityTypes = Object.freeze({
   WALKING: "walking",
   CYCLING: "cycling",
