@@ -1,27 +1,28 @@
-
-
 ## Realtime database
 
-Prior to deploying the ehealth application, it is important that npm is installed. To do so, cd into the \eHealthApplication\eHealthApp directory and run the following command
+The individual enhancement has been to implement a real-time live database solution to the application to allow live synchronization of the data. This has been achieved using **Firebase Realtime Database**.
 
-```
-npm i
-```
+For the Firebase Realtime Database API reference see [here.](https://firebase.google.com/docs/database)
 
-This will install all the dependencies that are needed to run the application.
+Key capabilities of the Firebase Realtime Database include:
 
-To deploy the eHealth application, you need to ensure that you are in the \eHealthApplication\eHealthApp directory and run the following command:
+- Realtime
+  - Instead of typical HTTP requests, the Firebase Realtime Database uses data synchronization—every time data changes, any connected device receives that update within milliseconds. Provide collaborative and immersive experiences without thinking about networking code.
+- Offline
+  - Firebase apps remain responsive even when offline because the Firebase Realtime Database SDK persists your data to disk. Once connectivity is reestablished, the client device receives any changes it missed, synchronizing it with the current server state.
+- Accessible from Client Devices
+  - The Firebase Realtime Database can be accessed directly from a mobile device or web browser; there’s no need for an application server. Security and data validation are available through the Firebase Realtime Database Security Rules, expression-based rules that are executed when data is read or written.
 
-```
-ionic serve
-```
+These features are well suited for the eHealth system to allow patients and doctors to get the latest information as quickly as possible.
 
-You might be prompted about if you wish to install react-scripts at which point you should type in 'y' and press enter.
-![React-scripts](./MD-Images/ReactScriptsNotInstalled.png)
+## Schema
 
-If the deployment failed and you receive a 'BrowserslistError' error, you will need to delete the following files from the directory: browserslist, browserslist.cmd, browserslist.ps1.
-Run the 'ionic serve' command once more and the application should successfully deploy
+For the schema please see [Scheama README](./out/README.md)
 
-Once deployed, the application will automatically be displayed on the scrren running on http://localhost:8100/.
+## Testing methodology
 
-## Testing
+To test the enhancement I have opted to follow a method named as **Exploratory Testing**.
+
+Exploratory testing is a type of software testing where test cases are not created in advance but testers check the system on the fly. They may note down ideas about what to test before test execution. The focus of exploratory testing is more on testing as a "thinking" activity.
+
+This form of testing was suitable in my case as the group part of the application has already implemented unit and integration testing. So instead, focusing on
