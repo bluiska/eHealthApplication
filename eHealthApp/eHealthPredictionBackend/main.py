@@ -29,7 +29,7 @@ def my_index(age, gender, weight, dp, sp, distancetravelled):
 
     result = predict_hypertension()
 
-    with open('Dataset/userTrainData.csv', 'a+') as fd:
+    with open('Dataset/userTrainData.csv', 'a') as fd:
         newrowwriter = csv.writer(fd)
         newrowwriter.writerow([0, age, g, dp, sp, distancetravelled, result])
     
@@ -78,6 +78,7 @@ def predict_hypertension():
     # print(x_cv)
     pred_cv4=nb.predict(x_cv)
     pred_cv5 = nb.predict(test)
+    
     # print(pred_cv5)
     print(pred_cv5)
     return pred_cv5[0]

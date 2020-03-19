@@ -1,6 +1,10 @@
 # eHealth Prediction Layer (PL)
 
-The ehealth Prediction Layer is a python-based layer that enables a health professional to perform predictions based on the activity data that the patient submits. It uses the Flask web framework for developing and deploying a web application that hosts the prediction algorithm. The prediction algorithm is developed in Python. It utilizes the NAIVE BAYES CLASSIFIER ALGORITHM
+The eHealth Prediction Layer is a python-based layer that enables a health professional to perform predictions based on the activity data that the patient submits. It uses the Flask web framework for developing and deploying a web application that hosts the prediction algorithm. The prediction algorithm is a machine learning algorithm that was developed in Python. It utilizes the NAIVE BAYES CLASSIFIER ALGORITHM to predict and classify the activity data that the patient enters for today. The machine learning algorithm is trained used a training dataset that is designed to cover as may different scenarios (different age/gender/gp/sp/weight/exercise) as possible. The machine learning algorithm predicts the likelyhood of the patient developing coronary heart disease.
+
+Whenever a value is predicted, the parmeters and the predicted result is appended to the training dataset. This means that any future predictions will be more accurate as the prediction alogithm will constantly be learning and evolving from the users data.
+
+The eHealth Prediction Layer is designed to be a tool to aid the diagnostics that health professionals perform.
 
 ## Prerequisites
 
