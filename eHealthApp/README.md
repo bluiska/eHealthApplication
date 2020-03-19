@@ -1,16 +1,27 @@
-# eHealth Client Application
-Lorem ipsum...
 
-## Prerequisites
-Lorem ipsum...
 
-## 1. Preamble
-Lorem ipsum...
+## Realtime database
 
-## 2. Deploying the client
-Lorem ipsum...
+Prior to deploying the ehealth application, it is important that npm is installed. To do so, cd into the \eHealthApplication\eHealthApp directory and run the following command
 
-## 3. Component structure
-Lorem ipsum...
+```
+npm i
+```
 
-## 4. Testing
+This will install all the dependencies that are needed to run the application.
+
+To deploy the eHealth application, you need to ensure that you are in the \eHealthApplication\eHealthApp directory and run the following command:
+
+```
+ionic serve
+```
+
+You might be prompted about if you wish to install react-scripts at which point you should type in 'y' and press enter.
+![React-scripts](./MD-Images/ReactScriptsNotInstalled.png)
+
+If the deployment failed and you receive a 'BrowserslistError' error, you will need to delete the following files from the directory: browserslist, browserslist.cmd, browserslist.ps1.
+Run the 'ionic serve' command once more and the application should successfully deploy
+
+Once deployed, the application will automatically be displayed on the scrren running on http://localhost:8100/.
+
+## Testing

@@ -1,0 +1,347 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "properties": {
+        "activities": {
+            "$id": "#/properties/activities",
+            "type": "object",
+            "title": "The Activities Schema",
+            "description": "The activities object stores all activities for all patient. Individual patients are added by their patientID.",
+            "default": {},
+            "examples": [
+                {
+                    "TestPatient-1": {
+                        "17-03-2020": [
+                            {
+                                "endTime": 1584439836571.0,
+                                "distance": 3.9,
+                                "steps": 8750.0,
+                                "timestamp": 1584439836571.0,
+                                "startTime": 1584437409859.0,
+                                "caloriesBurnt": 139.25,
+                                "type": "walk"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "required": [
+                "TestPatient-1"
+            ],
+            "properties": {
+                "TestPatient-1": {
+                    "$id": "#/properties/activities/properties/TestPatient-1",
+                    "type": "object",
+                    "title": "The Patient Activity Schema",
+                    "description": "Patient activities are added using the IDs of the patients. The activities of a patient are divided by day. Each day may contain many different types of activities. The appending of an activity should conform to the date formatting DD-MM-YYYY (see example)",
+                    "default": {},
+                    "examples": [
+                        {
+                            "17-03-2020": [
+                                {
+                                    "steps": 8750.0,
+                                    "distance": 3.9,
+                                    "timestamp": 1584439836571.0,
+                                    "caloriesBurnt": 139.25,
+                                    "startTime": 1584437409859.0,
+                                    "type": "walk",
+                                    "endTime": 1584439836571.0
+                                }
+                            ]
+                        }
+                    ],
+                    "required": [
+                        "17-03-2020"
+                    ],
+                    "properties": {
+                        "17-03-2020": {
+                            "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020",
+                            "type": "array",
+                            "title": "The 17-03-2020 Schema",
+                            "description": "A date to hold activities of the user.",
+                            "default": [],
+                            "items": {
+                                "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items",
+                                "type": "object",
+                                "title": "The Items Schema",
+                                "description": "Each activity can be listed under a date.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "startTime": 1584437409859.0,
+                                        "caloriesBurnt": 139.25,
+                                        "type": "walk",
+                                        "endTime": 1584439836571.0,
+                                        "distance": 3.9,
+                                        "steps": 8750.0,
+                                        "timestamp": 1584439836571.0
+                                    }
+                                ],
+                                "required": [
+                                    "caloriesBurnt",
+                                    "distance",
+                                    "endTime",
+                                    "startTime",
+                                    "steps",
+                                    "timestamp",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "caloriesBurnt": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/caloriesBurnt",
+                                        "type": "number",
+                                        "title": "The Caloriesburnt Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            139.25
+                                        ]
+                                    },
+                                    "distance": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/distance",
+                                        "type": "number",
+                                        "title": "The Distance Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            3.9
+                                        ]
+                                    },
+                                    "endTime": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/endTime",
+                                        "type": "integer",
+                                        "title": "The Endtime Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            1584439836571
+                                        ]
+                                    },
+                                    "startTime": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/startTime",
+                                        "type": "integer",
+                                        "title": "The Starttime Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            1584437409859
+                                        ]
+                                    },
+                                    "steps": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/steps",
+                                        "type": "integer",
+                                        "title": "The Steps Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            8750
+                                        ]
+                                    },
+                                    "timestamp": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/timestamp",
+                                        "type": "integer",
+                                        "title": "The Timestamp Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            1584439836571
+                                        ]
+                                    },
+                                    "type": {
+                                        "$id": "#/properties/activities/properties/TestPatient-1/properties/17-03-2020/items/properties/type",
+                                        "type": "string",
+                                        "title": "The Type Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "walk"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "doctors": {
+            "$id": "#/properties/doctors",
+            "type": "array",
+            "title": "The Doctors Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "items": {
+                "$id": "#/properties/doctors/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "gender": "Female",
+                        "name": "Dr. Madeleine Girard",
+                        "email": "madeleine.girard@ehs.com",
+                        "dob": "1995-11-01T00:00:00Z",
+                        "id": "TestDoctor-1"
+                    }
+                ],
+                "required": [
+                    "dob",
+                    "email",
+                    "gender",
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "dob": {
+                        "$id": "#/properties/doctors/items/properties/dob",
+                        "type": "string",
+                        "title": "The Dob Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "1995-11-01T00:00:00Z"
+                        ]
+                    },
+                    "email": {
+                        "$id": "#/properties/doctors/items/properties/email",
+                        "type": "string",
+                        "title": "The Email Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "madeleine.girard@ehs.com"
+                        ]
+                    },
+                    "gender": {
+                        "$id": "#/properties/doctors/items/properties/gender",
+                        "type": "string",
+                        "title": "The Gender Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Female"
+                        ]
+                    },
+                    "id": {
+                        "$id": "#/properties/doctors/items/properties/id",
+                        "type": "string",
+                        "title": "The Id Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "TestDoctor-1"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/doctors/items/properties/name",
+                        "type": "string",
+                        "title": "The Name Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Dr. Madeleine Girard"
+                        ]
+                    }
+                }
+            }
+        },
+        "patients": {
+            "$id": "#/properties/patients",
+            "type": "array",
+            "title": "The Patients Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "items": {
+                "$id": "#/properties/patients/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "email": "jonathan.wills70@outlook.co.uk",
+                        "dob": "1970-02-05T00:00:00Z",
+                        "id": "TestPatient-1",
+                        "name": "Jonathan Wills",
+                        "doctor": "TestDoctor-1",
+                        "gender": "Male"
+                    }
+                ],
+                "required": [
+                    "dob",
+                    "doctor",
+                    "email",
+                    "gender",
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "dob": {
+                        "$id": "#/properties/patients/items/properties/dob",
+                        "type": "string",
+                        "title": "The Dob Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "1970-02-05T00:00:00Z"
+                        ]
+                    },
+                    "doctor": {
+                        "$id": "#/properties/patients/items/properties/doctor",
+                        "type": "string",
+                        "title": "The Doctor Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "TestDoctor-1"
+                        ]
+                    },
+                    "email": {
+                        "$id": "#/properties/patients/items/properties/email",
+                        "type": "string",
+                        "title": "The Email Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "jonathan.wills70@outlook.co.uk"
+                        ]
+                    },
+                    "gender": {
+                        "$id": "#/properties/patients/items/properties/gender",
+                        "type": "string",
+                        "title": "The Gender Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Male"
+                        ]
+                    },
+                    "id": {
+                        "$id": "#/properties/patients/items/properties/id",
+                        "type": "string",
+                        "title": "The Id Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "TestPatient-1"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/patients/items/properties/name",
+                        "type": "string",
+                        "title": "The Name Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Jonathan Wills"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

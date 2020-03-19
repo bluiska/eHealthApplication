@@ -1,0 +1,145 @@
+{
+  "activities" : {
+    "TestPatient-1" : {
+      "17-03-2020" : [ {
+        "caloriesBurnt" : 139.25,
+        "distance" : 3.9,
+        "endTime" : 1584439836571,
+        "startTime" : 1584437409859,
+        "steps" : 8750,
+        "timestamp" : 1584439836571,
+        "type" : "walk"
+      }, {
+        "distance" : 10,
+        "endTime" : "2020-03-19T02:29:21.472Z",
+        "startTime" : "2020-03-19T00:31:21.472Z",
+        "timestamp" : 1584412281471,
+        "type" : "walk"
+      } ],
+      "18-03-2020" : [ {
+        "caloriesBurnt" : 89.6,
+        "distance" : 10.4,
+        "endTime" : 1584526356571,
+        "startTime" : 1584526329859,
+        "steps" : 4520,
+        "timestamp" : 1584483157021,
+        "type" : "walk"
+      }, {
+        "caloriesBurnt" : -1,
+        "distance" : 6.7,
+        "endTime" : 1584552348753,
+        "startTime" : 1584545148753,
+        "steps" : -1,
+        "timestamp" : 1584552348752,
+        "type" : "run"
+      } ],
+      "19-03-2020" : [ {
+        "timestamp" : 1584581148996,
+        "type" : "weight",
+        "weight" : "5"
+      }, {
+        "timestamp" : 1584582295717,
+        "type" : "weight",
+        "weight" : "72"
+      }, {
+        "timestamp" : 1584582588634,
+        "type" : "weight",
+        "weight" : "10"
+      }, {
+        "diastolicPressure" : "80",
+        "systolicPressure" : "120",
+        "timestamp" : 1584583203085,
+        "type" : "blood_pressure"
+      }, {
+        "distance" : 0.22,
+        "endTime" : "2020-03-19T02:31:48.044Z",
+        "startTime" : "2020-03-19T02:31:48.044Z",
+        "timestamp" : 1584585108044,
+        "type" : "cycle"
+      } ]
+    }
+  },
+  "doctors" : [ {
+    "dob" : "1995-11-01T00:00:00Z",
+    "email" : "madeleine.girard@ehs.com",
+    "gender" : "Female",
+    "id" : "TestDoctor-1",
+    "name" : "Dr. Madeleine Girard"
+  }, {
+    "dob" : "1981-06-11T00:00:00Z",
+    "email" : "esteban.escobar@ehs.com",
+    "gender" : "Male",
+    "id" : "TestDoctor-2",
+    "name" : "Dr. Esteban Escobar"
+  }, {
+    "dob" : "1990-04-01T00:00:00Z",
+    "email" : "stefan.hainer@ehs.com",
+    "gender" : "Male",
+    "id" : "TestDoctor-3",
+    "name" : "Dr. Stefan Hainer"
+  } ],
+  "patients" : [ {
+    "dob" : "1970-02-05T00:00:00Z",
+    "doctor" : "TestDoctor-1",
+    "email" : "jonathan.wills70@outlook.co.uk",
+    "gender" : "Male",
+    "id" : "TestPatient-1",
+    "name" : "Jonathan Wills"
+  }, {
+    "dob" : "1999-10-13T00:00:00Z",
+    "doctor" : "TestDoctor-1",
+    "email" : "kucharski.marianski@gmail.com",
+    "gender" : "Female",
+    "id" : "TestPatient-2",
+    "name" : "Maria Kucharski"
+  }, {
+    "dob" : "1967-09-07T00:00:00Z",
+    "doctor" : "TestDoctor-1",
+    "email" : "mohammad.hassan19670907@gmail.com",
+    "gender" : "Male",
+    "id" : "TestPatient-3",
+    "name" : "Mohammad Hassan"
+  }, {
+    "dob" : "1995-06-07T00:00:00Z",
+    "doctor" : "TestDoctor-2",
+    "email" : "elise.leclair13@outlook.fr",
+    "gender" : "Female",
+    "id" : "TestPatient-4",
+    "name" : "Elise Leclair"
+  }, {
+    "dob" : "1976-11-13T00:00:00Z",
+    "doctor" : "TestDoctor-2",
+    "email" : "johannsenroland76@outlook.de",
+    "gender" : "Male",
+    "id" : "TestPatient-5",
+    "name" : "Roland Johannsen"
+  }, {
+    "dob" : "1996-02-28T00:00:00Z",
+    "doctor" : "TestDoctor-3",
+    "email" : "genevieve.la.toulousaine@outlook.fr",
+    "gender" : "Female",
+    "id" : "TestPatient-6",
+    "name" : "Genevieve Leblanc"
+  }, {
+    "dob" : "1994-03-14T00:00:00Z",
+    "doctor" : "TestDoctor-3",
+    "email" : "aoife.na.heireann@outlook.ie",
+    "gender" : "Female",
+    "id" : "TestPatient-7",
+    "name" : "Aoife O'Connell"
+  }, {
+    "dob" : "1996-02-15T00:00:00Z",
+    "doctor" : "TestDoctor-3",
+    "email" : "dan@smith.ie",
+    "gender" : "Male",
+    "id" : "TestPatient-8",
+    "name" : "Daniel Smith"
+  }, {
+    "dob" : "1990-12-15T00:00:00Z",
+    "doctor" : "TestDoctor-3",
+    "email" : "adam@wells.uk",
+    "gender" : "Male",
+    "id" : "TestPatient-9",
+    "name" : "Adam Wells"
+  } ]
+}

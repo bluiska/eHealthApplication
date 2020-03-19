@@ -24,10 +24,8 @@ const Home = props => {
 	const [showDoctorActionSheet, setShowDoctorActionSheet] = useState(false);
 	const [showPatientActionSheet, setShowPatientActionSheet] = useState(false);
 
-	const [test, setTest] = useState("doctors");
-
 	//const [doctors, setDoctors] = useState([]);
-	const doctorsRef = firebaseInstance.db.ref(test);
+	const doctorsRef = firebaseInstance.db.ref("doctors");
 	const doctors = fiery.useFirebaseDatabase(doctorsRef);
 	const patientsRef = firebaseInstance.db.ref("patients");
 	const patients = fiery.useFirebaseDatabase(patientsRef);
@@ -98,13 +96,7 @@ const Home = props => {
 								</IonButton>
 							</Col>
 						</Row>
-						<Row>
-							<Col>
-								<IonButton size="large" expand="block" onClick={() => setTest("patients")}>
-									Test
-								</IonButton>
-							</Col>
-						</Row>
+						<Row></Row>
 					</Container>
 				</div>
 				<IonActionSheet
