@@ -264,7 +264,7 @@ const PatientOverview = props => {
       <IonToolbar>
         {displayFilter && !displayPredictions && <IonTitle>Filter by</IonTitle>}
         {!displayFilter && displayPredictions && (
-          <IonTitle>Predictions</IonTitle>
+          <IonTitle>Predictive Analysis</IonTitle>
         )}
 
         {!displayFilter && !displayPredictions && (

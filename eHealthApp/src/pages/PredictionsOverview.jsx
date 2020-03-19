@@ -23,6 +23,7 @@ import RenderPredictions from "./RenderPredictions";
 
 const PredictionsOverview = props => {
   const activities = props.activities[1] ? props.activities[1] : [];
+  const [callPredictionServer, setCallPredictionServer] = useState(true);
 
   /*
     This function checks if the activities array is empty. If it is empty, then it means that no activities were passed to the component
@@ -30,7 +31,7 @@ const PredictionsOverview = props => {
   */
   return (
     <IonPage>
-      <IonContent>
+      <IonContent className="ion-padding" fullscreen>
         {activities && activities.length === 0 && (
           <IonCard>
             <IonCardHeader>
@@ -50,6 +51,8 @@ const PredictionsOverview = props => {
           <RenderPredictions
             activities={activities}
             className="renderPredictions"
+            setCallPredictionServer={setCallPredictionServer}
+            callPredictionServer={callPredictionServer}
           />
         )}
       </IonContent>

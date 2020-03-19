@@ -1,6 +1,6 @@
 # eHealth Prediction Layer (PL)
 
-The ehealth Prediction Layer is a python-based layer that enables a health professional to perform predictions based on the activity data that the patient submits. It uses the Flask web framework for developing and deploying a web application that hosts the prediction algorithm.
+The ehealth Prediction Layer is a python-based layer that enables a health professional to perform predictions based on the activity data that the patient submits. It uses the Flask web framework for developing and deploying a web application that hosts the prediction algorithm. The prediction algorithm is developed in Python. It utilizes the NAIVE BAYES CLASSIFIER ALGORITHM
 
 ## Prerequisites
 
@@ -49,4 +49,20 @@ Once deployed, the application will automatically be displayed on the scrren run
 
 To perform a prediction on the flask web application, you must first have the eHealth application and flask web application deployed. On the eHealth frontend, select a doctor, then select a patient with activity data that has be recorded today that must contain at least 1 physical activity (run/cycle/walk) and at least 1 blood pressure reading. Click the 'View Predictions' button to calculate and retrieve a prediction.
 
-## 4. Integration Testing
+## 5. Testing
+
+Prior to running the unit tests, it is important npm is installed. To do so, cd into the \eHealthApplication\eHealthApp directory and run the following command
+
+```
+npm install
+```
+
+This will install all the dependencies that are needed to run the application.
+
+To run the tests for the eHealth application, you need to ensure that you are in the \eHealthApplication\eHealthApp directory and run the following command:
+
+```
+npm test
+```
+
+Once the command is ran, all the unit tests will start running with the results being displayed on the console.

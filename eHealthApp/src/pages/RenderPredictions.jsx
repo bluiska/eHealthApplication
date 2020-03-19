@@ -93,13 +93,16 @@ const RenderPredictions = props => {
     Math.min(...totalBloodPressure)
   );
 
-  fetch(
-    `/predict/${age}/${props.activities[0].patient.gender}/${avgWeight}/${avgDiastolicPressure}/${avgSystolicPressure}/${totalDistance}`
-  )
-    .then(res => res.json())
-    .then(data => {
-      setPredictions(data.result);
-    });
+  if (props.callPredictionServer === true) {
+    props.setCallPredictionServer(false);
+    fetch(
+      `/predict/${age}/${props.activities[0].patient.gender}/${avgWeight}/${avgDiastolicPressure}/${avgSystolicPressure}/${totalDistance}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        setPredictions(data.result);
+      });
+  }
 
   // 'data' is used for displaying the line graph
   let data = {
