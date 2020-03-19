@@ -6,6 +6,8 @@ Whenever a value is predicted, the parmeters and the predicted result is appende
 
 The eHealth Prediction Layer is designed to be a tool to aid the diagnostics that health professionals perform.
 
+In terms of testing, units test have been written to test the functionality of the enhancement. I also performed a user ususablity test, the results of which can be found in the INDIVIDUAL_ENHANCEMENT_USER_EVAL folder. Exploratory tests were heavily used to both test the ui of the application and to test the integrety of the machine learning prediction algorithm.
+
 ## Prerequisites
 
 - React Ionic
@@ -70,3 +72,7 @@ npm test
 ```
 
 Once the command is ran, all the unit tests will start running with the results being displayed on the console.
+
+## 5. Filter activity by date
+
+The functionality of the filter component has been enhanced. When the user filters by date, all activities within the specified age range are retrieved from the db and rendered to the screen.

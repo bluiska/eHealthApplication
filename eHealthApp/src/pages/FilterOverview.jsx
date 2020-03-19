@@ -126,7 +126,7 @@ const FilterOverview = props => {
             </IonItem>
             <IonItem>
               <IonRadio slot="start" value={resetDate} />
-              <IonLabel>Reset date filter</IonLabel>
+              <IonLabel>Custom</IonLabel>
             </IonItem>
           </IonRadioGroup>
         </IonList>
