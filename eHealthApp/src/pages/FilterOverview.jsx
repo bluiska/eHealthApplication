@@ -1,5 +1,5 @@
 /*
-The purpose of the filter overview page is to display the different options for the user to select that then allows them to 
+The purpose of the filter overview page is to display the different options for the user to select that then allows them to
 filter the list of activities. It works by passing the selected filter variable and state function to this component. When the user
 selects an activity type that they wish to filter by, it uses the setSelectedFilterHandler function to update the state. The selectedFilter
 variable is used to remember which of the filter options was selected, so whenever the page is rerendered, The pre-selected options are always checked.

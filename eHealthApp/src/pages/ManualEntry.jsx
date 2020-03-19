@@ -35,12 +35,15 @@ const ManualEntry = props => {
       <IonContent className="ion-padding">
         <IonList>
           <ImageCard
+            className="exercise"
             title="Exercise"
             image={exercise_img}
             onClick={() => {
               setExerciseOptionsOpen(!exerciseOptionsOpen);
             }}
           >
+            {console.log(props)}
+
             <Collapse in={exerciseOptionsOpen}>
               <IonCardContent>
                 <IconButtonContainer style={{ width: "100%", height: "50px" }}>
@@ -76,6 +79,7 @@ const ManualEntry = props => {
             </Collapse>
           </ImageCard>
           <ImageCard
+            className="bloodpressure"
             title="Blood Pressure"
             image={blood_pressure_img}
             onClick={() =>
@@ -85,6 +89,7 @@ const ManualEntry = props => {
             }
           />
           <ImageCard
+            className="weight"
             title="Weight"
             image={weight_img}
             onClick={() =>

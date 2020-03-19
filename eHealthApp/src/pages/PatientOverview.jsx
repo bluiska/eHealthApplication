@@ -36,7 +36,9 @@ import { firebaseInstance } from "./../components/firebase/firebase";
 import fiery from "fiery";
 import moment from "moment";
 
-/*props:
+/**props:
+  @param {String} props.match.params.patientid - passes the patient's id to the component
+  @param {String} props.match.params.patientname - passes the patient's name to the component
  */
 
 const PatientOverview = props => {
